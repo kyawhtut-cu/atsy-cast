@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorBackground">#242424</color>
+    <color name="colorBackground75">#BF242424</color>
+    <color name="colorBackground50">#80242424</color>
+    <color name="colorBackground25">#40242424</color>
+
+    <color name="colorPrimary">#b31c22</color>
+    <color name="colorPrimaryDark">#7A1317</color>
+    <color name="colorAccent">#1e3a7b</color>
+    <color name="colorPrimaryTransparent">#75b31c22</color>
+
+    <color name="colorCardBackgroundFocus">#7A1317</color>
+    <color name="colorCardBackgroundUnFocus">#424242</color>
+
+    <color name="colorAppNameBg">@color/colorPrimary</color>
+    <color name="colorAppNameStroke">@color/colorPrimaryDark</color>
+    <color name="colorAppName">@color/colorWhite</color>
+
+    <color name="colorWhite">#fff</color>
+    <color name="colorBlack">#000000</color>
+    <color name="colorBlack75">#BF000000</color>
+    <color name="colorBlack80">#80000000</color>
+
+    <color name="playerPause">#80000000</color>
+    <color name="playerPlay">#80000000</color>
+    <color name="playerIcon">#80ffffff</color>
+
+</resources>

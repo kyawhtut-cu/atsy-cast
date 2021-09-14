@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="android.graphics.drawable.Drawable" />
+
+        <variable
+            name="isFocus"
+            type="Boolean" />
+
+        <variable
+            name="seriesName"
+            type="String" />
+
+        <variable
+            name="seriesPoster"
+            type="String" />
+
+        <variable
+            name="seriesResolutionType"
+            type="Drawable" />
+
+        <variable
+            name="seriesYear"
+            type="String" />
+
+        <variable
+            name="seriesEpisodeCount"
+            type="String" />
+
+        <variable
+            name="seriesStatus"
+            type="String" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:background="@{isFocus ? @color/colorCardBackgroundFocus : @color/colorCardBackgroundUnFocus}">
+
+        <ImageView
+            android:id="@+id/iv_series_poster"
+            isHorizontal="@{false}"
+            isNeedToCache="@{true}"
+            loadImage="@{seriesPoster}"
+            android:layout_width="0dp"
+            android:layout_height="160dp"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/thumbnail_movie"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_episode_count"
+            isMMFont="@{true}"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:layout_marginEnd="@dimen/margin_medium"
+            android:background="@drawable/bg_msub_series_episode_count"
+            android:gravity="center"
+            android:text="@{seriesEpisodeCount}"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/text_smaller"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="64" />
+
+        <TextView
+            android:id="@+id/tv_series_year"
+            isMMFont="@{true}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_msub_imdb"
+            android:backgroundTint="@color/colorBluRay"
+            android:text="@{seriesYear}"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/text_smaller"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_series_poster"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="2017" />
+
+        <TextView
+            android:id="@+id/tv_series_name"
+            isMMFont="@{true}"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:minLines="1"
+            android:padding="2dp"
+            android:text="@{seriesName}"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/text_small"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_series_poster"
+            tools:text="@string/lbl_series_header_title" />
+
+        <TextView
+            android:id="@+id/tv_series_description"
+            isMMFont="@{true}"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:minLines="1"
+            android:paddingHorizontal="2dp"
+            android:paddingBottom="2dp"
+            android:text="@{seriesStatus}"
+            android:textColor="#979797"
+            android:textSize="@dimen/text_smaller"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_series_name"
+            tools:text="Season 1" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

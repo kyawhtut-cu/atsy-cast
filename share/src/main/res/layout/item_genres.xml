@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="genresName"
+            type="String" />
+
+        <variable
+            name="genresColor"
+            type="Integer" />
+    </data>
+
+    <com.kyawhut.atsycast.share.components.RoundedConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_small"
+        android:paddingHorizontal="@dimen/margin_medium"
+        android:paddingVertical="@dimen/margin_small"
+        app:backgroundColor="@{genresColor}"
+        app:cornerAll="@dimen/margin_small"
+        tools:backgroundColor="@color/colorPrimary">
+
+        <TextView
+            android:id="@+id/tv_genres"
+            isMMFont="@{true}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@{genresName}"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/text_smaller"
+            tools:text="Genres" />
+
+    </com.kyawhut.atsycast.share.components.RoundedConstraintLayout>
+</layout>

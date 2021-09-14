@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="IOSLoading">
+        <attr name="loadingColor" format="reference" />
+        <attr name="loadingSize" format="float" />
+    </declare-styleable>
+
+    <declare-styleable name="RoundedConstraintLayout">
+        <attr name="cornerLeftTop" format="dimension" />
+        <attr name="cornerRightTop" format="dimension" />
+        <attr name="cornerLeftBottom" format="dimension" />
+        <attr name="cornerRightBottom" format="dimension" />
+        <attr name="backgroundColor" format="color" />
+        <attr name="strokeLineWidth" format="dimension" />
+        <attr name="strokeLineColor" format="color" />
+        <attr name="dashLineWidth" format="dimension" />
+        <attr name="dashLineGap" format="dimension" />
+
+        <attr name="cornerLeftSide" format="dimension" />
+        <attr name="cornerRightSide" format="dimension" />
+
+        <attr name="cornerAll" format="dimension" />
+
+        <attr name="useDim" format="boolean" />
+    </declare-styleable>
+
+    <!--https://github.com/HeZaiJin/SlantedTextView-->
+    <declare-styleable name="SlantedTextView">
+        <attr name="slantedTextSize" format="dimension" />
+        <attr name="slantedBackgroundColor" format="color" />
+        <attr name="slantedText" format="string" />
+        <attr name="slantedTextColor" format="color" />
+        <attr name="slantedLength" format="dimension" />
+        <attr name="slantedMode" format="enum">
+            <enum name="left" value="0" />
+            <enum name="right" value="1" />
+            <enum name="left_bottom" value="2" />
+            <enum name="right_bottom" value="3" />
+            <enum name="left_triangle" value="4" />
+            <enum name="right_triangle" value="5" />
+            <enum name="left_bottom_triangle" value="6" />
+            <enum name="right_bottom_triangle" value="7" />
+        </attr>
+    </declare-styleable>
+
+</resources>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.kyawhut.atsycast.free2air">
+
+    <application>
+        <activity
+            android:name=".ui.home.HomeActivity"
+            android:screenOrientation="sensorLandscape"
+            android:theme="@style/BaseTvTheme" />
+    </application>
+</manifest>

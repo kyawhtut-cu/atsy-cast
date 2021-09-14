@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".base.BasePlayerActivity">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="isShowProgress"
+            type="Boolean" />
+
+        <variable
+            name="isLoading"
+            type="Boolean" />
+
+        <variable
+            name="focusEpisode"
+            type="Boolean" />
+
+        <variable
+            name="showEpisode"
+            type="Boolean" />
+
+        <variable
+            name="appName"
+            type="String" />
+
+        <variable
+            name="isVideoEnd"
+            type="Boolean" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/top"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.075" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/right_one"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.925" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/bottom_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.75" />
+
+        <com.google.android.exoplayer2.ui.PlayerView
+            android:id="@+id/player_view"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            app:auto_show="true"
+            app:controller_layout_id="@layout/atsy_player_controller"
+            app:hide_on_touch="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:show_buffering="never"
+            app:show_shuffle_button="false"
+            app:shutter_background_color="@color/colorBlack"
+            app:use_controller="true" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/view_loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_loading"
+            android:visibility="@{isLoading ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="gone">
+
+            <com.kyawhut.atsycast.share.components.IOSLoading
+                android:id="@+id/ios_loading"
+                isTv="@{false}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:loadingColor="@color/colorWhite"
+                app:loadingSize="56" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.kyawhut.atsycast.share.components.RoundedConstraintLayout
+            android:id="@+id/player_end_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="@dimen/margin_large"
+            android:paddingVertical="@dimen/margin_xxlarge"
+            android:visibility="@{isVideoEnd ? View.VISIBLE : View.GONE}"
+            app:backgroundColor="@color/colorBackground"
+            app:cornerAll="@dimen/margin_medium_2"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                isMMFont="@{true}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ရုပ်ရှင် ကြည့်ရှုခြင်း ပြီးဆုံးသွားပါပြီ။"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/text_regular"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="HardcodedText" />
+        </com.kyawhut.atsycast.share.components.RoundedConstraintLayout>
+
+        <com.kyawhut.atsycast.share.components.RoundedConstraintLayout
+            android:id="@+id/view_progress"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/margin_small"
+            android:visibility="@{isShowProgress ? View.VISIBLE : View.GONE}"
+            app:backgroundColor="@color/colorBackground50"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <View
+                android:id="@+id/view_buffered_percent"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@color/colorPrimaryDark"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:layout_width="150dp" />
+
+            <View
+                android:id="@+id/view_progress_percent"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@color/colorPrimary"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:layout_width="100dp" />
+        </com.kyawhut.atsycast.share.components.RoundedConstraintLayout>
+
+        <com.kyawhut.atsycast.share.components.PlayPauseView
+            android:id="@+id/play_pause_view"
+            isTv="@{false}"
+            android:layout_width="125dp"
+            android:layout_height="125dp"
+            android:alpha="0"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.kyawhut.atsycast.share.components.RoundedConstraintLayout
+            android:id="@+id/view_app_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="@dimen/margin_medium"
+            android:paddingVertical="@dimen/margin_small"
+            app:backgroundColor="@color/colorAppNameBg"
+            app:cornerLeftBottom="@dimen/margin_small"
+            app:cornerRightTop="@dimen/margin_small"
+            app:layout_constraintEnd_toStartOf="@+id/right_one"
+            app:layout_constraintTop_toTopOf="@+id/top"
+            app:strokeLineColor="@color/colorAppNameStroke"
+            app:strokeLineWidth="2dp">
+
+            <TextView
+                android:id="@+id/tv_app_name"
+                style="@style/TvDefaultText"
+                isMMFont="@{true}"
+                android:text="@{appName}"
+                android:textColor="@color/colorAppName"
+                android:textSize="@dimen/text_regular"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="App name" />
+
+        </com.kyawhut.atsycast.share.components.RoundedConstraintLayout>
+
+        <View
+            android:id="@+id/view_episode_bg"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/colorBackground75"
+            android:visibility="@{focusEpisode ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="gone" />
+
+        <FrameLayout
+            android:id="@+id/view_episode"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:visibility="@{showEpisode ? View.VISIBLE : View.GONE}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/bottom_detail" />
+
+        <com.kyawhut.atsycast.share.components.NetworkSpeedComponent
+            android:id="@+id/view_network_speed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

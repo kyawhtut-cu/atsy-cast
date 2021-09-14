@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="lbl_internal_error">Internal error.</string>
+    <string name="lbl_no_internet_connection">No internet connection.</string>
+    <string name="lbl_error_400">Error 400.</string>
+    <string name="lbl_error_401">Error 401.</string>
+    <string name="lbl_client_code_error">Client logic code error.</string>
+    <string name="lbl_connection_time_out">Connection time out</string>
+
+    <string name="lbl_error_fragment_message">Failed to load the data. Please check if the internet connection is working right.</string>
+    <string name="lbl_error_fragment_button">Try again</string>
+
+    <string name="lbl_recently_watch">Recently Watch</string>
+    <string name="lbl_recently_watch_key">recentlyWatch</string>
+    <string name="lbl_watch_later">Watch Later</string>
+    <string name="lbl_watch_later_key">watchLater</string>
+
+    <string name="kBps" translatable="false">kB/s</string>
+    <string name="MBps" translatable="false">MB/s</string>
+    <string name="kbps" translatable="false">kb/s</string>
+    <string name="Mbps" translatable="false">Mb/s</string>
+
+</resources>

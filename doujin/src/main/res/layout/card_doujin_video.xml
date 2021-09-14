@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.kyawhut.atsycast.doujin.data.network.response.DoujinVideoResponse" />
+
+        <import type="com.kyawhut.atsycast.doujin.BuildConfig" />
+
+        <variable
+            name="data"
+            type="DoujinVideoResponse" />
+
+        <variable
+            name="isFocus"
+            type="Boolean" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:background="@{isFocus ? @color/colorPrimary : @color/colorBackground}"
+        tools:background="@color/colorBackground"
+        tools:context=".ui.card.view.VideoCardView">
+
+        <ImageView
+            android:id="@+id/iv_doujin"
+            isBlur="@{true}"
+            isHorizontal="@{true}"
+            isNeedToCache="@{true}"
+            loadImage="@{BuildConfig.IMAGE_BASE_URL + data.doujinImage}"
+            android:layout_width="0dp"
+            android:layout_height="90dp"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/thumbnail_horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_doujin_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:paddingHorizontal="2dp"
+            android:paddingVertical="@dimen/margin_small"
+            android:text="@{data.doujinTitle}"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/text_small"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_doujin"
+            tools:text="Doujin Name" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

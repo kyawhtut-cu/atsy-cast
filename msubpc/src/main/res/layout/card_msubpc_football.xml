@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.kyawhut.atsycast.msubpc.data.network.response.FootballResponse.Data" />
+
+        <variable
+            name="football"
+            type="Data" />
+
+    </data>
+
+    <com.kyawhut.atsycast.share.components.RoundedConstraintLayout
+        android:id="@+id/card_football"
+        android:layout_width="260dp"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/margin_medium_2"
+        app:backgroundColor="@color/colorBackground"
+        app:cornerAll="@dimen/margin_small"
+        app:strokeLineColor="@color/colorPrimary"
+        app:strokeLineWidth="0dp"
+        tools:context=".ui.card.view.FootballCardView">
+
+        <ImageView
+            android:id="@+id/iv_flag"
+            isNeedToCache="@{true}"
+            loadImage="@{football.flag}"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:adjustViewBounds="true"
+            android:src="@drawable/thumbnail_horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_league_name" />
+
+        <ImageView
+            android:id="@+id/iv_flag_2"
+            isNeedToCache="@{true}"
+            loadImage="@{football.flag2}"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:adjustViewBounds="true"
+            android:src="@drawable/thumbnail_horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/iv_flag" />
+
+        <TextView
+            android:id="@+id/tv_league_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingVertical="@dimen/margin_medium_2"
+            android:text="@{String.format(`%s %s %s`, football.league, football.date, football.time)}"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/text_regular"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Match Name" />
+
+        <TextView
+            android:id="@+id/tv_match_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingVertical="@dimen/margin_medium_2"
+            android:text="@{football.matchName}"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/text_regular"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_flag"
+            tools:text="Match Name" />
+
+        <TextView
+            android:id="@+id/tv_vs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="VS"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/text_heading_1x"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_flag"
+            app:layout_constraintEnd_toStartOf="@+id/iv_flag_2"
+            app:layout_constraintStart_toEndOf="@+id/iv_flag"
+            app:layout_constraintTop_toTopOf="@+id/iv_flag"
+            tools:ignore="HardcodedText" />
+
+    </com.kyawhut.atsycast.share.components.RoundedConstraintLayout>
+</layout>

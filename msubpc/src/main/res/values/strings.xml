@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="lbl_movies_header_title">Movies</string>
+    <string name="lbl_latest_movie_title">Latest Movies</string>
+    <string name="lbl_2021_year_movies_title">2021 Movies</string>
+    <string name="lbl_2020_year_movies_title">2020 Movies</string>
+    <string name="lbl_2019_year_movies_title">2019 Movies</string>
+    <string name="lbl_action_movies_title">Action</string>
+    <string name="lbl_comedy_movies_title">Comedy</string>
+    <string name="lbl_horror_and_thriller_movies_title">Horror &amp; Thriller</string>
+    <string name="lbl_animation_movies_title">Animation</string>
+    <string name="lbl_japan_korea_thai_movies_title">Japan Korea Thai</string>
+    <string name="lbl_bollywood_movies_title">Bollywood</string>
+    <string name="lbl_china_movies_title">China</string>
+    <string name="lbl_super_hero_movies_title">Super Hero</string>
+    <string name="lbl_adult_movies_title">18+</string>
+    <string name="lbl_football_title">Football</string>
+    <string name="lbl_series_header_title">Series</string>
+    <string name="lbl_latest_series_title">Latest Series</string>
+    <string name="lbl_korea_series_title">Korea Series</string>
+    <string name="lbl_english_series_title">English Series</string>
+    <string name="lbl_anime_series_title">Anime Series</string>
+
+    <string name="lbl_latest_movie_key">-</string>
+    <string name="lbl_2021_year_movies_key">2021</string>
+    <string name="lbl_2020_year_movies_key">2020</string>
+    <string name="lbl_2019_year_movies_key">2019</string>
+    <string name="lbl_action_movies_key">action</string>
+    <string name="lbl_comedy_movies_key">comedy</string>
+    <string name="lbl_horror_and_thriller_movies_key">horror,thriller</string>
+    <string name="lbl_animation_movies_key">animation</string>
+    <string name="lbl_japan_korea_thai_movies_key">japan,korea,thai</string>
+    <string name="lbl_bollywood_movies_key">india</string>
+    <string name="lbl_china_movies_key">china</string>
+    <string name="lbl_super_hero_movies_key">super hero</string>
+    <string name="lbl_adult_movies_key">18+</string>
+    <string name="lbl_football_key">football</string>
+    <string name="lbl_latest_series_key">-</string>
+    <string name="lbl_korea_series_key">korea</string>
+    <string name="lbl_english_series_key">english</string>
+    <string name="lbl_anime_series_key">anime</string>
+</resources>

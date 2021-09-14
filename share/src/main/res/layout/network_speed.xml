@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="totalSpeed"
+            type="String" />
+
+        <variable
+            name="totalSpeedUnit"
+            type="String" />
+
+        <variable
+            name="downSpeed"
+            type="String" />
+
+        <variable
+            name="upSpeed"
+            type="String" />
+
+    </data>
+
+    <com.kyawhut.atsycast.share.components.RoundedConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingVertical="@dimen/margin_small"
+        app:backgroundColor="@color/colorBackground50"
+        app:cornerLeftBottom="@dimen/margin_small"
+        tools:ignore="SmallSp">
+
+        <TextView
+            android:id="@+id/tv_network_total_speed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@{totalSpeed}"
+            android:textColor="@color/colorWhite"
+            android:textSize="8sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/tv_network_total_speed_unit"
+            app:layout_constraintEnd_toEndOf="@+id/tv_network_total_speed_unit"
+            app:layout_constraintStart_toStartOf="@+id/tv_network_total_speed_unit"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:text="Speed" />
+
+        <TextView
+            android:id="@+id/tv_network_total_speed_unit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@{totalSpeedUnit}"
+            android:textColor="@color/colorWhite"
+            android:textSize="8sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_network_total_speed"
+            tools:text="Speed" />
+
+        <View
+            android:id="@+id/iv_net_speed"
+            android:layout_width="0.5dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/margin_medium"
+            android:background="@color/colorWhite"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_network_total_speed_unit"
+            app:layout_constraintStart_toEndOf="@+id/tv_network_total_speed_unit"
+            app:layout_constraintTop_toTopOf="@+id/tv_network_total_speed" />
+
+        <TextView
+            android:id="@+id/tv_network_up_speed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@{upSpeed}"
+            android:textColor="@color/colorWhite"
+            android:textSize="8sp"
+            app:layout_constraintEnd_toEndOf="@+id/tv_network_down_speed"
+            app:layout_constraintStart_toStartOf="@+id/tv_network_down_speed"
+            app:layout_constraintTop_toTopOf="@+id/tv_network_total_speed"
+            tools:text="Speed" />
+
+        <TextView
+            android:id="@+id/tv_network_down_speed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:gravity="center"
+            android:text="@{downSpeed}"
+            android:textColor="@color/colorWhite"
+            android:textSize="8sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/iv_net_speed"
+            app:layout_constraintTop_toTopOf="@+id/tv_network_total_speed_unit"
+            tools:text="Speed" />
+
+    </com.kyawhut.atsycast.share.components.RoundedConstraintLayout>
+
+</layout>

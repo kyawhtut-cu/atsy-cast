@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="drawerMenuTitle">
+        <item>@string/lblLatestUpdate</item>
+        <item>@string/lblHotVideos</item>
+        <item>@string/lblTopCommented</item>
+        <item>@string/lblTopViewed</item>
+        <item>@string/lblTopRated</item>
+        <item>@string/lblTopLiked</item>
+    </string-array>
+
+    <string-array name="drawerMenuKey">
+        <item>@string/lblLatestUpdateKey</item>
+        <item>@string/lblHotVideosKey</item>
+        <item>@string/lblTopCommentedKey</item>
+        <item>@string/lblTopViewedKey</item>
+        <item>@string/lblTopRatedKey</item>
+        <item>@string/lblTopLikedKey</item>
+    </string-array>
+
+</resources>

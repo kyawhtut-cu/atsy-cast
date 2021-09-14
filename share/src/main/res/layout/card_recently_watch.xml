@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.card.view.RecentlyWatchCardView">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="android.graphics.drawable.Drawable" />
+
+        <variable
+            name="isFocus"
+            type="Boolean" />
+
+        <variable
+            name="moviesName"
+            type="String" />
+
+        <variable
+            name="moviesPoster"
+            type="String" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
+        android:background="@{isFocus ? @color/colorCardBackgroundFocus : @color/colorCardBackgroundUnFocus}">
+
+        <ImageView
+            android:id="@+id/iv_poster"
+            isHorizontal="@{true}"
+            isNeedToCache="@{true}"
+            loadImage="@{moviesPoster}"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/thumbnail_horizontal" />
+
+        <com.kyawhut.atsycast.share.components.RoundedConstraintLayout
+            android:id="@+id/view_progress"
+            android:layout_width="162dp"
+            android:layout_height="@dimen/margin_small"
+            android:layout_marginHorizontal="@dimen/margin_small"
+            android:layout_marginBottom="@dimen/margin_small"
+            app:backgroundColor="@color/colorBackground50"
+            app:cornerAll="@dimen/margin_small"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_poster"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <View
+                android:id="@+id/view_progress_percent"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@color/colorPrimary"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:layout_width="100dp" />
+        </com.kyawhut.atsycast.share.components.RoundedConstraintLayout>
+
+        <TextView
+            android:id="@+id/tv_title"
+            isMMFont="@{true}"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:padding="@dimen/margin_small"
+            android:text="@{moviesName}"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/text_small"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_poster"
+            tools:text="App Name" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

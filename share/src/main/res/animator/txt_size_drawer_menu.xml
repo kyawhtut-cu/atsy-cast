@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_focused="true">
+        <set>
+            <objectAnimator
+                android:duration="0"
+                android:propertyName="textSize"
+                android:valueTo="10sp"
+                android:valueType="floatType" />
+        </set>
+    </item>
+    <item android:state_focused="false">
+        <set>
+            <objectAnimator
+                android:duration="0"
+                android:propertyName="textSize"
+                android:valueTo="8sp"
+                android:valueType="floatType" />
+        </set>
+    </item>
+</selector>

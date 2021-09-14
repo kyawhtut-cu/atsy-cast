@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <array name="array_movies_filter_title">
+        <item>@string/lbl_football_title</item>
+        <item>@string/lbl_latest_movie_title</item>
+        <item>@string/lbl_2021_year_movies_title</item>
+        <item>@string/lbl_2020_year_movies_title</item>
+        <item>@string/lbl_2019_year_movies_title</item>
+        <item>@string/lbl_action_movies_title</item>
+        <item>@string/lbl_comedy_movies_title</item>
+        <item>@string/lbl_horror_and_thriller_movies_title</item>
+        <item>@string/lbl_animation_movies_title</item>
+        <item>@string/lbl_japan_korea_thai_movies_title</item>
+        <item>@string/lbl_bollywood_movies_title</item>
+        <item>@string/lbl_china_movies_title</item>
+        <item>@string/lbl_super_hero_movies_title</item>
+        <item>@string/lbl_adult_movies_title</item>
+    </array>
+
+    <array name="array_movies_filter_key">
+        <item>@string/lbl_football_key</item>
+        <item>@string/lbl_latest_movie_key</item>
+        <item>@string/lbl_2021_year_movies_key</item>
+        <item>@string/lbl_2020_year_movies_key</item>
+        <item>@string/lbl_2019_year_movies_key</item>
+        <item>@string/lbl_action_movies_key</item>
+        <item>@string/lbl_comedy_movies_key</item>
+        <item>@string/lbl_horror_and_thriller_movies_key</item>
+        <item>@string/lbl_animation_movies_key</item>
+        <item>@string/lbl_japan_korea_thai_movies_key</item>
+        <item>@string/lbl_bollywood_movies_key</item>
+        <item>@string/lbl_china_movies_key</item>
+        <item>@string/lbl_super_hero_movies_key</item>
+        <item>@string/lbl_adult_movies_key</item>
+    </array>
+
+    <array name="array_series_filter_title">
+        <item>@string/lbl_latest_series_title</item>
+        <item>@string/lbl_korea_series_title</item>
+        <item>@string/lbl_english_series_title</item>
+        <item>@string/lbl_anime_series_title</item>
+    </array>
+
+    <array name="array_series_filter_key">
+        <item>@string/lbl_latest_series_key</item>
+        <item>@string/lbl_korea_series_key</item>
+        <item>@string/lbl_english_series_key</item>
+        <item>@string/lbl_anime_series_key</item>
+    </array>
+
+</resources>

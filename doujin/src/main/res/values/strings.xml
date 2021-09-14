@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="lblLatestUpdate">Latest Update</string>
+    <string name="lblHotVideos">Hot Videos</string>
+    <string name="lblTopCommented">Top Commented</string>
+    <string name="lblTopViewed">Top Viewed</string>
+    <string name="lblTopRated">Top Rated</string>
+    <string name="lblTopLiked">Top Liked</string>
+
+    <string name="lblLatestUpdateKey">latest</string>
+    <string name="lblHotVideosKey">hot</string>
+    <string name="lblTopCommentedKey">top_commented</string>
+    <string name="lblTopViewedKey">top_viewed</string>
+    <string name="lblTopRatedKey">top_rated</string>
+    <string name="lblTopLikedKey">top_liked</string>
+
+</resources>

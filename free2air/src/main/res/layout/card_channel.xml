@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="channelLogo"
+            type="String" />
+
+        <variable
+            name="channelName"
+            type="String" />
+
+        <variable
+            name="isFocus"
+            type="Boolean" />
+
+        <variable
+            name="isPlaying"
+            type="Boolean" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        tools:context=".ui.card.view.F2ACardView">
+
+        <ImageView
+            android:id="@+id/iv_channel_logo"
+            isHorizontal="@{true}"
+            isNeedToCache="@{true}"
+            loadImage="@{channelLogo}"
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/thumbnail_horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_channel_playing_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_playing"
+            android:paddingHorizontal="@dimen/margin_medium"
+            android:paddingVertical="@dimen/margin_small"
+            android:text="@string/lblPlaying"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/text_small"
+            android:visibility="@{isPlaying ? View.VISIBLE : View.GONE}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:src="@drawable/ic_f2a_card_play"
+            android:visibility="@{(isFocus &amp;&amp; !isPlaying) ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_channel_logo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_channel_name"
+            isMMFont="@{true}"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@{isFocus ? @color/colorCardBackgroundFocus : @color/colorCardBackgroundUnFocus}"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="1"
+            android:minLines="1"
+            android:paddingHorizontal="@dimen/margin_medium"
+            android:paddingVertical="@dimen/margin_small"
+            android:text="@{channelName}"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/text_small"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_channel_logo"
+            tools:text="@string/lblAppName"
+            tools:visibility="visible" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

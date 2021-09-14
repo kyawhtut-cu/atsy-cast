@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View.OnClickListener" />
+
+        <import type="android.view.View" />
+
+        <variable
+            name="onClickListener"
+            type="OnClickListener" />
+
+        <variable
+            name="networkState"
+            type="String" />
+
+        <variable
+            name="btnText"
+            type="String" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.25" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.75" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/top"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.15" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/bottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.65" />
+
+        <TextView
+            android:id="@+id/tv_player_state_message"
+            isMMFont="@{true}"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="@dimen/margin_medium_2"
+            android:background="@drawable/bg_loading"
+            android:gravity="center"
+            android:lineSpacingMultiplier="1.3"
+            android:padding="@dimen/margin_medium_2"
+            android:text="@{networkState}"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/text_regular"
+            app:layout_constraintBottom_toTopOf="@+id/btn_on_click"
+            app:layout_constraintEnd_toStartOf="@+id/right"
+            app:layout_constraintStart_toStartOf="@+id/left"
+            app:layout_constraintTop_toTopOf="@+id/top"
+            app:layout_goneMarginBottom="0dp"
+            tools:text="Player State" />
+
+        <TextView
+            android:id="@+id/btn_on_click"
+            isMMFont="@{true}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_default_focus"
+            android:focusableInTouchMode="true"
+            android:onClick="@{ (v) -> onClickListener.onClick(v)}"
+            android:text="@{btnText}"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/text_small"
+            android:visibility="@{btnText.isEmpty() ? View.GONE : View.VISIBLE}"
+            app:layout_constraintBottom_toTopOf="@+id/bottom"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="Retry" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="actionIcon"
+            type="Integer" />
+
+        <variable
+            name="actionName"
+            type="String" />
+
+        <variable
+            name="isFocus"
+            type="Boolean" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/view_action"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_medium_2"
+        android:background="@{isFocus ? @color/colorCardBackgroundFocus : @color/colorCardBackgroundUnFocus}"
+        android:paddingHorizontal="@dimen/margin_medium_2"
+        android:paddingVertical="6dp">
+
+        <ImageView
+            android:id="@+id/iv_action"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            app:imageResource="@{actionIcon}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/ic_add_to_watch_later" />
+
+        <TextView
+            android:id="@+id/tv_action_name"
+            style="@style/TvDefaultText"
+            android:layout_width="wrap_content"
+            android:paddingHorizontal="@dimen/margin_medium_2"
+            android:text="@{actionName}"
+            android:textAllCaps="true"
+            android:textColor="@color/colorWhite"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/iv_action"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Action Name" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

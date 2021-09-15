@@ -1,1 +1,0 @@
-UPLOAD Debug => curl --location --request POST https://cdn.kyawhtut.com/uploadBuildApk.php -F 'file=@tv/build/outputs/apk/debug/tv-debug.apk;type=application/vnd.android.package-archive' --form 'version=v1.0.0' --form 'apk_name=ATSY Cast - New' --form 'file_name=atsy-cast-new'

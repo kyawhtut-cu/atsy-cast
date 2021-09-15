@@ -19,7 +19,6 @@ import com.kyawhut.atsycast.share.model.VideoSourceModel
 import com.kyawhut.atsycast.share.utils.extension.putArg
 import com.kyawhut.atsycast.share.utils.extension.startActivity
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 
 /**
  * @author kyawhtut
@@ -29,9 +28,8 @@ import timber.log.Timber
 internal class CacheFragment : BaseGridSupportFragment<CacheViewModel>() {
 
     companion object {
-        fun newInstance(apiKey: String, key: String, appName: String): CacheFragment {
+        fun newInstance(key: String, appName: String): CacheFragment {
             return CacheFragment().putArg(
-                Constants.EXTRA_API_KEY to apiKey,
                 Constants.EXTRA_PAGE_KEY to key,
                 Constants.EXTRA_APP_NAME to appName,
             )
@@ -65,7 +63,6 @@ internal class CacheFragment : BaseGridSupportFragment<CacheViewModel>() {
     override fun onItemClicked(it: Any) {
         if (it is VideoResponse) {
             startActivity<DetailActivity>(
-                Constants.EXTRA_API_KEY to vm.apiKey,
                 Constants.EXTRA_VIDEO_DATA to it,
                 Constants.EXTRA_APP_NAME to vm.appName,
             )

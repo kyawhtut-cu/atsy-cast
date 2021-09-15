@@ -2,6 +2,7 @@ package com.kyawhut.atsycast.doujin.data.network.response
 
 import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 /**
  * @author kyawhtut
@@ -23,4 +24,4 @@ data class DoujinVideoDetailResponse(
     val doujinImage: String,
     @SerializedName("length")
     val doujinLength: String
-)
+) : Serializable

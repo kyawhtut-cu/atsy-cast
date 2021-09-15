@@ -16,11 +16,10 @@ internal class FootballRepositoryImpl @Inject constructor(
 ) : FootballRepository {
 
     override suspend fun getFootball(
-        apiKey: String,
         callback: (NetworkResponse<List<FootballResponse.Data>>) -> Unit
     ) {
         NetworkResponse.loading(callback)
-        val response = execute { api.getFootball(apiKey) }
+        val response = execute { api.getFootball() }
         if (response.isSuccess) {
             NetworkResponse.success(response.data?.football ?: listOf(), callback)
         } else {
@@ -30,11 +29,10 @@ internal class FootballRepositoryImpl @Inject constructor(
 
     override suspend fun getFootballStream(
         footballID: Int,
-        apiKey: String,
         callback: (NetworkResponse<FootballStreamResponse>) -> Unit
     ) {
         NetworkResponse.loading(callback)
-        val response = execute { api.getFootballStream(apiKey, footballID) }
+        val response = execute { api.getFootballStream(footballID) }
         response.post(callback)
     }
 }

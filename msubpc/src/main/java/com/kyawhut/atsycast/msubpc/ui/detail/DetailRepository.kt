@@ -17,19 +17,16 @@ internal interface DetailRepository {
 
     suspend fun getMovieStream(
         videoID: Int,
-        apiKey: String,
         callback: (NetworkResponse<MovieStreamResponse>) -> Unit
     )
 
     suspend fun getRelatedMovies(
         genres: String,
-        apiKey: String,
         callback: (NetworkResponse<List<VideoResponse>>) -> Unit
     )
 
     suspend fun getSeasonEpisode(
         seasonID: Int,
-        apiKey: String,
         callback: (NetworkResponse<Pair<List<VideoResponse>, List<EpisodeResponse>>>) -> Unit
     )
 }

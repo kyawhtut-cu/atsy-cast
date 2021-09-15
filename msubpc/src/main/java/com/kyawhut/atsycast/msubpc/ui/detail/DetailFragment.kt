@@ -226,7 +226,6 @@ internal class DetailFragment : BaseDetailTvFragment<DetailViewModel>() {
         when (item) {
             is VideoResponse -> {
                 startActivity<DetailActivity>(
-                    Constants.EXTRA_API_KEY to vm.apiKey,
                     Constants.EXTRA_VIDEO_ID to item.videoId,
                     Constants.EXTRA_VIDEO_DATA to item,
                 )

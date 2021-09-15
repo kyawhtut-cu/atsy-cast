@@ -12,15 +12,11 @@ internal interface VideoRepository {
 
     suspend fun getVideoData(
         pageKey: String,
-        appVersion: String,
-        packageName: String,
         page: Int,
         callback: (NetworkResponse<List<DoujinVideoResponse>>) -> Unit
     )
 
     suspend fun getVideoDetail(
-        appVersion: String,
-        packageName: String,
         doujinID: String,
         callback: (NetworkResponse<DoujinVideoDetailResponse>) -> Unit
     )

@@ -1,4 +1,5 @@
 plugins {
+    androidGitVersion()
     androidApp()
     dagger()
     kotlinAndroid()
@@ -8,16 +9,28 @@ plugins {
     firebaseCrashlytics()
 }
 
+val apkName = hashMapOf(
+    "localDebug" to "atsy-cast-debug-local.apk",
+    "prodDebug" to "atsy-cast-debug.apk",
+    "localRelease" to "atsy-cast-local.apk",
+    "prodRelease" to "atsy-cast.apk",
+    "localHome" to "atsy-cast-home-local.apk",
+    "prodHome" to "atsy-cast-home.apk"
+)
+
 android {
     compileSdkVersion(Versions.compileSdkVersion)
     buildToolsVersion(Versions.buildToolsVersion)
 
     defaultConfig {
+
         applicationId = "com.kyawhut.atsycast"
+
         minSdkVersion(Versions.tvMinSdkVersion)
         targetSdkVersion(Versions.tvTargetSdkVersion)
+
         versionCode = 1
-        versionName = "1.0"
+        versionName = androidGitVersion.name()
 
         multiDexEnabled = true
 
@@ -27,9 +40,56 @@ android {
 
     }
 
+    flavorDimensions("env")
+    productFlavors {
+        create("local") {
+            dimension = "env"
+        }
+
+        create("prod") {
+            dimension = "env"
+        }
+    }
+
     buildTypes {
-        getByName("release") {
+
+        getByName("debug") {
+            debuggable(true)
+            jniDebuggable(true)
+            renderscriptDebuggable(true)
+
             minifyEnabled(false)
+            isShrinkResources = false
+
+            applicationIdSuffix = ".debug"
+
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+        }
+
+        getByName("release") {
+            debuggable(false)
+            jniDebuggable(false)
+            renderscriptDebuggable(false)
+
+            minifyEnabled(true)
+            isShrinkResources = true
+
+            applicationIdSuffix = ""
+
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+        }
+
+        create("home") {
+            initWith(getByName("release"))
+
+            applicationIdSuffix = ".home"
+
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -51,6 +111,19 @@ android {
         jvmTarget = "1.8"
     }
 
+    android.applicationVariants.all {
+        val variant = this
+        variant.outputs.map { it as com.android.build.gradle.internal.api.BaseVariantOutputImpl }
+            .forEach { output ->
+                val buildOutputPath = "../../release/${variant.versionName}/"
+                output.outputFileName = String.format(
+                    "%s%s",
+                    buildOutputPath,
+                    apkName[variant.flavorName + variant.buildType.name.capitalize()]
+                )
+            }
+    }
+
 }
 
 dependencies {
@@ -62,6 +135,7 @@ dependencies {
     implementation(project(":msys"))
     implementation(project(":zcm"))
     implementation(project(":doujin"))
+    implementation(project(":ets2mm"))
 
     testImplementation(Libs.junit)
     androidTestImplementation(Libs.testJunit)

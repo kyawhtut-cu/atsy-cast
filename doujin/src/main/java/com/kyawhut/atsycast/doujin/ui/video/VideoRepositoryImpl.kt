@@ -17,29 +17,25 @@ internal class VideoRepositoryImpl @Inject constructor(
 
     override suspend fun getVideoData(
         pageKey: String,
-        appVersion: String,
-        packageName: String,
         page: Int,
         callback: (NetworkResponse<List<DoujinVideoResponse>>) -> Unit
     ) {
         NetworkResponse.loading(callback)
         val response = execute {
             when (page) {
-                -1 -> api.getHotData(packageName, appVersion)
-                else -> api.getDataWithPage(packageName, appVersion, pageKey, page).data
+                -1 -> api.getHotData()
+                else -> api.getDataWithPage(pageKey, page).data
             }
         }
         response.post(callback)
     }
 
     override suspend fun getVideoDetail(
-        appVersion: String,
-        packageName: String,
         doujinID: String,
         callback: (NetworkResponse<DoujinVideoDetailResponse>) -> Unit
     ) {
         NetworkResponse.loading(callback)
-        val response = execute { api.getVideoDetail(packageName, appVersion, doujinID) }
+        val response = execute { api.getVideoDetail(doujinID) }
         response.post(callback)
     }
 }

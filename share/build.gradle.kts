@@ -1,6 +1,7 @@
 import java.util.*
 
 plugins {
+    androidGitVersion()
     library()
     kotlinAndroid()
     kotlinKapt()
@@ -13,17 +14,18 @@ val SHEET_BASE_URL: String = releaseProperties.getProperty("SHEET_BASE_URL", "")
 val RELEASE_SCRIPT_ID: String = releaseProperties.getProperty("RELEASE_SCRIPT_ID", "")
 val DEBUG_SCRIPT_ID: String = releaseProperties.getProperty("DEBUG_SCRIPT_ID", "")
 val TELEGRAM_BOT_URL: String = releaseProperties.getProperty("TELEGRAM_BOT_URL", "")
-val TELEGRAM_BOT_ID: String = releaseProperties.getProperty("TELEGRAM_BOT_ID", "")
+val TELEGRAM_DEBUG_BOT_ID: String = releaseProperties.getProperty("TELEGRAM_BOT_ID", "")
+val TELEGRAM_RELEASE_BOT_ID: String = releaseProperties.getProperty("TELEGRAM_BOT_ID", "")
+val TELEGRAM_DEV_ID: String = releaseProperties.getProperty("TELEGRAM_DEV_ID", "")
 
 android {
     compileSdkVersion(Versions.compileSdkVersion)
     buildToolsVersion(Versions.buildToolsVersion)
 
     defaultConfig {
+
         minSdkVersion(Versions.tvMinSdkVersion)
         targetSdkVersion(Versions.tvMinSdkVersion)
-        versionCode = 1
-        versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -41,7 +43,11 @@ android {
         )
         buildConfigString(
             "TELEGRAM_BOT_ID",
-            TELEGRAM_BOT_ID
+            TELEGRAM_DEBUG_BOT_ID
+        )
+        buildConfigString(
+            "TELEGRAM_DEV_ID",
+            TELEGRAM_DEV_ID
         )
 
         javaCompileOptions {
@@ -51,14 +57,61 @@ android {
         }
     }
 
+    flavorDimensions("env")
+    productFlavors {
+        create("local") {
+            dimension = "env"
+        }
+
+        create("prod") {
+            dimension = "env"
+        }
+    }
+
     buildTypes {
+
+        getByName("debug") {
+            debuggable(true)
+            jniDebuggable(true)
+            renderscriptDebuggable(true)
+
+            minifyEnabled(false)
+            isShrinkResources = false
+
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+        }
+
         getByName("release") {
+
             buildConfigString(
                 "SCRIPT_ID",
                 RELEASE_SCRIPT_ID
             )
 
+            buildConfigString(
+                "TELEGRAM_BOT_ID",
+                TELEGRAM_RELEASE_BOT_ID
+            )
+
+            debuggable(false)
+            jniDebuggable(false)
+            renderscriptDebuggable(false)
+
             minifyEnabled(false)
+            isShrinkResources = false
+
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+        }
+
+        create("home") {
+            initWith(getByName("release"))
+
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -76,10 +129,21 @@ android {
         targetCompatibility(JavaVersion.VERSION_1_8)
     }
 
-    tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-        kotlinOptions {
-            jvmTarget = "1.8"
-        }
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
+    android.libraryVariants.all {
+        val variant = this
+        variant.outputs.map { it as com.android.build.gradle.internal.api.BaseVariantOutputImpl }
+            .forEach { output ->
+                val buildOutputPath = "../../release/${androidGitVersion.name()}/"
+                output.outputFileName = String.format(
+                    "%s%s",
+                    buildOutputPath,
+                    output.outputFileName
+                )
+            }
     }
 }
 

@@ -34,7 +34,10 @@ class PlayerActivity : BasePlayerActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        if (vm.videoSource == null) return
+        if (vm.videoSource == null) {
+            finishAndRemoveTask()
+            return
+        }
 
         playVideo()
 

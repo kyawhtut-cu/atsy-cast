@@ -23,10 +23,9 @@ internal class MoviesFragment : BaseGridSupportFragment<MoviesViewModel>() {
 
     companion object {
 
-        fun newInstance(apiKey: String, key: String, appName: String): MoviesFragment {
+        fun newInstance(key: String, appName: String): MoviesFragment {
             return MoviesFragment().putArg(
                 Constants.EXTRA_PAGE_KEY to key,
-                Constants.EXTRA_API_KEY to apiKey,
                 Constants.EXTRA_APP_NAME to appName
             )
         }
@@ -64,7 +63,6 @@ internal class MoviesFragment : BaseGridSupportFragment<MoviesViewModel>() {
     override fun onItemClicked(it: Any) {
         if (it is VideoResponse) {
             startActivity<DetailActivity>(
-                Constants.EXTRA_API_KEY to vm.apiKey,
                 Constants.EXTRA_VIDEO_DATA to it,
                 Constants.EXTRA_APP_NAME to vm.appName,
             )

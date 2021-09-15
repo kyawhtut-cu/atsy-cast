@@ -18,9 +18,6 @@ internal class MoviesViewModel @Inject constructor(
     private val repo: MoviesRepository
 ) : BaseViewModel() {
 
-    val apiKey: String by lazy {
-        savedStateHandle.get(Constants.EXTRA_API_KEY) ?: ""
-    }
     val appName: String by lazy {
         savedStateHandle.get(Constants.EXTRA_APP_NAME) ?: ""
     }
@@ -32,7 +29,7 @@ internal class MoviesViewModel @Inject constructor(
         callback: (NetworkResponse<List<VideoResponse>>) -> Unit
     ) {
         viewModelScope {
-            repo.getMovies(key, apiKey, callback)
+            repo.getMovies(key, callback)
         }
     }
 }

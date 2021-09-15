@@ -11,7 +11,6 @@ internal interface MoviesRepository {
 
     suspend fun getMovies(
         key: String,
-        apiKey: String,
         callback: (NetworkResponse<List<VideoResponse>>) -> Unit
     )
 }

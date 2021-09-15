@@ -8,11 +8,14 @@ import com.kyawhut.atsycast.doujin.BuildConfig
 import com.kyawhut.atsycast.doujin.data.network.response.DoujinVideoDetailResponse
 import com.kyawhut.atsycast.doujin.data.network.response.DoujinVideoResponse
 import com.kyawhut.atsycast.doujin.ui.card.CardPresenter
+import com.kyawhut.atsycast.doujin.ui.player.PlayerActivity
 import com.kyawhut.atsycast.doujin.utils.Constants
 import com.kyawhut.atsycast.share.base.BaseGridSupportFragment
+import com.kyawhut.atsycast.share.model.VideoSourceModel
 import com.kyawhut.atsycast.share.network.utils.NetworkResponse
 import com.kyawhut.atsycast.share.network.utils.NetworkStatus
 import com.kyawhut.atsycast.share.utils.extension.putArg
+import com.kyawhut.atsycast.share.utils.extension.startActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -25,14 +28,10 @@ internal class VideoFragment : BaseGridSupportFragment<VideoViewModel>() {
     companion object {
         fun newInstance(
             appName: String,
-            appVersion: String,
-            packageName: String,
             pageKey: String
         ): VideoFragment {
             return VideoFragment().putArg(
-                Constants.EXTRA_PACKAGE_NAME to packageName,
                 Constants.EXTRA_APP_NAME to appName,
-                Constants.EXTRA_APP_VERSION to appVersion,
                 Constants.EXTRA_PAGE_KEY to pageKey,
             )
         }
@@ -73,6 +72,15 @@ internal class VideoFragment : BaseGridSupportFragment<VideoViewModel>() {
             is NetworkStatus.LOADING -> showLoading()
             is NetworkStatus.SUCCESS -> {
                 hideLoading()
+                startActivity<PlayerActivity>(
+                    Constants.EXTRA_VIDEO_DATA to result.data,
+                    Constants.EXTRA_APP_NAME to vm.appName,
+                    Constants.EXTRA_VIDEO_SOURCE to VideoSourceModel(
+                        0,
+                        result.data?.doujinTitle ?: "",
+                        url = BuildConfig.MEDIA_BASE_URL + result.data?.doujinURL
+                    )
+                )
             }
             is NetworkStatus.ERROR -> {
                 hideLoading()
@@ -89,7 +97,7 @@ internal class VideoFragment : BaseGridSupportFragment<VideoViewModel>() {
 
     override fun onItemFocus(it: Any) {
         if (it is DoujinVideoResponse) {
-            changeBackground(BuildConfig.IMAGE_BASE_URL + it.doujinImage)
+//            changeBackground(BuildConfig.MEDIA_BASE_URL + it.doujinImage)
         }
     }
 

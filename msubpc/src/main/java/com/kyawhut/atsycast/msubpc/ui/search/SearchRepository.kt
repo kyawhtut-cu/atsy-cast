@@ -11,7 +11,6 @@ internal interface SearchRepository {
 
     suspend fun search(
         query: String,
-        apiKey: String,
         callback: (NetworkResponse<List<Pair<String, List<VideoResponse>>>>) -> Unit
     )
 }

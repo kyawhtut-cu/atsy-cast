@@ -22,14 +22,13 @@ internal class MoviesRepositoryImpl @Inject constructor(
 
     override suspend fun getMovies(
         key: String,
-        apiKey: String,
         callback: (NetworkResponse<List<VideoResponse>>) -> Unit
     ) {
         NetworkResponse.loading(callback)
         isFirstTime = key == "-" || _tmpMoviesData.isEmpty()
         if (key == "-" || _tmpMoviesData.isEmpty()) {
             _tmpMoviesData.clear()
-            val response = execute { api.getAllMovies(apiKey) }
+            val response = execute { api.getAllMovies() }
             if (response.isSuccess) {
                 response.data?.map {
                     it.apply {

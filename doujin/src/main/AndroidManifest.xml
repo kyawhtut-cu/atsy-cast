@@ -2,4 +2,21 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.kyawhut.atsycast.doujin">
 
+    <application>
+        <activity
+            android:name=".ui.home.HomeActivity"
+            android:screenOrientation="sensorLandscape"
+            android:theme="@style/BaseTvTheme" />
+
+        <activity
+            android:name=".ui.player.PlayerActivity"
+            android:screenOrientation="sensorLandscape"
+            android:theme="@style/BaseTvTheme" />
+
+        <activity
+            android:name=".ui.search.SearchActivity"
+            android:screenOrientation="sensorLandscape"
+            android:theme="@style/BaseTvTheme" />
+    </application>
+
 </manifest>

@@ -47,11 +47,10 @@ internal class DetailRepositoryImpl @Inject constructor(
 
     override suspend fun getMovieStream(
         videoID: Int,
-        apiKey: String,
         callback: (NetworkResponse<MovieStreamResponse>) -> Unit
     ) {
         NetworkResponse.loading(callback)
-        val response = execute { api.getMovieStream(apiKey, "$videoID") }
+        val response = execute { api.getMovieStream("$videoID") }
         if (response.isSuccess) {
             response.data?.apply {
                 if (stream != null) stream = AesEncryptDecrypt.getDecryptedString(stream)
@@ -63,12 +62,11 @@ internal class DetailRepositoryImpl @Inject constructor(
 
     override suspend fun getRelatedMovies(
         genres: String,
-        apiKey: String,
         callback: (NetworkResponse<List<VideoResponse>>) -> Unit
     ) {
         if (genres.isEmpty()) return
         NetworkResponse.loading(callback)
-        val response = execute { api.getRelatedMovies(apiKey, genres.substring(0, 4)) }
+        val response = execute { api.getRelatedMovies(genres.substring(0, 4)) }
         if (response.isSuccess) {
             NetworkResponse.success((response.data ?: listOf()).map {
                 it.apply {
@@ -80,12 +78,11 @@ internal class DetailRepositoryImpl @Inject constructor(
 
     override suspend fun getSeasonEpisode(
         seasonID: Int,
-        apiKey: String,
         callback: (NetworkResponse<Pair<List<VideoResponse>, List<EpisodeResponse>>>) -> Unit
     ) {
         NetworkResponse.loading(callback)
-        val relatedSeason = execute { api.getRelatedSeason(apiKey, seasonID) }
-        val episodeResponse = execute { api.getSeriesEpisode(apiKey, seasonID) }
+        val relatedSeason = execute { api.getRelatedSeason(seasonID) }
+        val episodeResponse = execute { api.getSeriesEpisode(seasonID) }
         if (episodeResponse.isError) {
             NetworkResponse.error(
                 episodeResponse.error,

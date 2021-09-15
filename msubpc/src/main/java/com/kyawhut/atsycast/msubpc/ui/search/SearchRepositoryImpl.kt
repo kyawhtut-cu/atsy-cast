@@ -22,13 +22,12 @@ internal class SearchRepositoryImpl @Inject constructor(
 
     override suspend fun search(
         query: String,
-        apiKey: String,
         callback: (NetworkResponse<List<Pair<String, List<VideoResponse>>>>) -> Unit
     ) {
         NetworkResponse.loading(callback)
         isFirstTime = searchResponse == null
         if (searchResponse == null) {
-            val response = execute { api.search(apiKey) }
+            val response = execute { api.search() }
             if (response.isSuccess) {
                 searchResponse = response.data
             } else if (response.isError) {

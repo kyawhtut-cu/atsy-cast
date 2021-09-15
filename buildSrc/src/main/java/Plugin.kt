@@ -1,4 +1,5 @@
 import org.gradle.kotlin.dsl.kotlin
+import org.gradle.kotlin.dsl.version
 import org.gradle.plugin.use.PluginDependenciesSpec
 import org.gradle.plugin.use.PluginDependencySpec
 
@@ -14,6 +15,12 @@ fun PluginDependenciesSpec.dagger(): PluginDependencySpec = id("dagger.hilt.andr
 
 fun PluginDependenciesSpec.library(): PluginDependencySpec = id("com.android.library")
 
-fun PluginDependenciesSpec.googleService(): PluginDependencySpec = id("com.google.gms.google-services")
+fun PluginDependenciesSpec.googleService(): PluginDependencySpec =
+    id("com.google.gms.google-services")
 
-fun PluginDependenciesSpec.firebaseCrashlytics(): PluginDependencySpec = id("com.google.firebase.crashlytics")
+fun PluginDependenciesSpec.firebaseCrashlytics(): PluginDependencySpec =
+    id("com.google.firebase.crashlytics")
+
+fun PluginDependenciesSpec.androidGitVersion(): PluginDependencySpec {
+    return id("com.gladed.androidgitversion") version "0.4.14"
+}

@@ -7,14 +7,17 @@ import androidx.leanback.widget.HeaderItem
 import androidx.leanback.widget.PageRow
 import androidx.leanback.widget.Row
 import androidx.leanback.widget.SectionRow
+import com.kyawhut.atsycast.doujin.DoujinApp.clearAPIKey
 import com.kyawhut.atsycast.doujin.R
 import com.kyawhut.atsycast.doujin.databinding.ActivityDoujinHomeBinding
+import com.kyawhut.atsycast.doujin.ui.search.SearchActivity
 import com.kyawhut.atsycast.doujin.ui.video.VideoFragment
 import com.kyawhut.atsycast.doujin.utils.Constants
 import com.kyawhut.atsycast.share.base.BaseBrowseSupportFragment
 import com.kyawhut.atsycast.share.base.BaseTvActivity
 import com.kyawhut.atsycast.share.utils.extension.FragmentExtension.replaceFragment
 import com.kyawhut.atsycast.share.utils.extension.putArg
+import com.kyawhut.atsycast.share.utils.extension.startActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -30,19 +33,19 @@ internal class HomeActivity : BaseTvActivity<ActivityDoujinHomeBinding>() {
     private val appName: String by lazy {
         intent?.getStringExtra(Constants.EXTRA_APP_NAME) ?: "Doujin"
     }
-    private val apiKey: String by lazy {
-        intent?.getStringExtra(Constants.EXTRA_API_KEY) ?: "com.hentaiser.app#617"
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (savedInstanceState == null) replaceFragment(
             R.id.content_frame, HomeFragment().putArg(
                 Constants.EXTRA_APP_NAME to appName,
-                Constants.EXTRA_PACKAGE_NAME to apiKey.split("#").first(),
-                Constants.EXTRA_APP_VERSION to apiKey.split("#").last(),
             )
         )
+    }
+
+    override fun onBackPressed() {
+        clearAPIKey()
+        super.onBackPressed()
     }
 
     @AndroidEntryPoint
@@ -50,11 +53,6 @@ internal class HomeActivity : BaseTvActivity<ActivityDoujinHomeBinding>() {
 
         private val appName: String
             get() = arguments?.getString(Constants.EXTRA_APP_NAME) ?: ""
-
-        private val packageName: String
-            get() = arguments?.getString(Constants.EXTRA_PACKAGE_NAME) ?: ""
-        private val appVersion: String
-            get() = arguments?.getString(Constants.EXTRA_APP_VERSION) ?: ""
 
         override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
             super.onViewCreated(view, savedInstanceState)
@@ -76,17 +74,14 @@ internal class HomeActivity : BaseTvActivity<ActivityDoujinHomeBinding>() {
         }
 
         override val onSearchClicked: () -> Unit = {
-            /*startActivity<SearchActivity>(
-                Constants.EXTRA_API_KEY to apiKey,
+            startActivity<SearchActivity>(
                 Constants.EXTRA_APP_NAME to appName,
-            )*/
+            )
         }
 
         override fun onCreateRowFragment(header: HeaderItem): Fragment {
             return VideoFragment.newInstance(
                 appName,
-                appVersion,
-                packageName,
                 header.description.toString(),
             )
         }

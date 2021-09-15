@@ -31,10 +31,9 @@ internal class FootballFragment : BaseGridSupportFragment<FootballViewModel>() {
 
         private const val DEFAULT_POSTER = "https://i.imgur.com/n46dDce.jpg"
 
-        fun newInstance(apiKey: String, key: String, appName: String): FootballFragment {
+        fun newInstance(key: String, appName: String): FootballFragment {
             return FootballFragment().putArg(
                 Constants.EXTRA_PAGE_KEY to key,
-                Constants.EXTRA_API_KEY to apiKey,
                 Constants.EXTRA_APP_NAME to appName
             )
         }

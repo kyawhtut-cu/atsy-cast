@@ -1,5 +1,7 @@
 package com.kyawhut.atsycast.doujin.data.di
 
+import com.kyawhut.atsycast.doujin.ui.search.SearchRepository
+import com.kyawhut.atsycast.doujin.ui.search.SearchRepositoryImpl
 import com.kyawhut.atsycast.doujin.ui.video.VideoRepository
 import com.kyawhut.atsycast.doujin.ui.video.VideoRepositoryImpl
 import dagger.Module
@@ -19,4 +21,8 @@ internal object RepositoryModule {
     @Provides
     @Singleton
     fun provideVideoRepository(repository: VideoRepositoryImpl): VideoRepository = repository
+
+    @Provides
+    @Singleton
+    fun provideSearchRepository(repository: SearchRepositoryImpl): SearchRepository = repository
 }

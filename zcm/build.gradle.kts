@@ -1,6 +1,7 @@
 import java.util.*
 
 plugins {
+    androidGitVersion()
     library()
     kotlinAndroid()
     kotlinKapt()
@@ -17,10 +18,9 @@ android {
     buildToolsVersion(Versions.buildToolsVersion)
 
     defaultConfig {
+
         minSdkVersion(Versions.tvMinSdkVersion)
         targetSdkVersion(Versions.tvTargetSdkVersion)
-        versionCode = 1
-        versionName = "1.0"
 
         multiDexEnabled = true
 
@@ -34,9 +34,50 @@ android {
         buildConfigString("BASE_URL", ZCM_BASE_URL)
     }
 
+    flavorDimensions("env")
+    productFlavors {
+        create("local") {
+            dimension = "env"
+        }
+
+        create("prod") {
+            dimension = "env"
+        }
+    }
+
     buildTypes {
-        getByName("release") {
+
+        getByName("debug") {
+            debuggable(true)
+            jniDebuggable(true)
+            renderscriptDebuggable(true)
+
             minifyEnabled(false)
+            isShrinkResources = false
+
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+        }
+
+        getByName("release") {
+            debuggable(false)
+            jniDebuggable(false)
+            renderscriptDebuggable(false)
+
+            minifyEnabled(false)
+            isShrinkResources = false
+
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+        }
+
+        create("home") {
+            initWith(getByName("release"))
+
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -58,6 +99,18 @@ android {
         jvmTarget = "1.8"
     }
 
+    android.libraryVariants.all {
+        val variant = this
+        variant.outputs.map { it as com.android.build.gradle.internal.api.BaseVariantOutputImpl }
+            .forEach { output ->
+                val buildOutputPath = "../../release/${androidGitVersion.name()}/"
+                output.outputFileName = String.format(
+                    "%s%s",
+                    buildOutputPath,
+                    output.outputFileName
+                )
+            }
+    }
 }
 
 dependencies {

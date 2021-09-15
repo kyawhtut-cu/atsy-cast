@@ -22,14 +22,13 @@ internal class SeriesRepositoryImpl @Inject constructor(
 
     override suspend fun getSeries(
         key: String,
-        apiKey: String,
         callback: (NetworkResponse<List<VideoResponse>>) -> Unit
     ) {
         NetworkResponse.loading(callback)
         isFirstTime = key == "-" || _tmpSeriesData.isEmpty()
         if (key == "-" || _tmpSeriesData.isEmpty()) {
             _tmpSeriesData.clear()
-            val response = execute { api.getAllSeries(apiKey) }
+            val response = execute { api.getAllSeries() }
             if (response.isSuccess) {
                 response.data?.map {
                     it.apply {

@@ -11,10 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.leanback.app.ProgressBarManager
 import androidx.leanback.app.SearchSupportFragment
-import androidx.leanback.widget.ArrayObjectAdapter
-import androidx.leanback.widget.FocusHighlight
-import androidx.leanback.widget.ListRowPresenter
-import androidx.leanback.widget.ObjectAdapter
+import androidx.leanback.widget.*
 import com.kyawhut.atsycast.share.R
 import com.kyawhut.atsycast.share.components.IOSLoading
 import com.kyawhut.atsycast.share.network.utils.NetworkError
@@ -56,6 +53,7 @@ abstract class BaseSearchSupportFragment<VM : BaseViewModel> : SearchSupportFrag
     private val progressBarManager by lazy {
         ProgressBarManager()
     }
+    private var workSelected: Any? = null
 
     abstract fun onClickRetry(query: String)
     private val errorFragment by lazy {
@@ -85,6 +83,14 @@ abstract class BaseSearchSupportFragment<VM : BaseViewModel> : SearchSupportFrag
             }
         }
         setOnItemViewSelectedListener { _, item, _, row ->
+            workSelected = item
+            workSelected?.let {
+                onItemSelected(it)
+                val listRowAdapter = (row as ListRow).adapter as ArrayObjectAdapter
+                if (isPagingEnable && listRowAdapter.indexOf(item) == listRowAdapter.size() - 1) {
+                    onLoadMore(query)
+                }
+            }
         }
 
         if (!hasPermission(Manifest.permission.RECORD_AUDIO)) {
@@ -118,7 +124,7 @@ abstract class BaseSearchSupportFragment<VM : BaseViewModel> : SearchSupportFrag
         progressBarManager.hide()
     }
 
-    fun showError(error: NetworkError, isBackEnabled: Boolean = false) {
+    fun showError(error: NetworkError?, isBackEnabled: Boolean = false) {
         errorFragment.isBackEnabled = isBackEnabled
         error.printStackTrace()
         hideLoading()
@@ -173,5 +179,7 @@ abstract class BaseSearchSupportFragment<VM : BaseViewModel> : SearchSupportFrag
     }
 
     abstract fun onItemClicked(index: Int, it: Any)
+    open fun onItemSelected(item: Any) {}
     abstract fun onSearch(query: String)
+    open fun onLoadMore(query: String) {}
 }

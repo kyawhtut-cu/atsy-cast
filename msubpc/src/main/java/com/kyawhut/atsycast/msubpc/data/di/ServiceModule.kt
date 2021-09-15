@@ -3,6 +3,7 @@ package com.kyawhut.atsycast.msubpc.data.di
 import android.content.Context
 import com.kyawhut.atsycast.msubpc.BuildConfig
 import com.kyawhut.atsycast.msubpc.data.network.MSubAPI
+import com.kyawhut.atsycast.msubpc.data.network.interceptor.HeaderInterceptor
 import com.kyawhut.atsycast.share.network.providers.createService
 import dagger.Module
 import dagger.Provides
@@ -22,6 +23,13 @@ internal object ServiceModule {
     @Provides
     @Singleton
     fun provideAPIService(@ApplicationContext context: Context): MSubAPI {
-        return createService(MSubAPI::class, BuildConfig.BASE_URL, context)
+        return createService(
+            MSubAPI::class,
+            BuildConfig.BASE_URL,
+            context,
+            interceptors = listOf(
+                HeaderInterceptor(context)
+            )
+        )
     }
 }

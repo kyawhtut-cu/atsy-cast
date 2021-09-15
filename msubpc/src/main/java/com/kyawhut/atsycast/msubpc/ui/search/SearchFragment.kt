@@ -24,7 +24,6 @@ import timber.log.Timber
 internal class SearchFragment : BaseSearchSupportFragment<SearchViewModel>() {
 
     override fun onClickRetry(query: String) {
-        Timber.d("onClickRetry => %s", this::class.java.name)
         vm.search(query, ::onSearchResult)
     }
 
@@ -33,7 +32,6 @@ internal class SearchFragment : BaseSearchSupportFragment<SearchViewModel>() {
     override fun onItemClicked(index: Int, it: Any) {
         if (it is VideoResponse) {
             startActivity<DetailActivity>(
-                Constants.EXTRA_API_KEY to vm.apiKey,
                 Constants.EXTRA_VIDEO_DATA to it,
                 Constants.EXTRA_APP_NAME to vm.appName
             )

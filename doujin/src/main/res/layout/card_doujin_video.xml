@@ -30,7 +30,7 @@
             isBlur="@{true}"
             isHorizontal="@{true}"
             isNeedToCache="@{true}"
-            loadImage="@{BuildConfig.IMAGE_BASE_URL + data.doujinImage}"
+
             android:layout_width="0dp"
             android:layout_height="90dp"
             android:adjustViewBounds="true"

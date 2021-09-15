@@ -4,10 +4,10 @@
 
     <application>
 
-       <!-- <activity
+        <activity
             android:name=".ui.home.HomeActivity"
             android:screenOrientation="sensorLandscape"
-            android:theme="@style/BaseTvTheme" />-->
+            android:theme="@style/BaseTvTheme" />
 
         <activity
             android:name=".ui.detail.DetailActivity"

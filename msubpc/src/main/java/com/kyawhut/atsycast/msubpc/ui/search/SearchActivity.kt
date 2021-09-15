@@ -14,7 +14,6 @@ internal class SearchActivity : BaseSearchTvActivity<SearchFragment>() {
 
     override val searchFragment: SearchFragment by lazy {
         SearchFragment().putArg(
-            Constants.EXTRA_API_KEY to intent?.getStringExtra(Constants.EXTRA_API_KEY),
             Constants.EXTRA_APP_NAME to intent?.getStringExtra(Constants.EXTRA_APP_NAME)
         )
     }

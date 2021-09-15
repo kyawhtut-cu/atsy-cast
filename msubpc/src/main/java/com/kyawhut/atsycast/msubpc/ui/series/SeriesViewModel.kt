@@ -18,9 +18,6 @@ internal class SeriesViewModel @Inject constructor(
     private val repo: SeriesRepository
 ) : BaseViewModel() {
 
-    val apiKey: String by lazy {
-        savedStateHandle.get(Constants.EXTRA_API_KEY) ?: ""
-    }
     val appName: String by lazy {
         savedStateHandle.get(Constants.EXTRA_APP_NAME) ?: ""
     }
@@ -32,7 +29,7 @@ internal class SeriesViewModel @Inject constructor(
         callback: (NetworkResponse<List<VideoResponse>>) -> Unit
     ) {
         viewModelScope {
-            repo.getSeries(key, apiKey, callback)
+            repo.getSeries(key, callback)
         }
     }
 }

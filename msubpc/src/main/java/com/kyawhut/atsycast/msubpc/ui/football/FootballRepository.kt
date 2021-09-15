@@ -11,13 +11,11 @@ import com.kyawhut.atsycast.share.network.utils.NetworkResponse
 internal interface FootballRepository {
 
     suspend fun getFootball(
-        apiKey: String,
         callback: (NetworkResponse<List<FootballResponse.Data>>) -> Unit
     )
 
     suspend fun getFootballStream(
         footballID: Int,
-        apiKey: String,
         callback: (NetworkResponse<FootballStreamResponse>) -> Unit
     )
 }

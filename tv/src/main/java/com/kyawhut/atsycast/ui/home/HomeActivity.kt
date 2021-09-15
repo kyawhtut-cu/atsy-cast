@@ -5,10 +5,8 @@ import androidx.fragment.app.commit
 import com.kyawhut.atsycast.R
 import com.kyawhut.atsycast.databinding.ActivityHomeBinding
 import com.kyawhut.atsycast.share.base.BaseTvActivity
-import com.kyawhut.atsycast.share.ui.dialog.PlayerErrorDialog.Companion.showPlayerError
 import com.kyawhut.atsycast.share.utils.ToggleBackground
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 
 /**
  * @author kyawhtut

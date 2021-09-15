@@ -18,9 +18,6 @@ internal class SearchViewModel @Inject constructor(
     private val repository: SearchRepository
 ) : BaseViewModel() {
 
-    val apiKey: String by lazy {
-        savedStateHandle.get(Constants.EXTRA_API_KEY) ?: ""
-    }
     val appName: String by lazy {
         savedStateHandle.get(Constants.EXTRA_APP_NAME) ?: ""
     }
@@ -30,7 +27,7 @@ internal class SearchViewModel @Inject constructor(
         callback: (NetworkResponse<List<Pair<String, List<VideoResponse>>>>) -> Unit
     ) {
         viewModelScope {
-            repository.search(query, apiKey, callback)
+            repository.search(query, callback)
         }
     }
 }

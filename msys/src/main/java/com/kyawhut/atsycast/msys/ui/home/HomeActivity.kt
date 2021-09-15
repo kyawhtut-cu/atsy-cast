@@ -34,10 +34,10 @@ internal class HomeActivity : BaseTvActivity<ActivityMsysHomeBinding>() {
         get() = R.layout.activity_msys_home
 
     private val appName: String by lazy {
-        intent?.getStringExtra(Constants.EXTRA_APP_NAME) ?: "MSYS"
+        intent?.getStringExtra(Constants.EXTRA_APP_NAME) ?: ""
     }
     private val apiKey: String by lazy {
-        intent?.getStringExtra(Constants.EXTRA_API_KEY) ?: "4F5A9C3D9A86FA54EACEDDD635185/d506abfd-9fe2-4b71-b979-feff21bcad13"
+        intent?.getStringExtra(Constants.EXTRA_API_KEY) ?: ""
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.leanback.widget.*
+import com.kyawhut.atsycast.msubpc.MsubPC.clearAPIKey
 import com.kyawhut.atsycast.msubpc.R
 import com.kyawhut.atsycast.msubpc.databinding.ActivityMsubHomeBinding
 import com.kyawhut.atsycast.msubpc.ui.cache.CacheFragment
@@ -33,18 +34,19 @@ internal class HomeActivity : BaseTvActivity<ActivityMsubHomeBinding>() {
     private val appName: String by lazy {
         intent?.getStringExtra(Constants.EXTRA_APP_NAME) ?: "M-Sub"
     }
-    private val apiKey: String by lazy {
-        intent?.getStringExtra(Constants.EXTRA_API_KEY) ?: ""
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (savedInstanceState == null) replaceFragment(
             R.id.content_frame, HomeFragment().putArg(
                 Constants.EXTRA_APP_NAME to appName,
-                Constants.EXTRA_API_KEY to apiKey,
             )
         )
+    }
+
+    override fun onBackPressed() {
+        clearAPIKey()
+        super.onBackPressed()
     }
 
     @AndroidEntryPoint
@@ -63,9 +65,6 @@ internal class HomeActivity : BaseTvActivity<ActivityMsubHomeBinding>() {
 
         private val appName: String
             get() = arguments?.getString(Constants.EXTRA_APP_NAME) ?: ""
-
-        private val apiKey: String
-            get() = arguments?.getString(Constants.EXTRA_API_KEY) ?: ""
 
         @Inject
         lateinit var homeRepository: HomeRepository
@@ -104,7 +103,6 @@ internal class HomeActivity : BaseTvActivity<ActivityMsubHomeBinding>() {
 
         override val onSearchClicked: () -> Unit = {
             startActivity<SearchActivity>(
-                Constants.EXTRA_API_KEY to apiKey,
                 Constants.EXTRA_APP_NAME to appName,
             )
         }
@@ -114,19 +112,15 @@ internal class HomeActivity : BaseTvActivity<ActivityMsubHomeBinding>() {
                     R.string.lbl_recently_watch_key
                 )
             ) CacheFragment.newInstance(
-                apiKey,
                 header.description.toString(),
                 appName,
             ) else if (header.description == getString(R.string.lbl_football_key)) FootballFragment.newInstance(
-                apiKey,
                 header.description.toString(),
                 appName
             ) else if (header.name.endsWith("Series")) SeriesFragment.newInstance(
-                apiKey,
                 header.description.toString(),
                 appName,
             ) else MoviesFragment.newInstance(
-                apiKey,
                 header.description.toString(),
                 appName
             )

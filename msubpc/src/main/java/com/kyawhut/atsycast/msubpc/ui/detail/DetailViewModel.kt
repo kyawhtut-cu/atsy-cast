@@ -20,9 +20,6 @@ internal class DetailViewModel @Inject constructor(
     private val repository: DetailRepository
 ) : BaseViewModel() {
 
-    val apiKey: String by lazy {
-        savedStateHandle.get(Constants.EXTRA_API_KEY) ?: ""
-    }
     val appName: String by lazy {
         savedStateHandle.get(Constants.EXTRA_APP_NAME) ?: ""
     }
@@ -38,19 +35,19 @@ internal class DetailViewModel @Inject constructor(
 
     fun getMovieStream(callback: (NetworkResponse<MovieStreamResponse>) -> Unit) {
         viewModelScope {
-            repository.getMovieStream(detailData!!.videoId, apiKey, callback)
+            repository.getMovieStream(detailData!!.videoId, callback)
         }
     }
 
     fun getRelatedMovies(genres: String, callback: (NetworkResponse<List<VideoResponse>>) -> Unit) {
         viewModelScope {
-            repository.getRelatedMovies(genres, apiKey, callback)
+            repository.getRelatedMovies(genres, callback)
         }
     }
 
     fun getSeasonEpisode(callback: (NetworkResponse<Pair<List<VideoResponse>, List<EpisodeResponse>>>) -> Unit) {
         viewModelScope {
-            repository.getSeasonEpisode(detailData!!.videoId, apiKey, callback)
+            repository.getSeasonEpisode(detailData!!.videoId, callback)
         }
     }
 }

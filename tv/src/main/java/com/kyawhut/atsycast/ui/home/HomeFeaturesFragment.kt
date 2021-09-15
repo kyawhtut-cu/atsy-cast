@@ -7,6 +7,7 @@ import androidx.leanback.app.RowsSupportFragment
 import androidx.leanback.widget.*
 import com.kyawhut.atsycast.R
 import com.kyawhut.atsycast.data.network.response.HomeFeatureResponse
+import com.kyawhut.atsycast.doujin.DoujinApp.goToDoujin
 import com.kyawhut.atsycast.free2air.Free2Air.goToFree2Air
 import com.kyawhut.atsycast.msubpc.MsubPC.goToMsubPC
 import com.kyawhut.atsycast.msys.MsysApp.goToMSYS
@@ -42,6 +43,7 @@ class HomeFeaturesFragment : RowsSupportFragment() {
                     2 -> goToMsubPC(item.featureName, item.featureAPIKey)
                     3 -> goToZCM(item.featureName, item.featureAPIKey)
                     4 -> goToMSYS(item.featureName, item.featureAPIKey)
+                    7 -> goToDoujin(item.featureName, item.featureAPIKey)
                 }
             }
         }

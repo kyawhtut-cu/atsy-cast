@@ -19,9 +19,6 @@ internal class FootballViewModel @Inject constructor(
     private val repo: FootballRepository
 ) : BaseViewModel() {
 
-    val apiKey: String by lazy {
-        savedStateHandle.get(Constants.EXTRA_API_KEY) ?: ""
-    }
     val appName: String by lazy {
         savedStateHandle.get(Constants.EXTRA_APP_NAME) ?: ""
     }
@@ -31,7 +28,7 @@ internal class FootballViewModel @Inject constructor(
         callback: (NetworkResponse<List<FootballResponse.Data>>) -> Unit
     ) {
         viewModelScope {
-            repo.getFootball(apiKey, callback)
+            repo.getFootball(callback)
         }
     }
 
@@ -44,7 +41,6 @@ internal class FootballViewModel @Inject constructor(
         viewModelScope {
             repo.getFootballStream(
                 football.id,
-                apiKey,
                 callback
             )
         }

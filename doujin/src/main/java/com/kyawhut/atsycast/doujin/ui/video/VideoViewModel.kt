@@ -26,12 +26,6 @@ internal class VideoViewModel @Inject constructor(
     val appName: String by lazy {
         savedStateHandle.get(Constants.EXTRA_APP_NAME) ?: ""
     }
-    private val appVersion: String by lazy {
-        savedStateHandle.get(Constants.EXTRA_APP_VERSION) ?: ""
-    }
-    private val packageName: String by lazy {
-        savedStateHandle.get(Constants.EXTRA_PACKAGE_NAME) ?: ""
-    }
     private val pageKey: String by lazy {
         savedStateHandle.get(Constants.EXTRA_PAGE_KEY) ?: ""
     }
@@ -48,7 +42,7 @@ internal class VideoViewModel @Inject constructor(
         }
         if (!isHasMoreData || isLoading) return
         viewModelScope {
-            repository.getVideoData(pageKey, appVersion, packageName, page) {
+            repository.getVideoData(pageKey, page) {
                 callback(it)
                 isLoading = it.isLoading
                 if (it.isSuccess) {
@@ -65,7 +59,7 @@ internal class VideoViewModel @Inject constructor(
     ) {
         this.doujinID = doujinID
         viewModelScope {
-            repository.getVideoDetail(appVersion, packageName, doujinID, callback)
+            repository.getVideoDetail(doujinID, callback)
         }
     }
 }

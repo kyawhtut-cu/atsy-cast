@@ -1,3 +1,4 @@
+include(":ets2mm")
 include(":doujin")
 include(":zcm")
 include(":msys")

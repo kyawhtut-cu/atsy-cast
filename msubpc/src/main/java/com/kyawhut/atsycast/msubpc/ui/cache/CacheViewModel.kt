@@ -22,9 +22,6 @@ internal class CacheViewModel @Inject constructor(
     val cacheKeyType: String by lazy {
         savedStateHandle.get(Constants.EXTRA_PAGE_KEY) ?: ""
     }
-    val apiKey: String by lazy {
-        savedStateHandle.get(Constants.EXTRA_API_KEY) ?: ""
-    }
     val appName: String by lazy {
         savedStateHandle.get(Constants.EXTRA_APP_NAME) ?: ""
     }

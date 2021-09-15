@@ -11,7 +11,6 @@ internal interface SeriesRepository {
 
     suspend fun getSeries(
         key: String,
-        apiKey: String,
         callback: (NetworkResponse<List<VideoResponse>>) -> Unit
     )
 }

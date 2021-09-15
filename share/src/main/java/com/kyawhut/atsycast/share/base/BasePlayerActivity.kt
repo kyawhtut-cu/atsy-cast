@@ -60,7 +60,10 @@ abstract class BasePlayerActivity : BaseTvActivity<AtsyPlayerBinding>(), PlayerM
     private var episodeFragment: RowsSupportFragment? = null
     private var focusRowCount: Int = -1
     private var numberOfRowCount: Int = 0
-    abstract fun isRelatedView(view: View): Boolean
+    open fun isRelatedView(view: View): Boolean {
+        return false
+    }
+
     open fun onRelatedItemClicked(item: Any) {}
 
     open val appName: String = ""
@@ -119,7 +122,7 @@ abstract class BasePlayerActivity : BaseTvActivity<AtsyPlayerBinding>(), PlayerM
         title: String,
         poster: String,
         source: VideoSourceModel,
-        lastPosition: Long
+        lastPosition: Long = 0L
     ) {
         vb.isVideoEnd = false
         playerManger.setPlayerTitle(title)

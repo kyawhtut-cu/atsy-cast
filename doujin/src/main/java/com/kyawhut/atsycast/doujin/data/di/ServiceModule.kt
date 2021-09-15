@@ -3,6 +3,7 @@ package com.kyawhut.atsycast.doujin.data.di
 import android.content.Context
 import com.kyawhut.atsycast.doujin.BuildConfig
 import com.kyawhut.atsycast.doujin.data.network.DoujinAPI
+import com.kyawhut.atsycast.doujin.data.network.interceptor.HeaderInterceptor
 import com.kyawhut.atsycast.share.network.providers.createService
 import dagger.Module
 import dagger.Provides
@@ -21,7 +22,16 @@ internal object ServiceModule {
 
     @Provides
     @Singleton
-    fun provideAPI(@ApplicationContext context: Context): DoujinAPI {
-        return createService(DoujinAPI::class, BuildConfig.BASE_URL, context)
+    fun provideAPI(
+        @ApplicationContext context: Context
+    ): DoujinAPI {
+        return createService(
+            DoujinAPI::class,
+            BuildConfig.BASE_URL,
+            context,
+            interceptors = listOf(
+                HeaderInterceptor(context)
+            )
+        )
     }
 }

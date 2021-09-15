@@ -46,7 +46,7 @@ internal class SearchFragment : BaseSearchSupportFragment<SearchViewModel>() {
             is NetworkStatus.SUCCESS -> {
                 hideLoading()
                 _isResultFound = result.data?.data?.isNotEmpty() ?: false
-                if (vm.page == 1) {
+                if (vm.isFirstPage) {
                     rowAdapter.clear()
 
                     val header = HeaderItem(0L, "Result")

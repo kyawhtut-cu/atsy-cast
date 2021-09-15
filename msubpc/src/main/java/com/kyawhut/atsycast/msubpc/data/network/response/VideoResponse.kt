@@ -62,10 +62,10 @@ internal data class VideoResponse(
 
     val qualityDrawable: Int
         get() = when {
-            (videoQuality ?: "").contains("Blu-Ray") -> R.drawable.bg_msub_resolution_blu_ray
-            (videoQuality ?: "").contains("Web-dl") -> R.drawable.bg_msub_resolution_web_dl
-            (videoQuality ?: "").contains("HD-Rip") -> R.drawable.bg_msub_resolution_hd_rip
-            else -> R.drawable.bg_msub_resolution_default
+            (videoQuality ?: "").contains("Blu-Ray") -> R.drawable.bg_resolution_blu_ray
+            (videoQuality ?: "").contains("Web-dl") -> R.drawable.bg_resolution_web_dl
+            (videoQuality ?: "").contains("HD-Rip") -> R.drawable.bg_resolution_hd_rip
+            else -> R.drawable.bg_resolution_default
         }
 
     val qualityColor: Int

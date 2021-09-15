@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="android.graphics.drawable.Drawable" />
+
+        <variable
+            name="isFocus"
+            type="Boolean" />
+
+        <variable
+            name="moviesName"
+            type="String" />
+
+        <variable
+            name="moviesPoster"
+            type="String" />
+
+        <variable
+            name="movieIMDB"
+            type="String" />
+
+        <variable
+            name="moviesYear"
+            type="String" />
+
+        <variable
+            name="moviesResolutionType"
+            type="Drawable" />
+
+        <variable
+            name="moviesResolution"
+            type="String" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:background="@{isFocus ? @color/colorCardBackgroundFocus : @color/colorCardBackgroundUnFocus}"
+        tools:context=".ui.card.view.VideoCardView">
+
+        <ImageView
+            android:id="@+id/iv_movies_poster"
+            isHorizontal="@{false}"
+            isNeedToCache="@{true}"
+            loadImage="@{moviesPoster}"
+            android:layout_width="0dp"
+            android:layout_height="160dp"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/thumbnail_movie"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_resolution"
+            isMMFont="@{true}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@{moviesResolutionType}"
+            android:text="@{moviesResolution}"
+            android:textColor="@{ moviesResolutionType == @drawable/bg_resolution_default ? @color/colorBlack : @color/colorWhite}"
+            android:textSize="@dimen/text_smaller"
+            android:visibility="@{moviesResolution.isEmpty() ? View.GONE : View.VISIBLE}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:background="@drawable/bg_resolution_blu_ray"
+            tools:text="Web-dl 4k"
+            tools:textColor="@color/colorWhite" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/view_imdb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_imdb"
+            android:visibility="@{movieIMDB.isEmpty() ? View.GONE : View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_movies_poster"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <ImageView
+                android:id="@+id/iv_star"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:src="@drawable/ic_star"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_imdb"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tv_imdb" />
+
+            <TextView
+                android:id="@+id/tv_imdb"
+                isMMFont="@{true}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_small"
+                android:text="@{movieIMDB}"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/text_smaller"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/iv_star"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="6.3" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <TextView
+            android:id="@+id/tv_movies_name"
+            isMMFont="@{true}"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:minLines="1"
+            android:padding="2dp"
+            android:text="@{moviesName}"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/text_small"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_movies_poster"
+            tools:text="Movies Name" />
+
+        <TextView
+            android:id="@+id/tv_series_description"
+            isMMFont="@{true}"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:minLines="1"
+            android:paddingHorizontal="2dp"
+            android:paddingBottom="2dp"
+            android:text="@{moviesYear}"
+            android:textColor="#979797"
+            android:textSize="@dimen/text_smaller"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_movies_name"
+            tools:text="2021" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

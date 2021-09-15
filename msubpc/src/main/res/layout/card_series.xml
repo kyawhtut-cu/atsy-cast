@@ -78,7 +78,7 @@
             isMMFont="@{true}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_msub_imdb"
+            android:background="@drawable/bg_imdb"
             android:backgroundTint="@color/colorBluRay"
             android:text="@{seriesYear}"
             android:textColor="@color/colorWhite"

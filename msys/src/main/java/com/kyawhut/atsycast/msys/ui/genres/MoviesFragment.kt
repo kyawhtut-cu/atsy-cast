@@ -49,7 +49,7 @@ internal class MoviesFragment : BaseGridSupportFragment<MoviesViewModel>() {
             is NetworkStatus.LOADING -> showLoading()
             is NetworkStatus.SUCCESS -> {
                 hideLoading()
-                if (vm.page == 0) rowsAdapter.setItems(result.data, MoviesResponse.diff)
+                if (vm.isFirstPage) rowsAdapter.setItems(result.data, MoviesResponse.diff)
                 else rowsAdapter.addAll(rowsAdapter.size(), result.data)
             }
             is NetworkStatus.ERROR -> {

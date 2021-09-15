@@ -1,9 +1,3 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <color name="colorWebDL">#007bff</color>
-    <color name="colorBluRay">#dc3545</color>
-    <color name="colorHDRip">#28a745</color>
-    <color name="colorDefault">#ffc107</color>
-
 </resources>

@@ -21,8 +21,9 @@ internal class VideoViewModel @Inject constructor(
     private val repository: VideoRepository,
 ) : BaseViewModel() {
 
-    var page: Int = -1
-        private set
+    private var page: Int = -1
+    val isHot: Boolean
+        get() = page == -1
     val appName: String by lazy {
         savedStateHandle.get(Constants.EXTRA_APP_NAME) ?: ""
     }

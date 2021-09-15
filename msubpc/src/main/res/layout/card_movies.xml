@@ -64,12 +64,12 @@
             android:layout_height="wrap_content"
             android:background="@{moviesResolutionType}"
             android:text="@{moviesResolution}"
-            android:textColor="@{ moviesResolutionType == @drawable/bg_msub_resolution_default ? @color/colorBlack : @color/colorWhite}"
+            android:textColor="@{ moviesResolutionType == @drawable/bg_resolution_default ? @color/colorBlack : @color/colorWhite}"
             android:textSize="@dimen/text_smaller"
             android:visibility="@{moviesResolution.isEmpty() ? View.GONE : View.VISIBLE}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:background="@drawable/bg_msub_resolution_blu_ray"
+            tools:background="@drawable/bg_resolution_blu_ray"
             tools:text="Web-dl 4k"
             tools:textColor="@color/colorWhite" />
 
@@ -77,7 +77,7 @@
             android:id="@+id/view_imdb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_msub_imdb"
+            android:background="@drawable/bg_imdb"
             android:visibility="@{movieIMDB.isEmpty() ? View.GONE : View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="@+id/iv_movies_poster"
             app:layout_constraintEnd_toEndOf="parent">

@@ -19,7 +19,9 @@ internal class SearchViewModel @Inject constructor(
     private val repository: SearchRepository
 ) : BaseViewModel() {
 
-    var page: Int = 1
+    private var page: Int = 1
+    val isFirstPage: Boolean
+        get() = page == 1
     private var totalPage: Int = 2
     private var isLoading: Boolean = false
     var doujinID: String = ""

@@ -26,4 +26,9 @@
     <color name="playerPlay">#80000000</color>
     <color name="playerIcon">#80ffffff</color>
 
+    <color name="colorWebDL">#007bff</color>
+    <color name="colorBluRay">#dc3545</color>
+    <color name="colorHDRip">#28a745</color>
+    <color name="colorDefault">#ffc107</color>
+
 </resources>

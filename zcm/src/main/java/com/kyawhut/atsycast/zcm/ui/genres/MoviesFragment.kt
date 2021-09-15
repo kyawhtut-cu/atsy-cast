@@ -4,14 +4,14 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.leanback.widget.ArrayObjectAdapter
-import com.kyawhut.atsycast.zcm.ui.card.CardPresenter
-import com.kyawhut.atsycast.zcm.ui.detail.DetailActivity
 import com.kyawhut.atsycast.share.base.BaseGridSupportFragment
 import com.kyawhut.atsycast.share.network.utils.NetworkResponse
 import com.kyawhut.atsycast.share.network.utils.NetworkStatus
 import com.kyawhut.atsycast.share.utils.extension.putArg
 import com.kyawhut.atsycast.share.utils.extension.startActivity
 import com.kyawhut.atsycast.zcm.data.network.response.MoviesResponse
+import com.kyawhut.atsycast.zcm.ui.card.CardPresenter
+import com.kyawhut.atsycast.zcm.ui.detail.DetailActivity
 import com.kyawhut.atsycast.zcm.utils.Constants
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -49,7 +49,7 @@ internal class MoviesFragment : BaseGridSupportFragment<MoviesViewModel>() {
             is NetworkStatus.LOADING -> showLoading()
             is NetworkStatus.SUCCESS -> {
                 hideLoading()
-                if (vm.page == 0) rowsAdapter.setItems(result.data, MoviesResponse.diff)
+                if (vm.isFirstPage) rowsAdapter.setItems(result.data, MoviesResponse.diff)
                 else rowsAdapter.addAll(rowsAdapter.size(), result.data)
             }
             is NetworkStatus.ERROR -> {

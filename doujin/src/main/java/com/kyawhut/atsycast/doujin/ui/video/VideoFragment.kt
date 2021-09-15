@@ -39,7 +39,7 @@ internal class VideoFragment : BaseGridSupportFragment<VideoViewModel>() {
 
     override val vm: VideoViewModel by viewModels()
     override val isPagingEnable: Boolean
-        get() = vm.page != -1
+        get() = !vm.isHot
     override val numberOfColumns: Int
         get() = 4
     override val rowsAdapter: ArrayObjectAdapter by lazy {

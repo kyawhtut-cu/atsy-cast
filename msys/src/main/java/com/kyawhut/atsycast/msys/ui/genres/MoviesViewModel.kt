@@ -18,8 +18,9 @@ internal class MoviesViewModel @Inject constructor(
     private val repository: MoviesRepository
 ) : BaseViewModel() {
 
-    var page: Int = 0
-        private set
+    private var page: Int = 0
+    val isFirstPage: Boolean
+        get() = page == 0
     private var isLoading: Boolean = false
     private var isHasMoreData: Boolean = true
     val apiKey: String by lazy {

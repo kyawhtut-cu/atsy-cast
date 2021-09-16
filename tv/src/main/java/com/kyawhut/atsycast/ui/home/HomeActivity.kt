@@ -6,6 +6,8 @@ import com.kyawhut.atsycast.R
 import com.kyawhut.atsycast.databinding.ActivityHomeBinding
 import com.kyawhut.atsycast.share.base.BaseTvActivity
 import com.kyawhut.atsycast.share.utils.ToggleBackground
+import com.kyawhut.atsycast.share.utils.extension.startActivity
+import com.kyawhut.atsycast.ui.setting.SettingActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -36,6 +38,10 @@ class HomeActivity : BaseTvActivity<ActivityHomeBinding>() {
 
         vb.homeState.onClickListener = {
             (supportFragmentManager.findFragmentById(R.id.frame_features) as HomeFeaturesFragment).refreshPage();
+        }
+
+        vb.btnActionSetting.setOnClickListener {
+            startActivity<SettingActivity>()
         }
     }
 

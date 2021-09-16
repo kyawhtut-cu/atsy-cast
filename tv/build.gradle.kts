@@ -145,6 +145,7 @@ dependencies {
     implementation(Libs.coreKtx)
     implementation(Libs.constraintLayout)
     implementation(Libs.vectorDrawable)
+    implementation(Libs.leanbackPreference)
 
     /*firebase*/
     implementation(platform(Libs.firebaseBom))

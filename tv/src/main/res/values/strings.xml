@@ -1,3 +1,64 @@
 <resources>
     <string name="app_name">ATSY Cast</string>
+
+    <string name="lbl_dark_side_dialog_password_title">Enter your Dark Side password</string>
+
+    <string name="pref_title_settings">App Settings</string>
+
+    <string name="pref_lottery">pref_lottery</string>
+    <string name="pref_title_lottery">Lottery</string>
+    <string name="pref_summary_lottery">Lottery</string>
+
+    <string name="pref_device_id">pref_device_id</string>
+    <string name="pref_title_device_id">Device ID</string>
+    <string name="pref_summary_device_id">Device ID</string>
+
+    <string name="pref_more_setting">pref_more_setting</string>
+    <string name="pref_title_more_setting">More Setting</string>
+    <string name="pref_summary_more_setting">More Setting Summary</string>
+
+    <string name="pref_app_version">pref_app_version</string>
+    <string name="pref_title_app_version">App Version</string>
+    <string name="pref_summary_app_version">App Version</string>
+
+    <string name="pref_app_package">pref_app_package</string>
+    <string name="pref_title_app_package">App Package Name</string>
+    <string name="pref_summary_app_package">App Package Name</string>
+
+    <string name="pref_develop_by">pref_develop_by</string>
+    <string name="pref_title_develop_by">Develop By</string>
+    <string name="pref_summary_develop_by">Kyaw Htut</string>
+
+    <string name="pref_adult">pref_adult</string>
+    <string name="pref_title_adult">Adult</string>
+    <string name="pref_summary_on_adult">Adult already open.</string>
+    <string name="pref_summary_off_adult">Adult already closed.</string>
+
+    <string name="pref_title_recommendations">Recommendations</string>
+    <string name="pref_key_recommendations">pref_recommendations</string>
+    <string name="pref_key_screen_general">general_settings</string>
+    <string name="pref_title_screen_general">General Settings</string>
+    <string name="pref_key_screen_signin">signin</string>
+    <string name="pref_title_screen_signin">Please Login</string>
+    <string name="pref_title_login_description">Please enter your username and password</string>
+    <string name="pref_title_username">Username</string>
+    <string name="pref_title_password">Password</string>
+    <string name="pref_key_login">pref_login</string>
+    <string name="pref_title_login">Login</string>
+
+    <array name="pref_title_username">
+        <item>Test 1</item>
+        <item>Test 2</item>
+        <item>Test 3</item>
+        <item>Test 4</item>
+        <item>Test 5</item>
+    </array>
+
+    <array name="entries">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </array>
 </resources>

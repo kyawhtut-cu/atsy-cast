@@ -75,6 +75,7 @@ object Libs {
     const val aviLoading = "com.wang.avi:library:${Versions.aviLoadingVersion}"
 
     const val leanback = "androidx.leanback:leanback:${Versions.leanbackVersion}"
+    const val leanbackPreference = "androidx.leanback:leanback-preference:${Versions.leanbackPreferenceVersion}"
 
     const val glide = "com.github.bumptech.glide:glide:${Versions.glideVersion}"
     const val glideOkHttp =

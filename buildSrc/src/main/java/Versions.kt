@@ -59,7 +59,8 @@ object Versions {
     const val roundableLayoutVersion = "1.1.3"
     const val aviLoadingVersion = "2.1.3"
 
-    const val leanbackVersion = "1.0.0"
+    const val leanbackVersion = "1.1.0-alpha04"
+    const val leanbackPreferenceVersion = "1.1.0-alpha04"
 
     const val glideVersion = "4.9.0"
     const val glideOkHttpVersion = "4.4.0"

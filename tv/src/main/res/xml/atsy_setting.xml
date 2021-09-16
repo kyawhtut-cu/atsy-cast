@@ -1,0 +1,45 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory android:title="@string/pref_title_settings">
+
+        <Preference
+            android:key="@string/pref_app_package"
+            android:summary="@string/pref_summary_app_package"
+            android:title="@string/pref_title_app_package" />
+
+        <CheckBoxPreference
+            android:key="@string/pref_lottery"
+            android:summary="@string/pref_summary_lottery"
+            android:title="@string/pref_title_lottery" />
+
+        <Preference
+            android:key="@string/pref_device_id"
+            android:summary="@string/pref_summary_device_id"
+            android:title="@string/pref_title_device_id"
+            app:enableCopying="true" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="@string/pref_more_setting"
+        android:title="@string/pref_title_more_setting"
+        app:initialExpandedChildrenCount="2">
+
+        <Preference
+            android:key="@string/pref_app_version"
+            android:summary="@string/pref_summary_app_version"
+            android:title="@string/pref_title_app_version" />
+
+        <Preference
+            android:key="@string/pref_develop_by"
+            android:summary="@string/pref_summary_develop_by"
+            android:title="@string/pref_title_develop_by" />
+
+        <CheckBoxPreference
+            android:key="@string/pref_adult"
+            android:summaryOff="@string/pref_summary_off_adult"
+            android:summaryOn="@string/pref_summary_on_adult"
+            android:title="@string/pref_title_adult" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

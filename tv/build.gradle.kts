@@ -46,7 +46,7 @@ android {
         minSdkVersion(Versions.tvMinSdkVersion)
         targetSdkVersion(Versions.tvTargetSdkVersion)
 
-        versionCode = 1
+        versionCode = androidGitVersion.code()
         versionName = androidGitVersion.name()
 
         multiDexEnabled = true

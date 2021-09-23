@@ -35,6 +35,7 @@ jobs:
       APP_CONFIG_FILE_BASE64: ${{ secrets.APP_CONFIG_FILE }}
       DEBUG_KEYSTORE_BASE64: ${{ secrets.DEBUG_KEYSTORE }}
       DEBUG_PLAY_SERVICE_BASE64: ${{ secrets.DEBUG_PLAY_SERVICE }}
+      FILE_UPLOAD_URL: ${{ secrets.FILE_UPLOAD_URL }}
 
     steps:
 
@@ -63,7 +64,7 @@ jobs:
       - name: Upload Debug APK to CDN
         uses: wei/curl@v1
         with:
-          args: --location --request POST ${{ secrets.FILE_UPLOAD_URL }} -F 'file=@app/build/outputs/apk/release/${{ env.RELEASE_VERSION }}/atsy-cast-debug-local.apk;type=application/vnd.android.package-archive' --form 'version=${{ env.RELEASE_VERSION }}' --form 'apk_name=ATSY Cast - New' --form 'file_name=atsy-cast-debug' --form 'is_home_version=true' --form 'update_name=atsy-cast-debug'
+          args: --location --request POST ${{ env.FILE_UPLOAD_URL }} -F 'file=@app/build/outputs/apk/release/${{ env.RELEASE_VERSION }}/atsy-cast-debug-local.apk;type=application/vnd.android.package-archive' --form 'version=${{ env.RELEASE_VERSION }}' --form 'apk_name=ATSY Cast - New' --form 'file_name=atsy-cast-debug' --form 'is_home_version=true' --form 'update_name=atsy-cast-debug'
 
       - name: Notift Debug status
         if: always()

@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+
+    <meta name="theme-color" content="#459a0b">
+
+    <meta name="description" content="Kyaw Htut">
+    <meta name="author" content="Kyaw Htut">
+    <meta name='title' content='cdn | ATSY Cast'>
+
+    <meta property='og:image' content='https://kyawhtut-cu.github.io/atsy-cast/tv/src/main/res/drawable/app_banner.png'/>
+    <meta name='og:title' content='cdn | ATSY Cast'/>
+    <meta name='og:author' content='Kyaw Htut'/>
+    <meta name='og:image:alt' content='Kyaw Htut'/>
+    <meta property='og:url' content='https://kyawhtut-cu.github.io/atsy-cast/'/>
+
+    <link rel="shortcut icon" href="./tv/web_hi_res_512.png" type="png">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>cdn | ATSY Cast</title>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css">
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+
+    <style>
+                .loader {
+                    border: 8px solid #f3f3f3;
+                    border-radius: 50%;
+                    border-top: 8px solid #459a0b;
+                    width: 56px;
+                    height: 56px;
+                    -webkit-animation: spin 2s linear infinite; /* Safari */
+                    animation: spin 2s linear infinite;
+                }
+
+                .fileName {
+                    color: black;
+                    cursor: pointer;
+                }
+
+                .fileName:hover {
+                    color: #007bff;
+                }
+
+                .empty {
+                    color: #c9c9c9;
+                    padding-top: 3rem;
+                    padding-bottom: 3rem;
+                    display: flex;
+                    justify-content: center;
+                }
+
+                .borderBottom {
+                    border-bottom: 1px solid #dee2e6;
+                }
+
+                .borderTop {
+                    border-top:  1px solid #dee2e6;
+                }
+
+                /* Safari */
+                @-webkit-keyframes spin {
+                    0% { -webkit-transform: rotate(0deg); }
+                    100% { -webkit-transform: rotate(360deg); }
+                }
+
+                @keyframes spin {
+                    0% { transform: rotate(0deg); }
+                    100% { transform: rotate(360deg); }
+                }
+
+    </style>
+
+</head>
+<body>
+
+<div class="container">
+    <nav aria-label="breadcrumb" style='margin-top: 1rem;' id="navBar"></nav>
+    <div id="loadingView" class="borderTop borderBottom pt-3 pb-3" style="display: flex; justify-content: center;">
+        <div class="loader"></div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-borderless table-hover" style="margin-bottom: 0px!important;" id="fileList"></table>
+    </div>
+    <div id="emptyView" class="empty d-none borderTop borderBottom">Empty folder.</div>
+    <div class="mt-5 mb-5">
+        <div class="borderBottom" style="position: relative; top: 13px;"></div>
+        <div class="text-center" style="position: relative;">
+            <span style="padding: 5px 15px; border-radius: 5px; background: #459a0b; color: white;" id="totalCount">
+                Total - 0
+            </span>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<!-- Bootstrap -->
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<script>
+           $(document).ready(function () {
+
+                var cacheName = "cdnATSYCastLastPath";
+
+				var folderIcon = `<svg aria-label="Directory" aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-file-directory hx_color-icon-directory">
+    <path fill-rule="evenodd" d="M1.75 1A1.75 1.75 0 000 2.75v10.5C0 14.216.784 15 1.75 15h12.5A1.75 1.75 0 0016 13.25v-8.5A1.75 1.75 0 0014.25 3h-6.5a.25.25 0 01-.2-.1l-.9-1.2c-.33-.44-.85-.7-1.4-.7h-3.5z"></path>
+</svg>`;
+
+				var fileIcon = `<svg aria-label="File" aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-file color-icon-tertiary">
+    <path fill-rule="evenodd" d="M3.75 1.5a.25.25 0 00-.25.25v11.5c0 .138.112.25.25.25h8.5a.25.25 0 00.25-.25V6H9.75A1.75 1.75 0 018 4.25V1.5H3.75zm5.75.56v2.19c0 .138.112.25.25.25h2.19L9.5 2.06zM2 1.75C2 .784 2.784 0 3.75 0h5.086c.464 0 .909.184 1.237.513l3.414 3.414c.329.328.513.773.513 1.237v8.086A1.75 1.75 0 0112.25 15h-8.5A1.75 1.75 0 012 13.25V1.75z"></path>
+</svg>`;
+
+				var pathList = localStorage.getItem(cacheName);
+				if (pathList === null) {
+					pathList = ["ATSY Cast - New"];
+				} else {
+					pathList = pathList.split(",");
+				}
+
+				processNavBar(pathList[pathList.length - 1]);
+				readFile();
+
+				function processNavBar(currentPath) {
+					$('#navBar').empty();
+					var ol = $('<ol>', {
+						'class' : `breadcrumb`
+					});
+					$.each(pathList, function(index, p) {
+						var pathName = p;
+						if(p == '') {
+							pathName = 'Home';
+						} else if(p == 'ATSY Cast - New') {
+						    pathName = 'ATSY Cast';
+						}
+
+						var li = $('<li>', {
+							'class' : `breadcrumb-item`
+						}).append($('<a>', {
+							'href' : 'javascript:void(0);'
+						}).append(pathName).click(function() {
+							onClickNavBar(p);
+						}));
+
+						if(p == currentPath) {
+							li = $('<li>', {
+								'class' : `breadcrumb-item active`,
+								'aria-current' : 'page'
+							}).append(pathName);
+						}
+
+						ol.append(li);
+					})
+					$('#navBar').append(ol);
+					localStorage.setItem(cacheName, pathList.join());
+				}
+
+				function onClickNavBar(path) {
+					var pathIndex = pathList.indexOf(path);
+					pathList = pathList.filter((p, index) => index <= pathIndex );
+					processNavBar(pathList[pathList.length - 1]);
+					readFile();
+				}
+
+				function readFile() {
+					var path = pathList.filter(p => p != '');
+					if(path.length == 0) {
+						path = '';
+					} else {
+						path = `/${path.join('/')}`;
+					}
+					$.ajax({
+						url: `https://cors.bridged.cc/https://cdn.kyawhtut.com/filePath.php?path=${path}`,
+						method: 'get',
+						beforeSend: function() {
+							$('#fileList').empty();
+							toggleLoading(true);
+							$('#totalCount').empty();
+							$('#totalCount').append('Total - 0');
+						},
+						complete: function() {
+						},
+						success: function(data) {
+							processFileList(data.data);
+							$('#totalCount').empty();
+							$('#totalCount').append('Total - ' + data.data.length);
+							toggleEmpty(data.data.length == 0 && pathList.length == 1);
+						},
+						error: function(err) {
+							console.log(err);
+						}
+					})
+				}
+
+				function toggleLoading(isLoading) {
+					$('#loadingView').addClass('d-none');
+					if(isLoading) {
+						$('#loadingView').removeClass('d-none');
+					}
+				}
+
+				function toggleEmpty(isEmpty) {
+					$('#emptyView').addClass('d-none');
+					if(isEmpty) {
+						$('#emptyView').removeClass('d-none');
+					}
+				}
+
+				function processFileList(fileList) {
+					var tbody = $('<tbody>');
+					if(pathList.length > 1) {
+						var tr = $('<tr>', {
+							'class' : 'borderTop borderBottom'
+						});
+						var fileName = $('<th>', {
+							'scope' : 'row',
+							'style' : 'width: 16px;'
+						}).append($('<a>', {
+							'href' : 'javascript:void(0);'
+						}).append('..').click(function() {
+							onClickNavBar(pathList[pathList.length - 2]);
+
+						}));
+
+						tr.append(fileName);
+						tr.append($('<td>'));
+						tr.append($('<td>', {
+							'class' : 'd-sm-block d-none text-center'
+						}));
+						tr.append($('<td>', {
+							'style' : 'width: 100px;'
+						}));
+
+						tbody.append(tr);
+					}
+					$.each(fileList, function(index, file) {
+                        var tr = 'borderBottom';
+						if(pathList.length == 1) {
+							tr = 'borderTop borderBottom';
+						}
+						var tr = $('<tr>', {
+							'class' : tr
+						});
+
+						var fileName = $('<td>').append($('<a>', {
+							'class' : 'fileName',
+							'href' : 'javascript:void(0);'
+						}).append(file.name).click(function() {
+							if(file.isFolder) {
+								pathList.push(file.name);
+								processNavBar(file.name);
+								readFile(file.path);
+							} else {
+								window.open(file.path);
+							}
+						}));
+
+						var fileSize = file.size;
+
+						if(file.isFolder) {
+							fileSize = '-';
+						}
+
+						var fileDate = $('<td>', {
+							'class' : 'd-sm-block d-none text-center'
+						}).append(file.created_date);
+
+						fileSize = $('<td>', {
+							'class' : 'text-right'
+						}).append(fileSize);
+
+						var fileType = fileIcon;
+						if(file.isFolder) {
+							fileType = folderIcon;
+						}
+
+
+						tr.append($('<th>', {
+							'scope' : 'row',
+							'style' : 'width: 16px;'
+						}).append(fileType))
+						tr.append(fileName);
+						tr.append(fileDate);
+						tr.append(fileSize);
+
+						tbody.append(tr);
+					});
+					$('#fileList').empty();
+					$('#fileList').append(tbody);
+					toggleLoading(false);
+				}
+			});
+
+    </script>
+</body>
+</html>

@@ -62,9 +62,3 @@ jobs:
           chatId: ${{ secrets.KH_CHAT_ID }}
           jobStatus: ${{ job.status }}
           skipSuccess: false
-
-      - name: Notify build_release status
-        if: always()
-        uses: wei/curl@v1
-        with:
-          args: curl -G ${{ secrets.TELEGRAM_BOT_URL }} --data-urlencode 'message=ATSY Cast - ${{ env.RELEASE_VERSION }} Build Release Completed.'

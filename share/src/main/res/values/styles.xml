@@ -19,7 +19,7 @@
     </style>
 
     <style name="ProgressTheme">
-        <item name="colorAccent">@color/colorPrimary</item>
+        <item name="colorAccent">#b31c22</item>
     </style>
 
     <style name="FullScreenDialogTransparent" parent="BaseTvTheme">

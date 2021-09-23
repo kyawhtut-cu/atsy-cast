@@ -83,7 +83,7 @@
                 style="@style/TvDefaultText"
                 android:paddingHorizontal="@dimen/margin_medium"
                 android:text="@string/lblLive"
-                android:textColor="@color/colorPrimary"
+                android:textColor="#b31c22"
                 android:textSize="@dimen/text_regular"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"

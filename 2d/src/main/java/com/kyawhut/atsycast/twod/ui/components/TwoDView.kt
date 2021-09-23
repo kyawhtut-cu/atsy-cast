@@ -28,10 +28,10 @@ class TwoDView @JvmOverloads constructor(
     }
 
     private val isTwelveHour: Boolean
-        get() = getCurrentHours() <= 12
+        get() = getCurrentHours() >= 12
 
     private val isFourHour: Boolean
-        get() = getCurrentHours() >= 12
+        get() = getCurrentHours() >= 16
 
     private val vb: View2dBinding by lazy {
         View2dBinding.inflate(LayoutInflater.from(context), this, true)

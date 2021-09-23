@@ -113,13 +113,13 @@
             android:layout_height="wrap_content"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            app:buffered_color="@color/colorPrimaryDark"
+            app:buffered_color="#7A1317"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:played_color="@color/colorPrimary"
-            app:scrubber_color="@color/colorPrimary"
+            app:played_color="#b31c22"
+            app:scrubber_color="#b31c22"
             app:unplayed_color="#C3C3C3" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

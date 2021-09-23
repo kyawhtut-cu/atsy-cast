@@ -1,4 +1,4 @@
-name: ATSY Cast Release Building
+name: ATSY Cast Debug Building
 
 on:
   push:
@@ -24,7 +24,7 @@ jobs:
       - name: Notify to Developer
         uses: wei/curl@v1
         with:
-          args: curl -G ${{ secrets.TELEGRAM_BOT_URL }} --data-urlencode 'message=ATSY Cast Version - ${{ env.RELEASE_VERSION }} Debug Build Start'
+          args: curl -G ${{ secrets.TELEGRAM_BOT_URL }} --data-urlencode 'message=ATSY Cast Version - ${{ env.RELEASE_VERSION }} Build Start'
 
   build_release:
 
@@ -46,7 +46,7 @@ jobs:
       - run: touch debug-keystore.jks
       - run: echo $DEBUG_KEYSTORE_BASE64 | base64 --decode > debug-keystore.jks
       - run: touch tv/google-services.json
-      - run: echo $DEBUG_PLAY_SERVICE_BASE64 | base64 --dcode > tv/google-services.json
+      - run: echo $DEBUG_PLAY_SERVICE_BASE64 | base64 --decode > tv/google-services.json
 
       - name: Tag Version
         run: |

@@ -7,28 +7,8 @@ on:
 
 jobs:
 
-  build_start:
-
-    name: Build Release Start
-    runs-on: ubuntu-latest
-
-    steps:
-
-      - name: Check Out Branch
-        uses: actions/checkout@v2.3.4
-
-      - name: Tag Version
-        run: |
-          echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
-
-      - name: Notify to Developer
-        uses: wei/curl@v1
-        with:
-          args: curl -G ${{ secrets.TELEGRAM_BOT_URL }} --data-urlencode 'message=ATSY Cast Version - ${{ env.RELEASE_VERSION }} Release Build Start'
-
   build_release:
 
-    needs: build_start
     name: Build Release
     runs-on: ubuntu-18.04
     env:
@@ -46,7 +26,7 @@ jobs:
       - run: touch release-keystore.jks
       - run: echo $RELEASE_KEYSTORE_BASE64 | base64 --decode > release-keystore.jks
       - run: touch tv/google-services.json
-      - run: echo $RELEASE_PLAY_SERVICE_BASE64 | base64 --dcode > tv/google-services.json
+      - run: echo $RELEASE_PLAY_SERVICE_BASE64 | base64 --decode > tv/google-services.json
 
       - name: Tag Version
         run: |

@@ -1,7 +1,10 @@
 package com.kyawhut.atsycast.zcm.ui.search
 
+import android.content.Context
 import com.kyawhut.atsycast.share.network.utils.NetworkResponse
 import com.kyawhut.atsycast.share.network.utils.execute
+import com.kyawhut.atsycast.share.utils.ShareUtils.isAdult
+import com.kyawhut.atsycast.share.utils.extension.Extension.isAdultOpen
 import com.kyawhut.atsycast.zcm.data.network.ZCMAPI
 import com.kyawhut.atsycast.zcm.data.network.response.MoviesResponse
 import javax.inject.Inject
@@ -15,6 +18,7 @@ internal class SearchRepositoryImpl @Inject constructor(
 ) : SearchRepository {
 
     override suspend fun search(
+        context: Context,
         query: String,
         apiKey: String,
         callback: (NetworkResponse<List<MoviesResponse>>) -> Unit
@@ -22,7 +26,9 @@ internal class SearchRepositoryImpl @Inject constructor(
         NetworkResponse.loading(callback)
         val response = execute { api.search(query, apiKey) }
         if (response.isSuccess) {
-            NetworkResponse.success(response.data?.moviesList ?: listOf(), callback)
+            NetworkResponse.success(response.data?.moviesList?.filter {
+                !it.moviesGenres.any { it.genresTitle.isAdult } || context.isAdultOpen
+            } ?: listOf(), callback)
         } else NetworkResponse.error(response.error, callback)
     }
 }

@@ -23,6 +23,9 @@ internal class PlayerViewModel @Inject constructor(
     val appName: String by lazy {
         savedStateHandle.get(Constants.EXTRA_APP_NAME) ?: ""
     }
+    private val isAdult: Boolean by lazy {
+        savedStateHandle.get(Constants.EXTRA_IS_ADULT) ?: false
+    }
     var videoID: Int = savedStateHandle.get(Constants.EXTRA_VIDEO_ID) ?: 0
     var isResume: Boolean = savedStateHandle.get(Constants.EXTRA_IS_RESUME) ?: false
     var videoTitle: String = savedStateHandle.get(Constants.EXTRA_VIDEO_TITLE) ?: ""
@@ -53,6 +56,7 @@ internal class PlayerViewModel @Inject constructor(
             videoCustomHeader = this@PlayerViewModel.videoSource!!.customHeader
             videoRelatedVideo = Gson().toJson(episodeList)
             videoSourceType = SourceType.ZCM
+            isAdult = this@PlayerViewModel.isAdult
         }
     }
 }

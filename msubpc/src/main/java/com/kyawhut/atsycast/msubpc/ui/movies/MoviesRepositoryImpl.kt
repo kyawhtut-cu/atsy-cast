@@ -1,10 +1,13 @@
 package com.kyawhut.atsycast.msubpc.ui.movies
 
+import android.content.Context
 import com.kyawhut.atsycast.msubpc.data.network.MSubAPI
 import com.kyawhut.atsycast.msubpc.data.network.response.VideoResponse
 import com.kyawhut.atsycast.msubpc.utils.AesEncryptDecrypt
 import com.kyawhut.atsycast.share.network.utils.NetworkResponse
 import com.kyawhut.atsycast.share.network.utils.execute
+import com.kyawhut.atsycast.share.utils.ShareUtils.isAdult
+import com.kyawhut.atsycast.share.utils.extension.Extension.isAdultOpen
 import kotlinx.coroutines.delay
 import java.util.*
 import javax.inject.Inject
@@ -21,6 +24,7 @@ internal class MoviesRepositoryImpl @Inject constructor(
     private var isFirstTime: Boolean = false
 
     override suspend fun getMovies(
+        context: Context,
         key: String,
         callback: (NetworkResponse<List<VideoResponse>>) -> Unit
     ) {
@@ -63,7 +67,9 @@ internal class MoviesRepositoryImpl @Inject constructor(
             }
         }.run {
             if (!isFirstTime) delay(3000)
-            NetworkResponse.success(this, callback)
+            NetworkResponse.success(this.filter {
+                !(it.videoGenres ?: "").isAdult || context.isAdultOpen
+            }, callback)
         }
     }
 }

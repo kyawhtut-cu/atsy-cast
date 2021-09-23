@@ -105,4 +105,7 @@ object Libs {
     const val toasty = "com.github.GrenderG:Toasty:${Versions.toastyVersion}"
     const val easyPermission = "pub.devrel:easypermissions:${Versions.easyPermissionVersion}"
     const val googleZxing = "com.google.zxing:core:${Versions.googleZxingVersion}"
+
+    const val leakCanary = "com.squareup.leakcanary:leakcanary-android:${Versions.leakCanaryVersion}"
+    const val leakCanaryNoOP = "com.squareup.leakcanary:leakcanary-android-no-op:${Versions.leakCanaryVersion}"
 }

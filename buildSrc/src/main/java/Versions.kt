@@ -73,4 +73,5 @@ object Versions {
     const val toastyVersion = "1.5.2"
     const val easyPermissionVersion = "3.0.0"
     const val googleZxingVersion = "3.3.3"
+    const val leakCanaryVersion = "1.5.4"
 }

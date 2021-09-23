@@ -1,12 +1,15 @@
 package com.kyawhut.atsycast.ets2mm.ui.home
 
+import android.content.Context
 import com.kyawhut.atsycast.ets2mm.data.network.Et2API
 import com.kyawhut.atsycast.ets2mm.data.network.response.GenresResponse
 import com.kyawhut.atsycast.share.db.source.RecentlyWatchSource
 import com.kyawhut.atsycast.share.db.source.WatchLaterSource
 import com.kyawhut.atsycast.share.network.utils.NetworkResponse
 import com.kyawhut.atsycast.share.network.utils.execute
+import com.kyawhut.atsycast.share.utils.ShareUtils.isAdult
 import com.kyawhut.atsycast.share.utils.SourceType
+import com.kyawhut.atsycast.share.utils.extension.Extension.isAdultOpen
 import javax.inject.Inject
 
 /**
@@ -26,12 +29,15 @@ internal class HomeRepositoryImpl @Inject constructor(
         get() = watchLaterSource.isHasWatchLater(SourceType.ET2SMM)
 
     override suspend fun getHome(
+        context: Context,
         callback: (NetworkResponse<List<GenresResponse>>) -> Unit
     ) {
         NetworkResponse.loading(callback)
         val response = execute { api.getHome() }
         if (response.isSuccess) {
-            val genresList = response.data?.toMutableList()
+            val genresList = response.data?.filter { it.genreName.isNotEmpty() }?.filter {
+                !it.genreName.isAdult || context.isAdultOpen
+            }?.toMutableList()
             genresList?.add(0, GenresResponse("-1", "Latest Movies"))
             genresList?.add(1, GenresResponse("0", "Latest Series"))
             NetworkResponse.success(genresList ?: listOf(), callback)

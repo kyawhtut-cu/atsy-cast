@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import androidx.databinding.DataBindingUtil
 import androidx.leanback.widget.BaseCardView
 import androidx.viewbinding.ViewBinding
+import timber.log.Timber
 
 /**
  * @author kyawhtut

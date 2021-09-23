@@ -75,6 +75,7 @@ internal class CacheFragment : BaseGridSupportFragment<CacheViewModel>() {
                 Constants.EXTRA_VIDEO_TITLE to it.videoTitle,
                 Constants.EXTRA_VIDEO_COVER to it.videoCover,
                 Constants.EXTRA_APP_NAME to vm.appName,
+                Constants.EXTRA_IS_ADULT to it.isAdult,
                 Constants.EXTRA_VIDEO_SOURCE to VideoSourceModel(
                     it.videoID.toInt(),
                     it.videoTitle,

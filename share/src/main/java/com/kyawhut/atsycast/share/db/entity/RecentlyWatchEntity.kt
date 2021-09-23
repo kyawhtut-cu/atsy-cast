@@ -37,8 +37,12 @@ data class RecentlyWatchEntity(
     val videoRelatedVideo: String = "",
     @ColumnInfo(name = "video_source_type")
     val videoSourceType: SourceType,
+    @ColumnInfo(name = "is_adult")
+    val isAdult: Boolean,
     @ColumnInfo(name = "created_at")
-    val createdAt: Date
+    val createdAt: Date,
+    @ColumnInfo(name = "updated_at")
+    val updateAt: Date
 ) {
 
     companion object {
@@ -77,7 +81,8 @@ data class RecentlyWatchEntity(
         var videoCustomHeader: List<Pair<String, String>> = mutableListOf()
         var videoRelatedVideo: String = ""
         var videoSourceType: SourceType = SourceType.UNKNOWN
-        var createdAt: Date = Date()
+        var updateAt: Date = Date()
+        var isAdult: Boolean = false
 
         fun build(): RecentlyWatchEntity = RecentlyWatchEntity(
             id,
@@ -92,7 +97,9 @@ data class RecentlyWatchEntity(
             videoCustomHeader,
             videoRelatedVideo,
             videoSourceType,
-            createdAt
+            isAdult,
+            Date(),
+            updateAt
         )
     }
 }

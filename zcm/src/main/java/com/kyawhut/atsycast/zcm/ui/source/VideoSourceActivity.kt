@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import com.kyawhut.atsycast.share.base.BaseGuidedStepActivity
 import com.kyawhut.atsycast.share.ui.resume.ResumeFragment
+import com.kyawhut.atsycast.share.utils.ShareUtils.isAdult
 import com.kyawhut.atsycast.share.utils.extension.startActivity
 import com.kyawhut.atsycast.zcm.ui.player.PlayerActivity
 import com.kyawhut.atsycast.zcm.utils.Constants
@@ -71,7 +72,8 @@ class VideoSourceActivity : BaseGuidedStepActivity() {
                 ?: vm.videoData?.moviesImage ?: ""),
             Constants.EXTRA_APP_NAME to vm.appName,
             Constants.EXTRA_VIDEO_SOURCE to vm.source[linkIndex],
-            Constants.EXTRA_RELATED_EPISODE to vm.relatedEpisode
+            Constants.EXTRA_RELATED_EPISODE to vm.relatedEpisode,
+            Constants.EXTRA_IS_ADULT to (vm.videoData?.moviesGenres?.any { it.genresTitle.isAdult } == true),
         )
     }
 }

@@ -1,5 +1,6 @@
 package com.kyawhut.atsycast.msys.ui.search
 
+import android.app.Application
 import androidx.lifecycle.SavedStateHandle
 import com.kyawhut.atsycast.msys.data.network.response.MoviesResponse
 import com.kyawhut.atsycast.msys.utils.Constants
@@ -14,6 +15,7 @@ import javax.inject.Inject
  */
 @HiltViewModel
 internal class SearchViewModel @Inject constructor(
+    private val application: Application,
     private val savedStateHandle: SavedStateHandle,
     private val repository: SearchRepository
 ) : BaseViewModel() {
@@ -30,7 +32,7 @@ internal class SearchViewModel @Inject constructor(
         callback: (NetworkResponse<List<MoviesResponse>>) -> Unit
     ) {
         viewModelScope {
-            repository.search(query, apiKey, callback)
+            repository.search(application, query, apiKey, callback)
         }
     }
 }

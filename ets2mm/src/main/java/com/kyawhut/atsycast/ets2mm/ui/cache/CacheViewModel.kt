@@ -1,5 +1,6 @@
 package com.kyawhut.atsycast.ets2mm.ui.cache
 
+import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.SavedStateHandle
 import com.kyawhut.atsycast.ets2mm.data.network.response.VideoResponse
@@ -15,6 +16,7 @@ import javax.inject.Inject
  */
 @HiltViewModel
 internal class CacheViewModel @Inject constructor(
+    private val application: Application,
     private val savedStateHandle: SavedStateHandle,
     private val repository: CacheRepository
 ) : BaseViewModel() {
@@ -27,8 +29,8 @@ internal class CacheViewModel @Inject constructor(
     }
 
     val recentlyWatch: LiveData<List<RecentlyWatchEntity>>
-        get() = repository.getRecentlyWatch()
+        get() = repository.getRecentlyWatch(application)
 
     val watchLater: LiveData<List<VideoResponse>>
-        get() = repository.getWatchLater()
+        get() = repository.getWatchLater(application)
 }

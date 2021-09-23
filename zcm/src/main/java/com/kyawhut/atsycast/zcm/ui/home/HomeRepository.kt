@@ -1,5 +1,6 @@
 package com.kyawhut.atsycast.zcm.ui.home
 
+import android.content.Context
 import com.kyawhut.atsycast.share.network.utils.NetworkResponse
 import com.kyawhut.atsycast.zcm.data.network.response.GenresResponse
 
@@ -9,7 +10,11 @@ import com.kyawhut.atsycast.zcm.data.network.response.GenresResponse
  */
 internal interface HomeRepository {
 
-    suspend fun getHome(apiKey: String, callback: (NetworkResponse<List<GenresResponse>>) -> Unit)
+    suspend fun getHome(
+        context: Context,
+        apiKey: String,
+        callback: (NetworkResponse<List<GenresResponse>>) -> Unit
+    )
 
     val isHasRecently: Boolean
 

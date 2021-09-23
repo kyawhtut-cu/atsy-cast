@@ -1,11 +1,14 @@
 package com.kyawhut.atsycast.msubpc.ui.search
 
+import android.content.Context
 import com.kyawhut.atsycast.msubpc.data.network.MSubAPI
 import com.kyawhut.atsycast.msubpc.data.network.response.SearchResponse
 import com.kyawhut.atsycast.msubpc.data.network.response.VideoResponse
 import com.kyawhut.atsycast.msubpc.utils.AesEncryptDecrypt
 import com.kyawhut.atsycast.share.network.utils.NetworkResponse
 import com.kyawhut.atsycast.share.network.utils.execute
+import com.kyawhut.atsycast.share.utils.ShareUtils.isAdult
+import com.kyawhut.atsycast.share.utils.extension.Extension.isAdultOpen
 import kotlinx.coroutines.delay
 import javax.inject.Inject
 
@@ -21,6 +24,7 @@ internal class SearchRepositoryImpl @Inject constructor(
     private var isFirstTime: Boolean = false
 
     override suspend fun search(
+        context: Context,
         query: String,
         callback: (NetworkResponse<List<Pair<String, List<VideoResponse>>>>) -> Unit
     ) {
@@ -44,6 +48,8 @@ internal class SearchRepositoryImpl @Inject constructor(
                 }
             }.filter {
                 it.videoTitle.contains(query, true)
+            }.filter {
+                it.videoGenres?.isAdult != true || context.isAdultOpen
             }
             val series = it.series.map {
                 it.apply {

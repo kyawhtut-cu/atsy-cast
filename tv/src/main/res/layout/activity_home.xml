@@ -14,12 +14,46 @@
         <variable
             name="backgroundPoster"
             type="String" />
+
+        <variable
+            name="isFocusSetting"
+            type="Boolean" />
+
+        <variable
+            name="clock"
+            type="String" />
+
+        <variable
+            name="twoDValue"
+            type="String" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.home.HomeActivity">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guide_feature"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.65" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.93" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/top"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#FFFFFF"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.1" />
 
         <ImageView
             android:id="@+id/iv_background"
@@ -29,7 +63,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/thumbnail_horizontal"
+            android:src="@drawable/ic_thumbnail"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -40,19 +74,38 @@
             isTv="@{true}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_medium_2"
             android:background="@drawable/bg_setting_focus"
             android:padding="@dimen/margin_medium_2"
             android:src="@drawable/ic_setting_white"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintEnd_toStartOf="@+id/tv_clock"
+            app:layout_constraintTop_toTopOf="@+id/top" />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline"
+        <TextView
+            android:id="@+id/tv_setting_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.65" />
+            android:layout_marginTop="@dimen/margin_small"
+            android:text="@string/lbl_setting"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/text_small"
+            android:visibility="@{isFocusSetting ? View.VISIBLE : View.GONE}"
+            app:layout_constraintEnd_toEndOf="@+id/btn_action_setting"
+            app:layout_constraintStart_toStartOf="@+id/btn_action_setting"
+            app:layout_constraintTop_toBottomOf="@+id/btn_action_setting" />
+
+        <TextView
+            android:id="@+id/tv_clock"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/margin_medium"
+            android:paddingEnd="0dp"
+            android:text="@{clock}"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/text_heading_1x"
+            app:layout_constraintBottom_toBottomOf="@+id/btn_action_setting"
+            app:layout_constraintEnd_toStartOf="@+id/end"
+            app:layout_constraintTop_toTopOf="@+id/btn_action_setting"
+            tools:text="02:50 PM" />
 
         <FrameLayout
             android:id="@+id/frame_features"
@@ -61,7 +114,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/guideline" />
+            app:layout_constraintTop_toTopOf="@+id/guide_feature" />
 
         <com.kyawhut.atsycast.share.components.NetworkStateComponent
             android:id="@+id/home_state"

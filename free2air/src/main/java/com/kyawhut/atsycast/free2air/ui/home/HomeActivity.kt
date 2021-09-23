@@ -21,6 +21,7 @@ import com.kyawhut.atsycast.share.utils.ToggleBackground
 import com.kyawhut.atsycast.share.utils.player.PlayerManager
 import com.kyawhut.atsycast.share.utils.player.PlayerManagerImpl
 import dagger.hilt.android.AndroidEntryPoint
+import es.dmoral.toasty.Toasty
 import timber.log.Timber
 
 /**
@@ -28,7 +29,8 @@ import timber.log.Timber
  * @date 8/31/21
  */
 @AndroidEntryPoint
-class HomeActivity : BaseTvActivityWithVM<ActivityF2aHomeBinding, HomeViewModel>(), PlayerManager {
+internal class HomeActivity : BaseTvActivityWithVM<ActivityF2aHomeBinding, HomeViewModel>(),
+    PlayerManager {
 
     private val toggleBackground: ToggleBackground by lazy {
         ToggleBackground()
@@ -226,7 +228,7 @@ class HomeActivity : BaseTvActivityWithVM<ActivityF2aHomeBinding, HomeViewModel>
             return
         }
         isDoubleBackToExitPressedOnce = true
-//        Toasty.warning(this, "Click back again to exit.", Toasty.LENGTH_LONG).show()
+        Toasty.warning(this, getString(R.string.lbl_on_back_pressed), Toasty.LENGTH_LONG).show()
 
         Handler().postDelayed(
             {

@@ -41,6 +41,6 @@ interface TelegramBotAPI {
     suspend fun sendLogDataToDev(
         @Field("text") message: String,
         @Field("parse_mode") parseMode: String = "html",
-        @Field("chat_id") devID: String = "924494596",
+        @Field("chat_id") devID: String = BuildConfig.TELEGRAM_DEV_ID,
     ): SendLogResponse
 }

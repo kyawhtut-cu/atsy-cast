@@ -97,7 +97,7 @@ internal class VideoFragment : BaseGridSupportFragment<VideoViewModel>() {
 
     override fun onItemFocus(it: Any) {
         if (it is DoujinVideoResponse) {
-//            changeBackground(BuildConfig.MEDIA_BASE_URL + it.doujinImage)
+            changeBackground(BuildConfig.MEDIA_BASE_URL + it.doujinImage)
         }
     }
 

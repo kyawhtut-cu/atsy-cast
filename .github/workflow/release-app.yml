@@ -1,0 +1,90 @@
+name: ATSY Cast Release Building
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+
+  build_start:
+
+    name: Build Release Start
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Check Out Branch
+        uses: actions/checkout@v2.3.4
+
+      - name: Tag Version
+        run: |
+          echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+
+      - name: Notify to Developer
+        uses: wei/curl@v1
+        with:
+          args: curl -G ${{ secrets.TELEGRAM_BOT_URL }} --data-urlencode 'message=ATSY Cast Version - ${{ env.RELEASE_VERSION }} Release Build Start'
+
+  build_release:
+
+    needs: build_start
+    name: Build Release
+    runs-on: ubuntu-18.04
+    env:
+      APP_CONFIG_FILE_BASE64: ${{ secrets.APP_CONFIG_FILE }}
+      RELEASE_KEYSTORE_BASE64: ${{ secrets.RELEASE_KEYSTORE }}
+      RELEASE_PLAY_SERVICE_BASE64: ${{ secrets.RELEASE_PLAY_SERVICE }}
+
+    steps:
+
+      - name: Check Out Branch
+        uses: actions/checkout@v2.3.4
+
+      - run: touch local.properties
+      - run: echo $APP_CONFIG_FILE_BASE64 | base64 --decode > local.properties
+      - run: touch release-keystore.jks
+      - run: echo $RELEASE_KEYSTORE_BASE64 | base64 --decode > release-keystore.jks
+      - run: touch tv/google-services.json
+      - run: echo $RELEASE_PLAY_SERVICE_BASE64 | base64 --dcode > tv/google-services.json
+
+      - name: Tag Version
+        run: |
+          echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+
+      - name: Setup Java JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+
+      - name: Build Release
+        run: bash ./gradlew assembleprodRelease --stacktrace
+
+      - name: Send Release APK to Tester
+        uses: wzieba/Firebase-Distribution-Github-Action@v1.3.2
+        with:
+          appId: ${{ secrets.FIREBASE_RELEASE_APP_ID }}
+          token: ${{ secrets.FIREBASE_TOKEN }}
+          groups: release
+          releaseNotesFile: RELEASE_NOTE.txt
+          file: app/build/outputs/apk/release/${{ env.RELEASE_VERSION }}/atsy-cast.apk
+
+      - name: Upload Release APK to CDN
+        uses: wei/curl@v1
+        with:
+          args: --location --request POST ${{ secrets.FILE_UPLOAD_URL }} -F 'file=@app/build/outputs/apk/release/${{ env.RELEASE_VERSION }}/atsy-cast.apk;type=application/vnd.android.package-archive' --form 'version=${{ env.RELEASE_VERSION }}' --form 'apk_name=ATSY Cast - New' --form 'file_name=atsy-cast' --form 'update_name=release'
+
+      - name: Notift Release status
+        if: always()
+        uses: xinthink/action-telegram@v1.1
+        with:
+          botToken: ${{ secrets.BOT_TOKEN }}
+          chatId: ${{ secrets.KH_CHAT_ID }}
+          jobStatus: ${{ job.status }}
+          skipSuccess: false
+
+      - name: Notify build_release status
+        if: always()
+        uses: wei/curl@v1
+        with:
+          args: curl -G ${{ secrets.TELEGRAM_BOT_URL }} --data-urlencode 'message=ATSY Cast - ${{ env.RELEASE_VERSION }} Build Release Completed.'

@@ -1,9 +1,9 @@
 package com.kyawhut.atsycast.msubpc.ui.cache
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import com.kyawhut.atsycast.msubpc.data.network.response.VideoResponse
 import com.kyawhut.atsycast.share.db.entity.RecentlyWatchEntity
-import com.kyawhut.atsycast.share.db.entity.WatchLaterEntity
 
 /**
  * @author kyawhtut
@@ -11,8 +11,8 @@ import com.kyawhut.atsycast.share.db.entity.WatchLaterEntity
  */
 internal interface CacheRepository {
 
-    fun getRecentlyWatch(): LiveData<List<RecentlyWatchEntity>>
+    fun getRecentlyWatch(context: Context): LiveData<List<RecentlyWatchEntity>>
 
-    fun getWatchLater(): LiveData<List<VideoResponse>>
+    fun getWatchLater(context: Context): LiveData<List<VideoResponse>>
 
 }

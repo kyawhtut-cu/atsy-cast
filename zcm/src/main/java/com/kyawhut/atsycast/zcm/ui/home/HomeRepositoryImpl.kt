@@ -1,10 +1,13 @@
 package com.kyawhut.atsycast.zcm.ui.home
 
+import android.content.Context
 import com.kyawhut.atsycast.share.db.source.RecentlyWatchSource
 import com.kyawhut.atsycast.share.db.source.WatchLaterSource
 import com.kyawhut.atsycast.share.network.utils.NetworkResponse
 import com.kyawhut.atsycast.share.network.utils.execute
+import com.kyawhut.atsycast.share.utils.ShareUtils.isAdult
 import com.kyawhut.atsycast.share.utils.SourceType
+import com.kyawhut.atsycast.share.utils.extension.Extension.isAdultOpen
 import com.kyawhut.atsycast.zcm.data.network.ZCMAPI
 import com.kyawhut.atsycast.zcm.data.network.response.GenresResponse
 import javax.inject.Inject
@@ -26,13 +29,16 @@ internal class HomeRepositoryImpl @Inject constructor(
         get() = watchLaterSource.isHasWatchLater(SourceType.ZCM)
 
     override suspend fun getHome(
+        context: Context,
         apiKey: String,
         callback: (NetworkResponse<List<GenresResponse>>) -> Unit
     ) {
         NetworkResponse.loading(callback)
         val response = execute { api.getHome(apiKey) }
         if (response.isSuccess) {
-            val genresList = response.data?.toMutableList()
+            val genresList = response.data?.filter { it.genresTitle.isNotEmpty() }?.filter {
+                !it.genresTitle.isAdult || context.isAdultOpen
+            }?.toMutableList()
             genresList?.add(0, GenresResponse(0, "Latest"))
             NetworkResponse.success(genresList ?: listOf(), callback)
         } else response.post(callback)

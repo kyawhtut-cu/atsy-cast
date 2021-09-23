@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.update.UpdateActivity">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="android.view.View.OnClickListener" />
+
+        <variable
+            name="percent"
+            type="String" />
+
+        <variable
+            name="onClickListener"
+            type="OnClickListener" />
+
+        <variable
+            name="updateVersion"
+            type="String" />
+
+        <variable
+            name="updateMessage"
+            type="String" />
+
+        <variable
+            name="actionText"
+            type="String" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorBackground">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.63" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.07" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/view_update"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/colorBlack"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/center"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/update_animation"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toTopOf="@+id/view_footer"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/update_animation" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/view_footer"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_large"
+                android:layout_marginBottom="@dimen/margin_medium"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <TextView
+                    android:id="@+id/btn_action"
+                    isMMFont="@{true}"
+                    isTv="@{percent.isEmpty()}"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_default_focus"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:gravity="center"
+                    android:onClick="@{(v) -> onClickListener.onClick(v)}"
+                    android:text="@{actionText}"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/text_regular"
+                    android:visibility="@{percent.isEmpty() ? View.VISIBLE : View.GONE}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Download">
+
+                    <requestFocus />
+                </TextView>
+
+                <TextView
+                    android:id="@+id/tv_percent"
+                    isMMFont="@{true}"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="@dimen/margin_small"
+                    android:text="@{String.format(`Downloading... %s%s`, percent, `%`)}"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/text_small"
+                    android:visibility="@{percent.isEmpty() ? View.GONE : View.VISIBLE}"
+                    app:layout_constraintBottom_toTopOf="@+id/update_view"
+                    app:layout_constraintEnd_toEndOf="@+id/update_view"
+                    app:layout_constraintStart_toStartOf="@+id/update_view"
+                    tools:text="Downloading... 56%" />
+
+                <com.kyawhut.atsycast.share.components.RoundedConstraintLayout
+                    android:id="@+id/update_view"
+                    android:layout_width="305dp"
+                    android:layout_height="@dimen/margin_medium"
+                    android:visibility="@{percent.isEmpty() ? View.GONE : View.VISIBLE}"
+                    app:backgroundColor="@color/colorWebDL"
+                    app:cornerAll="@dimen/margin_medium"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                    <View
+                        android:id="@+id/view_percent"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:background="@color/colorPrimary"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </com.kyawhut.atsycast.share.components.RoundedConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/view_information"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/center"
+            app:layout_constraintStart_toStartOf="@+id/start"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/bottom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.9" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/top"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.35" />
+
+            <com.kyawhut.atsycast.share.components.RoundedConstraintLayout
+                android:id="@+id/view_app_logo"
+                android:layout_width="120dp"
+                android:layout_height="80dp"
+                app:cornerAll="@dimen/margin_medium"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/top">
+
+                <ImageView
+                    android:id="@+id/iv_app_logo"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/app_banner"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </com.kyawhut.atsycast.share.components.RoundedConstraintLayout>
+
+            <TextView
+                android:id="@+id/tv_version"
+                isMMFont="@{true}"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="@dimen/margin_medium_2"
+                android:paddingVertical="@dimen/margin_medium"
+                android:text="@{String.format(`Version - %s`, updateVersion)}"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/text_heading_1x"
+                app:layout_constraintBottom_toTopOf="@+id/top"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/view_app_logo"
+                tools:text="Version - 1.0.0" />
+
+            <TextView
+                android:id="@+id/tv_update_message"
+                isMMFont="@{true}"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:paddingHorizontal="@dimen/margin_medium_2"
+                android:paddingBottom="@dimen/margin_medium"
+                android:text="@{updateMessage}"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/text_heading_1x"
+                app:layout_constraintBottom_toTopOf="@+id/bottom"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/view_app_logo"
+                app:layout_constraintTop_toTopOf="@+id/top"
+                tools:text="Version - 1.0.0" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

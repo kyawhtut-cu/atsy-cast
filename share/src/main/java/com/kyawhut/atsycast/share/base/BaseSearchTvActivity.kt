@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.KeyEvent
 import androidx.fragment.app.FragmentActivity
+import com.kyawhut.atsycast.share.R
 import com.kyawhut.atsycast.share.utils.extension.FragmentExtension.replaceFragment
+import es.dmoral.toasty.Toasty
 
 /**
  * @author kyawhtut
@@ -47,7 +49,7 @@ abstract class BaseSearchTvActivity<FM : BaseSearchSupportFragment<*>> : Fragmen
         }
         isDoubleBackToExitPressedOnce = true
 
-//        Toasty.warning(this, "Click back again to exit.", Toasty.LENGTH_LONG).show()
+        Toasty.warning(this, getString(R.string.lbl_on_back_pressed), Toasty.LENGTH_LONG).show()
 
         object : CountDownTimer(2000, 1000) {
             override fun onFinish() {

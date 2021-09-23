@@ -103,8 +103,8 @@ abstract class BaseBrowseSupportFragment : BrowseSupportFragment() {
             onSearchClicked?.invoke()
         }
 
-        brandColor = getColorValue(R.color.colorPrimary)
-        searchAffordanceColor = getColorValue(R.color.colorAccent)
+        brandColor = getColorValue(R.color.brandColor)
+        searchAffordanceColor = getColorValue(R.color.searchAffordanceColor)
         mainFragmentRegistry.registerFragment(PageRow::class.java, PageRowFragmentFactory())
     }
 

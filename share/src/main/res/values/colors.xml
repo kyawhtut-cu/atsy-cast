@@ -5,17 +5,17 @@
     <color name="colorBackground50">#80242424</color>
     <color name="colorBackground25">#40242424</color>
 
-    <color name="colorPrimary">#b31c22</color>
-    <color name="colorPrimaryDark">#7A1317</color>
-    <color name="colorAccent">#1e3a7b</color>
-    <color name="colorPrimaryTransparent">#75b31c22</color>
+    <color name="brandColor">#b31c22</color>
+    <color name="searchAffordanceColor">#1e3a7b</color>
 
+    <color name="colorThumbnail">#2B4E78</color>
+
+    <color name="colorCardBackground">#242424</color>
     <color name="colorCardBackgroundFocus">#7A1317</color>
     <color name="colorCardBackgroundUnFocus">#424242</color>
 
-    <color name="colorAppNameBg">@color/colorPrimary</color>
-    <color name="colorAppNameStroke">@color/colorPrimaryDark</color>
-    <color name="colorAppName">@color/colorWhite</color>
+    <color name="colorCardAction">#7a1317</color>
+    <color name="colorCardActionUnFocus">#424242</color>
 
     <color name="colorWhite">#fff</color>
     <color name="colorBlack">#000000</color>

@@ -21,7 +21,7 @@ interface RecentlyWatchSource {
 
     fun get(sourceType: SourceType): List<RecentlyWatchEntity>
 
-    fun getLive(sourceType: SourceType): LiveData<List<RecentlyWatchEntity>>
+    fun getLive(sourceType: SourceType): Flowable<List<RecentlyWatchEntity>>
 
     fun delete(videoID: String, sourceType: SourceType)
 

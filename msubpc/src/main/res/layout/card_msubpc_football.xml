@@ -18,9 +18,9 @@
         android:layout_width="260dp"
         android:layout_height="wrap_content"
         android:paddingHorizontal="@dimen/margin_medium_2"
-        app:backgroundColor="@color/colorBackground"
+        app:backgroundColor="@color/colorCardBackground"
         app:cornerAll="@dimen/margin_small"
-        app:strokeLineColor="@color/colorPrimary"
+        app:strokeLineColor="@color/colorCardBackgroundFocus"
         app:strokeLineWidth="0dp"
         tools:context=".ui.card.view.FootballCardView">
 
@@ -31,7 +31,7 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:adjustViewBounds="true"
-            android:src="@drawable/thumbnail_horizontal"
+            android:src="@drawable/ic_thumbnail"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_league_name" />
 
@@ -42,7 +42,7 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:adjustViewBounds="true"
-            android:src="@drawable/thumbnail_horizontal"
+            android:src="@drawable/ic_thumbnail"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/iv_flag" />
 

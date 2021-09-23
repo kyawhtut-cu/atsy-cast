@@ -16,5 +16,5 @@ internal object Constants {
     const val EXTRA_IS_RESUME = "EXTRA_IS_RESUME"
     const val EXTRA_VIDEO_COVER = "EXTRA_VIDEO_COVER"
     const val EXTRA_APP_NAME = "EXTRA_APP_NAME"
-    const val EXTRA_IS_LIVE = "EXTRA_IS_LIVE"
+    const val EXTRA_IS_ADULT = "EXTRA_IS_ADULT"
 }

@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import com.kyawhut.atsycast.share.db.dao.RecentlyWatchDao
 import com.kyawhut.atsycast.share.db.entity.RecentlyWatchEntity
 import com.kyawhut.atsycast.share.utils.SourceType
+import io.reactivex.Flowable
 
 /**
  * @author kyawhtut
@@ -29,7 +30,7 @@ class RecentlyWatchSourceImpl(private val dao: RecentlyWatchDao) : RecentlyWatch
         return dao.get(sourceType)
     }
 
-    override fun getLive(sourceType: SourceType): LiveData<List<RecentlyWatchEntity>> {
+    override fun getLive(sourceType: SourceType): Flowable<List<RecentlyWatchEntity>> {
         return dao.getLive(sourceType)
     }
 

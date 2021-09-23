@@ -1,5 +1,6 @@
 package com.kyawhut.atsycast.msubpc.ui.movies
 
+import android.app.Application
 import androidx.lifecycle.SavedStateHandle
 import com.kyawhut.atsycast.msubpc.data.network.response.VideoResponse
 import com.kyawhut.atsycast.msubpc.utils.Constants
@@ -14,6 +15,7 @@ import javax.inject.Inject
  */
 @HiltViewModel
 internal class MoviesViewModel @Inject constructor(
+    private val application: Application,
     private val savedStateHandle: SavedStateHandle,
     private val repo: MoviesRepository
 ) : BaseViewModel() {
@@ -29,7 +31,7 @@ internal class MoviesViewModel @Inject constructor(
         callback: (NetworkResponse<List<VideoResponse>>) -> Unit
     ) {
         viewModelScope {
-            repo.getMovies(key, callback)
+            repo.getMovies(application, key, callback)
         }
     }
 }

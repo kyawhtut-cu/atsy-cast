@@ -13,6 +13,8 @@ import com.kyawhut.atsycast.share.base.BaseSearchSupportFragment
 import com.kyawhut.atsycast.share.network.utils.NetworkError.Companion.printStackTrace
 import com.kyawhut.atsycast.share.network.utils.NetworkResponse
 import com.kyawhut.atsycast.share.network.utils.NetworkStatus
+import com.kyawhut.atsycast.share.utils.ShareUtils.isAdult
+import com.kyawhut.atsycast.share.utils.extension.Extension.isAdultOpen
 import com.kyawhut.atsycast.share.utils.extension.startActivity
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -56,7 +58,9 @@ internal class SearchFragment : BaseSearchSupportFragment<SearchViewModel>() {
                         val listAdapter = ArrayObjectAdapter(
                             CardPresenter(requireContext())
                         ).apply {
-                            setItems(it.moviesList, VideoResponse.diff)
+                            setItems(it.moviesList.filter {
+                                !it.videoTitle.isAdult || isAdultOpen
+                            }, VideoResponse.diff)
                         }
                         rowAdapter.add(ListRow(header, listAdapter))
                     }
@@ -65,7 +69,9 @@ internal class SearchFragment : BaseSearchSupportFragment<SearchViewModel>() {
                         val listAdapter = ArrayObjectAdapter(
                             CardPresenter(requireContext())
                         ).apply {
-                            setItems(it.seriesList, VideoResponse.diff)
+                            setItems(it.seriesList.filter {
+                                !it.videoTitle.isAdult || isAdultOpen
+                            }, VideoResponse.diff)
                         }
                         rowAdapter.add(ListRow(header, listAdapter))
                     }

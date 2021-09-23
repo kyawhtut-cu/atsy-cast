@@ -1,13 +1,30 @@
 <resources>
     <string name="app_name">ATSY Cast</string>
+    <string name="lbl_setting">Settings</string>
 
     <string name="lbl_dark_side_dialog_password_title">Enter your Dark Side password</string>
+    <string name="lbl_device_dialog_password_title">Enter your Device password</string>
+
+    <string name="lbl_error_change_name">နာမည်ချိန်းရာ တွင် တစ်ခုခု မှားယွင်းနေပါသည်။</string>
+    <string name="lbl_notify_to_developer">တစ်ခုခုမှားယွင်းနေပါသဖြင့် Developer ထံသို့ အကြောင်းကြားပြီးပါပြီ။</string>
+    <string name="lbl_device_register_error">Device Register လုပ်ရာတွင် တစ်ခုခုမှားယွင်းနေပါသည်။</string>
+    <string name="lbl_device_password_error">Device Password စစ်ဆေးရာတွင် တစ်ခုခုမှားယွင်းနေပါသည်။</string>
+    <string name="lbl_check_update_error">Application Update စစ်ဆေးရာတွင် တစ်ခုခုမှားယွင်းနေပါသည်။</string>
+    <string name="lbl_wrong_password">လျှို့ဝှက်နံပါတ် မှားယွင်းနေပါသည်။</string>
+
+    <string name="lbl_download">Download</string>
+    <string name="lbl_permission">Need Permission</string>
+    <string name="lbl_retry">Retry</string>
+    <string name="lbl_install">Install</string>
+    <string name="lbl_exit">Exit</string>
+    <string name="lbl_maintenance">Maintenance</string>
 
     <string name="pref_title_settings">App Settings</string>
 
-    <string name="pref_lottery">pref_lottery</string>
-    <string name="pref_title_lottery">Lottery</string>
-    <string name="pref_summary_lottery">Lottery</string>
+    <string name="pref_language">pref_language</string>
+    <string name="pref_title_language">Language</string>
+    <string name="pref_dialog_title_language">Choose Language</string>
+    <string name="pref_summary_language">Language</string>
 
     <string name="pref_device_id">pref_device_id</string>
     <string name="pref_title_device_id">Device ID</string>
@@ -29,10 +46,15 @@
     <string name="pref_title_develop_by">Develop By</string>
     <string name="pref_summary_develop_by">Kyaw Htut</string>
 
-    <string name="pref_adult">pref_adult</string>
     <string name="pref_title_adult">Adult</string>
     <string name="pref_summary_on_adult">Adult already open.</string>
     <string name="pref_summary_off_adult">Adult already closed.</string>
+
+    <string name="old_pref_display_name">old_pref_display_name</string>
+    <string name="pref_display_name">pref_display_name</string>
+    <string name="pref_title_display_name">Your Name</string>
+    <string name="pref_dialog_display_name">Enter Your Name</string>
+    <string name="pref_summary_display_name">Your Name</string>
 
     <string name="pref_title_recommendations">Recommendations</string>
     <string name="pref_key_recommendations">pref_recommendations</string>
@@ -45,6 +67,16 @@
     <string name="pref_title_password">Password</string>
     <string name="pref_key_login">pref_login</string>
     <string name="pref_title_login">Login</string>
+
+    <array name="pref_language_entries">
+        <item>English</item>
+        <item>Myanmar</item>
+    </array>
+
+    <array name="pref_language_entries_value">
+        <item>en</item>
+        <item>mm</item>
+    </array>
 
     <array name="pref_title_username">
         <item>Test 1</item>

@@ -1,6 +1,5 @@
 package com.kyawhut.atsycast.share.db.dao
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -29,7 +28,7 @@ abstract class RecentlyWatchDao {
     abstract fun get(sourceType: SourceType): List<RecentlyWatchEntity>
 
     @Query("select * from table_recently_watch where video_source_type = :sourceType order by created_at")
-    abstract fun getLive(sourceType: SourceType): LiveData<List<RecentlyWatchEntity>>
+    abstract fun getLive(sourceType: SourceType): Flowable<List<RecentlyWatchEntity>>
 
     @Query("select count(*) from table_recently_watch where video_source_type = :sourceType")
     abstract fun getCountLiveData(sourceType: SourceType): Flowable<Int>

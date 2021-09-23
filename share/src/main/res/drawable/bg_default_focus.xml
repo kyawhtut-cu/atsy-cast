@@ -3,23 +3,15 @@
     <item android:state_focused="true">
         <shape>
             <corners android:radius="@dimen/margin_medium" />
-            <solid android:color="@color/colorPrimaryTransparent" />
-            <padding
-                android:bottom="@dimen/margin_medium"
-                android:left="@dimen/margin_medium_2"
-                android:right="@dimen/margin_medium_2"
-                android:top="@dimen/margin_medium" />
+            <solid android:color="#75b31c22" />
+            <padding android:bottom="@dimen/margin_medium" android:left="@dimen/margin_medium_2" android:right="@dimen/margin_medium_2" android:top="@dimen/margin_medium" />
         </shape>
     </item>
     <item>
         <shape>
             <corners android:radius="@dimen/margin_medium" />
             <solid android:color="@color/colorBackground50" />
-            <padding
-                android:bottom="@dimen/margin_medium"
-                android:left="@dimen/margin_medium_2"
-                android:right="@dimen/margin_medium_2"
-                android:top="@dimen/margin_medium" />
+            <padding android:bottom="@dimen/margin_medium" android:left="@dimen/margin_medium_2" android:right="@dimen/margin_medium_2" android:top="@dimen/margin_medium" />
         </shape>
     </item>
 </selector>

@@ -16,7 +16,6 @@ import android.os.Parcelable
 import android.provider.Settings
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import java.io.Serializable
 
 object IntentExtension {
@@ -175,17 +174,14 @@ inline fun <reified T : Activity> Fragment.startActivity(vararg params: Pair<Str
 inline fun <reified T : Activity> Activity.startActivityForResult(
     requestCode: Int,
     vararg params: Pair<String, Any?>
-) = IntentExtension.startActivityForResult(this, T::class.java, requestCode, params)
+) =
+    IntentExtension.startActivityForResult(this, T::class.java, requestCode, params)
 
 inline fun <reified T : Activity> Fragment.startActivityForResult(
     requestCode: Int,
     vararg params: Pair<String, Any?>
-) = IntentExtension.startActivityForResult(this, T::class.java, requestCode, params)
-
-inline fun <reified T : Activity> FragmentActivity.startActivityForResult(
-    requestCode: Int,
-    vararg params: Pair<String, Any?>
-) = IntentExtension.startActivityForResult(this, T::class.java, requestCode, params)
+) =
+    IntentExtension.startActivityForResult(this, T::class.java, requestCode, params)
 
 inline fun <reified T : Service> Context.startService(vararg params: Pair<String, Any?>) =
     IntentExtension.startService(this, T::class.java, params)

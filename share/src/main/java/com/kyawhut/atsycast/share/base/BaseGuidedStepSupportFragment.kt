@@ -27,7 +27,7 @@ abstract class BaseGuidedStepSupportFragment : GuidedStepSupportFragment() {
     open val description: String = ""
     open val breadcrumb: String = ""
     open val icon: Drawable? by lazy {
-        getDrawableValue(R.drawable.thumbnail_horizontal)
+        getDrawableValue(R.drawable.ic_thumbnail)
     }
 
     open fun onCreateActions(actions: MutableList<GuidedAction>) {}

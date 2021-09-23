@@ -1,5 +1,6 @@
 package com.kyawhut.atsycast.ets2mm.ui.home
 
+import android.content.Context
 import com.kyawhut.atsycast.ets2mm.data.network.response.GenresResponse
 import com.kyawhut.atsycast.share.network.utils.NetworkResponse
 
@@ -9,7 +10,7 @@ import com.kyawhut.atsycast.share.network.utils.NetworkResponse
  */
 internal interface HomeRepository {
 
-    suspend fun getHome(callback: (NetworkResponse<List<GenresResponse>>) -> Unit)
+    suspend fun getHome(context: Context, callback: (NetworkResponse<List<GenresResponse>>) -> Unit)
 
     val isHasRecently: Boolean
 

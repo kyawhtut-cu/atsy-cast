@@ -1,9 +1,12 @@
 package com.kyawhut.atsycast.ets2mm.ui.movies
 
+import android.content.Context
 import com.kyawhut.atsycast.ets2mm.data.network.Et2API
 import com.kyawhut.atsycast.ets2mm.data.network.response.VideoResponse
 import com.kyawhut.atsycast.share.network.utils.NetworkResponse
 import com.kyawhut.atsycast.share.network.utils.execute
+import com.kyawhut.atsycast.share.utils.ShareUtils.isAdult
+import com.kyawhut.atsycast.share.utils.extension.Extension.isAdultOpen
 import javax.inject.Inject
 
 /**
@@ -15,6 +18,7 @@ internal class MoviesRepositoryImpl @Inject constructor(
 ) : MoviesRepository {
 
     override suspend fun getMovies(
+        context: Context,
         genresID: String,
         page: Int,
         callback: (NetworkResponse<List<VideoResponse>>) -> Unit
@@ -27,6 +31,13 @@ internal class MoviesRepositoryImpl @Inject constructor(
                 else -> api.getVideoByGenresID(genresID, page)
             }
         }
-        response.post(callback)
+        if (response.isSuccess) {
+            NetworkResponse.success(
+                response.data?.filter {
+                    !it.videoTitle.isAdult || context.isAdultOpen
+                } ?: listOf(),
+                callback
+            )
+        } else response.post(callback)
     }
 }

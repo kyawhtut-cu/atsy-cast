@@ -9,6 +9,7 @@ import com.kyawhut.atsycast.share.base.BaseGuidedStepActivity
 import com.kyawhut.atsycast.share.model.VideoSourceModel
 import com.kyawhut.atsycast.share.ui.dialog.PlayerErrorDialog.Companion.showError
 import com.kyawhut.atsycast.share.ui.resume.ResumeFragment
+import com.kyawhut.atsycast.share.utils.ShareUtils.isAdult
 import com.kyawhut.atsycast.share.utils.ShareUtils.isDirectPlayExtension
 import com.kyawhut.atsycast.share.utils.ShareUtils.isEmbedExtension
 import com.kyawhut.atsycast.share.utils.ShareUtils.isWEBMExtension
@@ -134,6 +135,7 @@ class VideoSourceActivity : BaseGuidedStepActivity() {
             Constants.EXTRA_VIDEO_COVER to (vm.videoData?.moviesCover
                 ?: vm.videoData?.moviesImage ?: ""),
             Constants.EXTRA_APP_NAME to vm.appName,
+            Constants.EXTRA_IS_ADULT to (vm.videoData?.moviesGenres?.any { it.genresTitle.isAdult } == true),
             Constants.EXTRA_VIDEO_SOURCE to vm.source[linkIndex].apply {
                 if (vm.sourceURL.isNotEmpty())
                     url = vm.sourceURL

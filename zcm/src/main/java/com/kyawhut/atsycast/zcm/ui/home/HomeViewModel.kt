@@ -1,5 +1,6 @@
 package com.kyawhut.atsycast.zcm.ui.home
 
+import android.app.Application
 import androidx.lifecycle.SavedStateHandle
 import com.kyawhut.atsycast.share.base.BaseViewModel
 import com.kyawhut.atsycast.share.network.utils.NetworkResponse
@@ -14,6 +15,7 @@ import javax.inject.Inject
  */
 @HiltViewModel
 internal class HomeViewModel @Inject constructor(
+    private val application: Application,
     private val savedStateHandle: SavedStateHandle,
     private val homeRepository: HomeRepository,
 ) : BaseViewModel() {
@@ -35,7 +37,7 @@ internal class HomeViewModel @Inject constructor(
 
     fun getHome(callback: (NetworkResponse<List<GenresResponse>>) -> Unit) {
         viewModelScope {
-            homeRepository.getHome(apiKey, callback)
+            homeRepository.getHome(application, apiKey, callback)
         }
     }
 }

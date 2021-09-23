@@ -20,9 +20,11 @@ import com.kyawhut.atsycast.share.R
 import com.kyawhut.atsycast.share.databinding.AtsyPlayerBinding
 import com.kyawhut.atsycast.share.model.VideoSourceModel
 import com.kyawhut.atsycast.share.ui.dialog.PlayerErrorDialog.Companion.showPlayerError
+import com.kyawhut.atsycast.share.utils.color.RandomColor
 import com.kyawhut.atsycast.share.utils.extension.Extension.screenSize
 import com.kyawhut.atsycast.share.utils.player.PlayerManager
 import com.kyawhut.atsycast.share.utils.player.PlayerManagerImpl
+import es.dmoral.toasty.Toasty
 import timber.log.Timber
 
 /**
@@ -74,18 +76,19 @@ abstract class BasePlayerActivity : BaseTvActivity<AtsyPlayerBinding>(), PlayerM
 
         initEpisode()
 
-        vb.isShowProgress = true
-
-        vb.playerView.findViewById<DefaultTimeBar>(R.id.exo_progress)
-            .setOnKeyListener { _, i, event ->
-                if (isPlayerControllerShowed) handleProgressBarAction(i)
-                else Handler().postDelayed({
-                    isPlayerControllerShowed = true
-                }, 300)
-                i != 4
-            }
-
-        vb.appName = appName
+        vb.apply {
+            isShowProgress = true
+            appName = this@BasePlayerActivity.appName
+            viewAppName.setBackgroundColor(RandomColor().randomColor())
+            playerView.findViewById<DefaultTimeBar>(R.id.exo_progress)
+                .setOnKeyListener { _, i, _ ->
+                    if (isPlayerControllerShowed) handleProgressBarAction(i)
+                    else Handler().postDelayed({
+                        isPlayerControllerShowed = true
+                    }, 300)
+                    i != 4
+                }
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle, outPersistentState: PersistableBundle) {
@@ -328,7 +331,7 @@ abstract class BasePlayerActivity : BaseTvActivity<AtsyPlayerBinding>(), PlayerM
             return
         }
         isDoubleBackToExitPressedOnce = true
-//        Toasty.warning(this, "Click back again to exit.", Toasty.LENGTH_LONG).show()
+        Toasty.warning(this, getString(R.string.lbl_on_back_pressed), Toasty.LENGTH_LONG).show()
 
         Handler().postDelayed(
             {

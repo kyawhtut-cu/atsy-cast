@@ -11,7 +11,9 @@ import com.kyawhut.atsycast.ets2mm.ET2SMMApp.clearAPIKey
 import com.kyawhut.atsycast.ets2mm.R
 import com.kyawhut.atsycast.ets2mm.data.network.response.GenresResponse
 import com.kyawhut.atsycast.ets2mm.databinding.ActivityEts2mmHomeBinding
+import com.kyawhut.atsycast.ets2mm.ui.cache.CacheFragment
 import com.kyawhut.atsycast.ets2mm.ui.movies.MoviesFragment
+import com.kyawhut.atsycast.ets2mm.ui.search.SearchActivity
 import com.kyawhut.atsycast.ets2mm.utils.Constants
 import com.kyawhut.atsycast.share.base.BaseBrowseSupportFragment
 import com.kyawhut.atsycast.share.base.BaseTvActivity
@@ -19,8 +21,6 @@ import com.kyawhut.atsycast.share.network.utils.NetworkResponse
 import com.kyawhut.atsycast.share.network.utils.NetworkStatus
 import com.kyawhut.atsycast.share.utils.extension.FragmentExtension.replaceFragment
 import com.kyawhut.atsycast.share.utils.extension.putArg
-import com.kyawhut.atsycast.ets2mm.ui.cache.CacheFragment
-import com.kyawhut.atsycast.ets2mm.ui.search.SearchActivity
 import com.kyawhut.atsycast.share.utils.extension.startActivity
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -35,7 +35,7 @@ internal class HomeActivity : BaseTvActivity<ActivityEts2mmHomeBinding>() {
         get() = R.layout.activity_ets2mm_home
 
     private val appName: String by lazy {
-        intent?.getStringExtra(Constants.EXTRA_APP_NAME) ?: "ET2S Myanmar"
+        intent?.getStringExtra(Constants.EXTRA_APP_NAME) ?: ""
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

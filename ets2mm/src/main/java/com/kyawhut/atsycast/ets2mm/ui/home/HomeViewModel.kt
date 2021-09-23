@@ -1,5 +1,6 @@
 package com.kyawhut.atsycast.ets2mm.ui.home
 
+import android.app.Application
 import androidx.lifecycle.SavedStateHandle
 import com.kyawhut.atsycast.ets2mm.data.network.response.GenresResponse
 import com.kyawhut.atsycast.ets2mm.utils.Constants
@@ -14,6 +15,7 @@ import javax.inject.Inject
  */
 @HiltViewModel
 internal class HomeViewModel @Inject constructor(
+    private val application: Application,
     private val savedStateHandle: SavedStateHandle,
     private val homeRepository: HomeRepository,
 ) : BaseViewModel() {
@@ -32,7 +34,7 @@ internal class HomeViewModel @Inject constructor(
 
     fun getHome(callback: (NetworkResponse<List<GenresResponse>>) -> Unit) {
         viewModelScope {
-            homeRepository.getHome(callback)
+            homeRepository.getHome(application, callback)
         }
     }
 }

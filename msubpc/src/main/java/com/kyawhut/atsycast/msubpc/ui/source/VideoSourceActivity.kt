@@ -6,6 +6,7 @@ import com.kyawhut.atsycast.msubpc.ui.player.PlayerActivity
 import com.kyawhut.atsycast.msubpc.utils.Constants
 import com.kyawhut.atsycast.share.base.BaseGuidedStepActivity
 import com.kyawhut.atsycast.share.ui.resume.ResumeFragment
+import com.kyawhut.atsycast.share.utils.ShareUtils.isAdult
 import com.kyawhut.atsycast.share.utils.extension.startActivity
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -71,7 +72,8 @@ class VideoSourceActivity : BaseGuidedStepActivity() {
                 ?: vm.videoData!!.videoPosterImage),
             Constants.EXTRA_APP_NAME to vm.appName,
             Constants.EXTRA_VIDEO_SOURCE to vm.source[linkIndex],
-            Constants.EXTRA_RELATED_EPISODE to vm.relatedEpisode
+            Constants.EXTRA_RELATED_EPISODE to vm.relatedEpisode,
+            Constants.EXTRA_IS_ADULT to (vm.videoData?.videoGenres?.isAdult == true)
         )
     }
 }

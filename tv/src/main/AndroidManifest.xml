@@ -8,10 +8,16 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+
     <application
         android:name=".ATSYCast"
-        android:allowBackup="true"
-        android:banner="@mipmap/ic_launcher"
+        android:allowBackup="false"
+        android:banner="@drawable/app_banner"
         android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -22,7 +28,7 @@
         tools:targetApi="m">
 
         <activity
-            android:name=".ui.home.HomeActivity"
+            android:name=".ui.splash.SplashActivity"
             android:screenOrientation="sensorLandscape"
             android:theme="@style/BaseTvTheme">
             <intent-filter>
@@ -34,9 +40,37 @@
         </activity>
 
         <activity
+            android:name=".ui.home.HomeActivity"
+            android:screenOrientation="sensorLandscape"
+            android:theme="@style/BaseTvTheme" />
+
+        <activity
+            android:name=".ui.update.UpdateActivity"
+            android:screenOrientation="sensorLandscape"
+            android:theme="@style/BaseTvTheme" />
+
+        <activity
             android:name=".ui.setting.SettingActivity"
+            android:label="Setting"
             android:screenOrientation="sensorLandscape"
             android:theme="@style/TvSetting" />
+
+        <service
+            android:name=".utils.services.DownloaderService"
+            android:exported="false"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.update_provider"
+            android:exported="false"
+            android:grantUriPermissions="true"
+            tools:replace="android:authorities">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_provider_path"
+                tools:replace="android:resource" />
+        </provider>
     </application>
 
 </manifest>

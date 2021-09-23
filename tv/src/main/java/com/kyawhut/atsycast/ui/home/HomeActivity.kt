@@ -1,6 +1,7 @@
 package com.kyawhut.atsycast.ui.home
 
 import android.os.Bundle
+import android.os.CountDownTimer
 import androidx.fragment.app.commit
 import com.kyawhut.atsycast.R
 import com.kyawhut.atsycast.databinding.ActivityHomeBinding
@@ -9,6 +10,8 @@ import com.kyawhut.atsycast.share.utils.ToggleBackground
 import com.kyawhut.atsycast.share.utils.extension.startActivity
 import com.kyawhut.atsycast.ui.setting.SettingActivity
 import dagger.hilt.android.AndroidEntryPoint
+import java.text.SimpleDateFormat
+import java.util.*
 
 /**
  * @author kyawhtut
@@ -24,6 +27,17 @@ class HomeActivity : BaseTvActivity<ActivityHomeBinding>() {
     override val layoutID: Int
         get() = R.layout.activity_home
 
+    private val clockCountDown: CountDownTimer by lazy {
+        object : CountDownTimer(1000 * 10, 1000) {
+            override fun onTick(millisUntilFinished: Long) {
+            }
+
+            override fun onFinish() {
+                executeClock()
+            }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (savedInstanceState == null) {
@@ -31,6 +45,8 @@ class HomeActivity : BaseTvActivity<ActivityHomeBinding>() {
                 add(R.id.frame_features, HomeFeaturesFragment())
             }
         }
+
+        vb.isFocusSetting = true
 
         toggleBackground.callBack = {
             vb.backgroundPoster = it
@@ -40,9 +56,21 @@ class HomeActivity : BaseTvActivity<ActivityHomeBinding>() {
             (supportFragmentManager.findFragmentById(R.id.frame_features) as HomeFeaturesFragment).refreshPage();
         }
 
-        vb.btnActionSetting.setOnClickListener {
-            startActivity<SettingActivity>()
+        vb.btnActionSetting.apply {
+            setOnFocusChangeListener { _, hasFocus ->
+                vb.isFocusSetting = hasFocus
+            }
+            setOnClickListener {
+                startActivity<SettingActivity>()
+            }
         }
+
+        executeClock()
+    }
+
+    private fun executeClock() {
+        vb.clock = SimpleDateFormat("hh:mm a", Locale.ENGLISH).format(Date())
+        clockCountDown.start()
     }
 
     fun toggleLoading(isLoadingState: Boolean) {
@@ -71,6 +99,7 @@ class HomeActivity : BaseTvActivity<ActivityHomeBinding>() {
     }
 
     override fun onDestroy() {
+        clockCountDown.cancel()
         toggleBackground.stop()
         super.onDestroy()
     }

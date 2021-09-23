@@ -179,20 +179,17 @@
             android:layout_height="wrap_content"
             android:paddingHorizontal="@dimen/margin_medium"
             android:paddingVertical="@dimen/margin_small"
-            app:backgroundColor="@color/colorAppNameBg"
             app:cornerLeftBottom="@dimen/margin_small"
             app:cornerRightTop="@dimen/margin_small"
             app:layout_constraintEnd_toStartOf="@+id/right_one"
-            app:layout_constraintTop_toTopOf="@+id/top"
-            app:strokeLineColor="@color/colorAppNameStroke"
-            app:strokeLineWidth="2dp">
+            app:layout_constraintTop_toTopOf="@+id/top">
 
             <TextView
                 android:id="@+id/tv_app_name"
                 style="@style/TvDefaultText"
                 isMMFont="@{true}"
                 android:text="@{appName}"
-                android:textColor="@color/colorAppName"
+                android:textColor="@color/colorWhite"
                 android:textSize="@dimen/text_regular"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"

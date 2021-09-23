@@ -1,3 +1,5 @@
+import java.util.*
+
 plugins {
     androidGitVersion()
     androidApp()
@@ -17,6 +19,21 @@ val apkName = hashMapOf(
     "localHome" to "atsy-cast-home-local.apk",
     "prodHome" to "atsy-cast-home.apk"
 )
+
+val releaseProperties = Properties()
+releaseProperties.load(file("${rootDir}/local.properties").inputStream())
+val DEBUG_ALIAS: String = releaseProperties.getProperty("DEBUG_ALIAS", "")
+val DEBUG_ALIAS_PASSWORD: String = releaseProperties.getProperty("DEBUG_ALIAS_PASSWORD", "")
+val DEBUG_KEYSTORE_PASSWORD: String = releaseProperties.getProperty("DEBUG_KEYSTORE_PASSWORD", "")
+val DEBUG_KEYSTORE_NAME: String = releaseProperties.getProperty("DEBUG_KEYSTORE_NAME", "")
+
+val RELEASE_ALIAS: String = releaseProperties.getProperty("RELEASE_ALIAS", "")
+val RELEASE_ALIAS_PASSWORD: String = releaseProperties.getProperty("RELEASE_ALIAS_PASSWORD", "")
+val RELEASE_KEYSTORE_PASSWORD: String = releaseProperties.getProperty("RELEASE_KEYSTORE_PASSWORD", "")
+val RELEASE_KEYSTORE_NAME: String = releaseProperties.getProperty("RELEASE_KEYSTORE_NAME", "")
+
+val HOME_UPDATE_URL: String = releaseProperties.getProperty("HOME_UPDATE_URL", "")
+val RELEASE_UPDATE_URL: String = releaseProperties.getProperty("RELEASE_UPDATE_URL", "")
 
 android {
     compileSdkVersion(Versions.compileSdkVersion)
@@ -51,6 +68,23 @@ android {
         }
     }
 
+    signingConfigs {
+
+        getByName("debug") {
+            storeFile = File(rootDir, DEBUG_KEYSTORE_NAME)
+            storePassword = DEBUG_KEYSTORE_PASSWORD
+            keyAlias = DEBUG_ALIAS
+            keyPassword = DEBUG_ALIAS_PASSWORD
+        }
+
+        register("release") {
+            storeFile = File(rootDir, RELEASE_KEYSTORE_NAME)
+            storePassword = RELEASE_KEYSTORE_PASSWORD
+            keyAlias = RELEASE_ALIAS
+            keyPassword = RELEASE_ALIAS_PASSWORD
+        }
+    }
+
     buildTypes {
 
         getByName("debug") {
@@ -62,6 +96,10 @@ android {
             isShrinkResources = false
 
             applicationIdSuffix = ".debug"
+
+            signingConfig = signingConfigs.getByName("debug")
+
+            buildConfigString("UPDATE_URL", "")
 
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -79,6 +117,10 @@ android {
 
             applicationIdSuffix = ""
 
+            signingConfig = signingConfigs.getByName("release")
+
+            buildConfigString("UPDATE_URL", RELEASE_UPDATE_URL)
+
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -89,6 +131,8 @@ android {
             initWith(getByName("release"))
 
             applicationIdSuffix = ".home"
+
+            buildConfigString("UPDATE_URL", HOME_UPDATE_URL)
 
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -136,6 +180,8 @@ dependencies {
     implementation(project(":zcm"))
     implementation(project(":doujin"))
     implementation(project(":ets2mm"))
+    implementation(project(":2d"))
+    implementation(project(":eporner"))
 
     testImplementation(Libs.junit)
     androidTestImplementation(Libs.testJunit)
@@ -164,4 +210,12 @@ dependencies {
     kapt(Libs.roomCompiler)
 
     implementation(Libs.gson)
+
+    implementation(Libs.lottie)
+    implementation(Libs.easyPermission)
+
+    //Memory leak detection
+    debugImplementation(Libs.leakCanary)
+    releaseImplementation(Libs.leakCanaryNoOP)
+    "homeImplementation"(Libs.leakCanaryNoOP)
 }

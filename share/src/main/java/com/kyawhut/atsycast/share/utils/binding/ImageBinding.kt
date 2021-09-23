@@ -7,7 +7,6 @@ import com.bumptech.glide.request.RequestOptions
 import com.kyawhut.atsycast.share.R
 import com.kyawhut.atsycast.share.glide.BlurTransformation
 import com.kyawhut.atsycast.share.glide.GlideApp
-import timber.log.Timber
 
 /**
  * @author kyawhtut
@@ -29,8 +28,8 @@ object ImageBinding {
             else diskCacheStrategy(DiskCacheStrategy.NONE)
             if (isBlur == true) apply(RequestOptions.bitmapTransform(BlurTransformation(8, 3)))
         }
-            .placeholder(if (isHorizontal == true) R.drawable.thumbnail_horizontal else R.drawable.thumbnail_movie)
-            .error(if (isHorizontal == true) R.drawable.thumbnail_horizontal else R.drawable.thumbnail_movie)
+            .placeholder(if (isHorizontal == true) R.drawable.ic_thumbnail else R.drawable.ic_thumbnail)
+            .error(if (isHorizontal == true) R.drawable.ic_thumbnail else R.drawable.ic_thumbnail)
             .into(this)
     }
 }

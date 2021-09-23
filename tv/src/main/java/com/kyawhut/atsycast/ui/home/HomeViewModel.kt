@@ -1,5 +1,6 @@
 package com.kyawhut.atsycast.ui.home
 
+import android.content.Context
 import com.kyawhut.atsycast.data.network.response.HomeFeatureResponse
 import com.kyawhut.atsycast.share.base.BaseViewModel
 import com.kyawhut.atsycast.share.network.utils.NetworkResponse
@@ -15,9 +16,14 @@ class HomeViewModel @Inject constructor(
     private val repo: HomeRepository
 ) : BaseViewModel() {
 
-    fun getHomeFeatures(callback: (NetworkResponse<List<HomeFeatureResponse>>) -> Unit) {
+    var homeFeatureList: List<HomeFeatureResponse> = mutableListOf()
+
+    fun getHomeFeatures(
+        context: Context,
+        callback: (NetworkResponse<List<HomeFeatureResponse>>) -> Unit
+    ) {
         viewModelScope {
-            repo.getHomeFeatures(callback)
+            repo.getHomeFeatures(context, callback)
         }
     }
 }

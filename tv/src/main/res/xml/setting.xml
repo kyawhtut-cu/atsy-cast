@@ -1,84 +1,81 @@
-<PreferenceScreen
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:title="Setting">
 
-    <PreferenceCategory
-        android:title="@string/pref_title_settings">
+    <PreferenceCategory android:title="@string/pref_title_settings">
 
         <Preference
             android:key="preference"
-            android:title="@string/pref_title_recommendations"
-            android:summary="@string/pref_title_recommendations"/>
+            android:summary="@string/pref_title_recommendations"
+            android:title="@string/pref_title_recommendations" />
 
         <Preference
             android:key="stylized"
-            android:title="@string/pref_key_recommendations"
-            android:summary="@string/pref_key_recommendations"/>
+            android:summary="@string/pref_key_recommendations"
+            android:title="@string/pref_key_recommendations" />
 
         <Preference
+            android:icon="@android:drawable/ic_menu_camera"
             android:key="icon"
-            android:title="@string/pref_key_screen_general"
             android:summary="@string/pref_key_screen_general"
-            android:icon="@android:drawable/ic_menu_camera"/>
+            android:title="@string/pref_key_screen_general" />
 
         <Preference
             android:key="single_line_title"
-            android:title="@string/pref_title_screen_general"
             android:summary="@string/pref_title_screen_general"
-            app:singleLineTitle="true"/>
+            android:title="@string/pref_title_screen_general"
+            app:singleLineTitle="true" />
     </PreferenceCategory>
 
-    <PreferenceCategory
-        android:title="@string/pref_key_screen_signin">
+    <PreferenceCategory android:title="@string/pref_key_screen_signin">
 
         <CheckBoxPreference
             android:key="checkbox"
-            android:title="@string/pref_title_screen_signin"
-            android:summary="@string/pref_title_screen_signin"/>
+            android:summary="@string/pref_title_screen_signin"
+            android:title="@string/pref_title_screen_signin" />
 
         <SwitchPreferenceCompat
             android:key="switch"
-            android:title="@string/pref_title_login_description"
-            android:summary="@string/pref_title_login_description"/>
+            android:summary="@string/pref_title_login_description"
+            android:title="@string/pref_title_login_description" />
 
-        <!--<DropDownPreference
+        <DropDownPreference
+            android:entries="@array/pref_title_username"
+            android:entryValues="@array/pref_title_username"
             android:key="dropdown"
             android:title="@string/pref_title_username"
-            android:entries="@array/pref_title_username"
-            app:useSimpleSummaryProvider="true"
-            android:entryValues="@array/entries"/>-->
+            app:useSimpleSummaryProvider="true" />
 
         <SeekBarPreference
+            android:defaultValue="5"
             android:key="seekbar"
-            android:title="@string/pref_title_username"
             android:max="10"
-            android:defaultValue="5"/>
+            android:title="@string/pref_title_username" />
     </PreferenceCategory>
 
-    <PreferenceCategory
-        android:title="@string/pref_title_password">
+    <PreferenceCategory android:title="@string/pref_title_password">
 
         <EditTextPreference
+            android:dialogTitle="@string/pref_key_login"
             android:key="edittext"
             android:title="@string/pref_key_login"
-            app:useSimpleSummaryProvider="true"
-            android:dialogTitle="@string/pref_key_login"/>
+            app:useSimpleSummaryProvider="true" />
 
-        <!--<ListPreference
+        <ListPreference
+            android:dialogTitle="@string/pref_title_login"
+            android:entries="@array/pref_title_username"
+            android:entryValues="@array/pref_title_username"
             android:key="list"
             android:title="@string/pref_title_login"
-            app:useSimpleSummaryProvider="true"
-            android:entries="@array/pref_title_username"
-            android:entryValues="@array/entries"
-            android:dialogTitle="@string/pref_title_login"/>-->
+            app:useSimpleSummaryProvider="true" />
 
-        <!--<MultiSelectListPreference
-            android:key="multi_select_list"
-            android:title="title_multi_list_preference"
-            android:summary="summary_multi_list_preference"
+        <MultiSelectListPreference
+            android:dialogTitle="dialog_title_multi_list_preference"
             android:entries="@array/pref_title_username"
-            android:entryValues="@array/entries"
-            android:dialogTitle="dialog_title_multi_list_preference"/>-->
+            android:entryValues="@array/pref_title_username"
+            android:key="multi_select_list"
+            android:summary="summary_multi_list_preference"
+            android:title="title_multi_list_preference" />
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -88,41 +85,42 @@
 
         <Preference
             android:key="expandable"
-            android:title="title_expandable_preference"
-            android:summary="summary_expandable_preference"/>
+            android:summary="summary_expandable_preference"
+            android:title="title_expandable_preference" />
 
         <Preference
-            android:title="title_intent_preference"
-            android:summary="summary_intent_preference">
+            android:summary="summary_intent_preference"
+            android:title="title_intent_preference">
 
-            <intent android:action="android.intent.action.VIEW"
-                android:data="http://www.android.com"/>
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="http://www.android.com" />
 
         </Preference>
 
         <SwitchPreferenceCompat
             android:key="parent"
-            android:title="title_parent_preference"
-            android:summary="summary_parent_preference"/>
+            android:summary="summary_parent_preference"
+            android:title="title_parent_preference" />
 
         <SwitchPreferenceCompat
-            android:key="child"
             android:dependency="parent"
-            android:title="title_child_preference"
-            android:summary="summary_child_preference"/>
+            android:key="child"
+            android:summary="summary_child_preference"
+            android:title="title_child_preference" />
 
         <SwitchPreferenceCompat
             android:key="toggle_summary"
-            android:title="title_toggle_summary_preference"
+            android:summaryOff="summary_off_toggle_summary_preference"
             android:summaryOn="summary_on_toggle_summary_preference"
-            android:summaryOff="summary_off_toggle_summary_preference"/>
+            android:title="title_toggle_summary_preference" />
 
         <Preference
             android:key="copyable"
-            android:title="title_copyable_preference"
-            android:summary="summary_copyable_preference"
             android:selectable="false"
-            app:enableCopying="true"/>
+            android:summary="summary_copyable_preference"
+            android:title="title_copyable_preference"
+            app:enableCopying="true" />
     </PreferenceCategory>
 
 </PreferenceScreen>

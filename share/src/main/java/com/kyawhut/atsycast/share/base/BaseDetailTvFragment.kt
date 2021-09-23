@@ -43,7 +43,7 @@ abstract class BaseDetailTvFragment<VM : BaseViewModel> : Fragment() {
     }
     private var rowsSupportFragment: RowsSupportFragment? = null
 
-    open val actionHighlightFocus: Int = FocusHighlight.ZOOM_FACTOR_NONE
+    open val actionHighlightFocus: Int = FocusHighlight.ZOOM_FACTOR_XSMALL
     open val actionUseDimmer: Boolean = true
 
     private val actionListRowPresenter by lazy {

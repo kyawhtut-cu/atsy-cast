@@ -8,7 +8,6 @@ import com.kyawhut.atsycast.share.base.BaseViewModel
 import com.kyawhut.atsycast.share.model.VideoSourceModel
 import com.kyawhut.atsycast.share.utils.SourceType
 import dagger.hilt.android.lifecycle.HiltViewModel
-import timber.log.Timber
 import javax.inject.Inject
 
 /**
@@ -23,6 +22,9 @@ internal class PlayerViewModel @Inject constructor(
 
     val appName: String by lazy {
         savedStateHandle.get(Constants.EXTRA_APP_NAME) ?: ""
+    }
+    private val isAdult: Boolean by lazy {
+        savedStateHandle.get(Constants.EXTRA_IS_ADULT) ?: false
     }
     var videoID: Int = savedStateHandle.get(Constants.EXTRA_VIDEO_ID) ?: 0
     var isResume: Boolean = savedStateHandle.get(Constants.EXTRA_IS_RESUME) ?: false
@@ -54,6 +56,7 @@ internal class PlayerViewModel @Inject constructor(
             videoCustomHeader = this@PlayerViewModel.videoSource!!.customHeader
             videoRelatedVideo = Gson().toJson(episodeList)
             videoSourceType = SourceType.MSYS
+            isAdult = this@PlayerViewModel.isAdult
         }
     }
 }

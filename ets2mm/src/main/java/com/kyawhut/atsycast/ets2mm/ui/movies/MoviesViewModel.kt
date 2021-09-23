@@ -1,5 +1,6 @@
 package com.kyawhut.atsycast.ets2mm.ui.movies
 
+import android.app.Application
 import androidx.lifecycle.SavedStateHandle
 import com.kyawhut.atsycast.ets2mm.data.network.response.VideoResponse
 import com.kyawhut.atsycast.ets2mm.utils.Constants
@@ -14,6 +15,7 @@ import javax.inject.Inject
  */
 @HiltViewModel
 internal class MoviesViewModel @Inject constructor(
+    private val application: Application,
     private val savedStateHandle: SavedStateHandle,
     private val repository: MoviesRepository
 ) : BaseViewModel() {
@@ -33,7 +35,7 @@ internal class MoviesViewModel @Inject constructor(
     fun getMovies(callback: (NetworkResponse<List<VideoResponse>>) -> Unit) {
         if (isLoading || !isHasMoreData) return
         viewModelScope {
-            repository.getMovies(genresID, page) {
+            repository.getMovies(application, genresID, page) {
                 callback(it)
                 isLoading = it.isLoading
                 if (it.isSuccess) {

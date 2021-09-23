@@ -1,5 +1,6 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:title="@string/lbl_setting">
 
     <PreferenceCategory android:title="@string/pref_title_settings">
 
@@ -8,10 +9,20 @@
             android:summary="@string/pref_summary_app_package"
             android:title="@string/pref_title_app_package" />
 
-        <CheckBoxPreference
-            android:key="@string/pref_lottery"
-            android:summary="@string/pref_summary_lottery"
-            android:title="@string/pref_title_lottery" />
+        <EditTextPreference
+            android:dialogTitle="@string/pref_dialog_display_name"
+            android:key="@string/pref_display_name"
+            android:title="@string/pref_title_display_name"
+            app:useSimpleSummaryProvider="true" />
+
+        <ListPreference
+            android:defaultValue="en"
+            android:dialogTitle="@string/pref_dialog_title_language"
+            android:entries="@array/pref_language_entries"
+            android:entryValues="@array/pref_language_entries_value"
+            android:key="@string/pref_language"
+            android:title="@string/pref_title_language"
+            app:useSimpleSummaryProvider="true" />
 
         <Preference
             android:key="@string/pref_device_id"

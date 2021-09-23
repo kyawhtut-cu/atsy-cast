@@ -12,7 +12,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.leanback.app.BackgroundManager
 import androidx.viewbinding.ViewBinding
 import com.kyawhut.atsycast.share.R
-import com.kyawhut.atsycast.share.utils.ShareUtils.getColorValue
+import com.kyawhut.atsycast.share.utils.extension.Extension.getColorValue
 import com.kyawhut.atsycast.share.utils.extension.Extension.loadImage
 
 /**

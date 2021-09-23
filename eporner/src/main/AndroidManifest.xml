@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.kyawhut.atsycast.eporner">
+
+    <application>
+
+        <activity
+            android:name=".ui.home.HomeActivity"
+            android:screenOrientation="sensorLandscape"
+            android:theme="@style/BaseTvTheme" />
+
+        <activity
+            android:name=".ui.search.SearchActivity"
+            android:screenOrientation="sensorLandscape"
+            android:theme="@style/BaseTvTheme" />
+
+        <activity
+            android:name=".ui.player.WebPlayerActivity"
+            android:screenOrientation="sensorLandscape"
+            android:theme="@style/BaseTvTheme" />
+    </application>
+
+</manifest>

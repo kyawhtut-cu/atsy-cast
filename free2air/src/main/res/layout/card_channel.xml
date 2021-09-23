@@ -27,6 +27,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="150dp"
         android:layout_height="wrap_content"
+        android:background="@{isFocus ? @color/colorCardBackgroundFocus : @color/colorCardBackgroundUnFocus}"
         tools:context=".ui.card.view.F2ACardView">
 
         <ImageView
@@ -37,7 +38,7 @@
             android:layout_width="0dp"
             android:layout_height="80dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/thumbnail_horizontal"
+            android:src="@drawable/ic_thumbnail"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -71,7 +72,6 @@
             isMMFont="@{true}"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@{isFocus ? @color/colorCardBackgroundFocus : @color/colorCardBackgroundUnFocus}"
             android:ellipsize="end"
             android:gravity="center"
             android:maxLines="1"

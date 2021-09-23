@@ -14,8 +14,7 @@ val SHEET_BASE_URL: String = releaseProperties.getProperty("SHEET_BASE_URL", "")
 val RELEASE_SCRIPT_ID: String = releaseProperties.getProperty("RELEASE_SCRIPT_ID", "")
 val DEBUG_SCRIPT_ID: String = releaseProperties.getProperty("DEBUG_SCRIPT_ID", "")
 val TELEGRAM_BOT_URL: String = releaseProperties.getProperty("TELEGRAM_BOT_URL", "")
-val TELEGRAM_DEBUG_BOT_ID: String = releaseProperties.getProperty("TELEGRAM_BOT_ID", "")
-val TELEGRAM_RELEASE_BOT_ID: String = releaseProperties.getProperty("TELEGRAM_BOT_ID", "")
+val TELEGRAM_BOT_ID: String = releaseProperties.getProperty("TELEGRAM_BOT_ID", "")
 val TELEGRAM_DEV_ID: String = releaseProperties.getProperty("TELEGRAM_DEV_ID", "")
 
 android {
@@ -43,7 +42,7 @@ android {
         )
         buildConfigString(
             "TELEGRAM_BOT_ID",
-            TELEGRAM_DEBUG_BOT_ID
+            TELEGRAM_BOT_ID
         )
         buildConfigString(
             "TELEGRAM_DEV_ID",
@@ -89,11 +88,6 @@ android {
             buildConfigString(
                 "SCRIPT_ID",
                 RELEASE_SCRIPT_ID
-            )
-
-            buildConfigString(
-                "TELEGRAM_BOT_ID",
-                TELEGRAM_RELEASE_BOT_ID
             )
 
             debuggable(false)
@@ -172,6 +166,7 @@ dependencies {
     //HTTP interceptor
     debugImplementation(Libs.chuck)
     releaseImplementation(Libs.chuckRelease)
+    "homeImplementation"(Libs.chuckRelease)
 
     api(Libs.jsoup)
 
@@ -181,6 +176,9 @@ dependencies {
 
     //Timber(Logging)
     api(Libs.timber)
+
+    // Toasty(Toast)
+    api(Libs.toasty)
 
     implementation(Libs.exoPlayer)
     implementation(Libs.exoPlayerCore)
@@ -200,4 +198,6 @@ dependencies {
     implementation(Libs.roomRxJava)
 
     implementation(Libs.lottie)
+
+    implementation(Libs.googleZxing)
 }

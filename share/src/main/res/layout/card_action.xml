@@ -26,7 +26,8 @@
         android:layout_marginEnd="@dimen/margin_medium_2"
         android:background="@{isFocus ? @color/colorCardBackgroundFocus : @color/colorCardBackgroundUnFocus}"
         android:paddingHorizontal="@dimen/margin_medium_2"
-        android:paddingVertical="6dp">
+        android:paddingVertical="6dp"
+        tools:context=".ui.card.view.ActionCardView">
 
         <ImageView
             android:id="@+id/iv_action"

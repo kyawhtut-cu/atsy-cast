@@ -16,3 +16,5 @@ local.properties
 git-push.gradle
 schemas
 utils.txt
+debug-keystore.jks
+release-keystore.jks

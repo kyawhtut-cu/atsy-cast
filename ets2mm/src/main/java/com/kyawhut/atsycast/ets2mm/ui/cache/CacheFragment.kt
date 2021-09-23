@@ -4,13 +4,20 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.leanback.widget.ArrayObjectAdapter
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.kyawhut.atsycast.ets2mm.R
+import com.kyawhut.atsycast.ets2mm.data.network.response.EpisodeResponse
 import com.kyawhut.atsycast.ets2mm.data.network.response.VideoResponse
 import com.kyawhut.atsycast.ets2mm.ui.card.CardPresenter
+import com.kyawhut.atsycast.ets2mm.ui.detail.DetailActivity
+import com.kyawhut.atsycast.ets2mm.ui.player.PlayerActivity
 import com.kyawhut.atsycast.ets2mm.utils.Constants
 import com.kyawhut.atsycast.share.base.BaseGridSupportFragment
 import com.kyawhut.atsycast.share.db.entity.RecentlyWatchEntity
+import com.kyawhut.atsycast.share.model.VideoSourceModel
 import com.kyawhut.atsycast.share.utils.extension.putArg
+import com.kyawhut.atsycast.share.utils.extension.startActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -55,15 +62,15 @@ internal class CacheFragment : BaseGridSupportFragment<CacheViewModel>() {
 
     override fun onItemClicked(it: Any) {
         if (it is VideoResponse) {
-            /* startActivity<DetailActivity>(
-                 Constants.EXTRA_API_KEY to vm.apiKey,
-                 Constants.EXTRA_VIDEO_DATA to it,
-                 Constants.EXTRA_APP_NAME to vm.appName,
-             )*/
+            startActivity<DetailActivity>(
+                Constants.EXTRA_VIDEO_DATA to it,
+                Constants.EXTRA_APP_NAME to vm.appName,
+            )
         } else if (it is RecentlyWatchEntity) {
-            /*startActivity<PlayerActivity>(
+            startActivity<PlayerActivity>(
                 Constants.EXTRA_VIDEO_ID to it.videoID.toInt(),
                 Constants.EXTRA_IS_RESUME to true,
+                Constants.EXTRA_IS_ADULT to it.isAdult,
                 Constants.EXTRA_VIDEO_TITLE to it.videoTitle,
                 Constants.EXTRA_VIDEO_COVER to it.videoCover,
                 Constants.EXTRA_APP_NAME to vm.appName,
@@ -80,7 +87,7 @@ internal class CacheFragment : BaseGridSupportFragment<CacheViewModel>() {
                     it.videoRelatedVideo,
                     object : TypeToken<List<EpisodeResponse>>() {}.type
                 )
-            )*/
+            )
         }
     }
 

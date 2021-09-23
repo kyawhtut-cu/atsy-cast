@@ -15,6 +15,7 @@ import com.kyawhut.atsycast.doujin.ui.video.VideoFragment
 import com.kyawhut.atsycast.doujin.utils.Constants
 import com.kyawhut.atsycast.share.base.BaseBrowseSupportFragment
 import com.kyawhut.atsycast.share.base.BaseTvActivity
+import com.kyawhut.atsycast.share.utils.extension.Extension.getColorValue
 import com.kyawhut.atsycast.share.utils.extension.FragmentExtension.replaceFragment
 import com.kyawhut.atsycast.share.utils.extension.putArg
 import com.kyawhut.atsycast.share.utils.extension.startActivity
@@ -31,7 +32,7 @@ internal class HomeActivity : BaseTvActivity<ActivityDoujinHomeBinding>() {
         get() = R.layout.activity_doujin_home
 
     private val appName: String by lazy {
-        intent?.getStringExtra(Constants.EXTRA_APP_NAME) ?: "Doujin"
+        intent?.getStringExtra(Constants.EXTRA_APP_NAME) ?: ""
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

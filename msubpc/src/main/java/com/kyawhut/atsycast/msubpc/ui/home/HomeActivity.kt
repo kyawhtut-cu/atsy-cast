@@ -15,6 +15,8 @@ import com.kyawhut.atsycast.msubpc.ui.series.SeriesFragment
 import com.kyawhut.atsycast.msubpc.utils.Constants
 import com.kyawhut.atsycast.share.base.BaseBrowseSupportFragment
 import com.kyawhut.atsycast.share.base.BaseTvActivity
+import com.kyawhut.atsycast.share.utils.ShareUtils.isAdult
+import com.kyawhut.atsycast.share.utils.extension.Extension.isAdultOpen
 import com.kyawhut.atsycast.share.utils.extension.FragmentExtension.replaceFragment
 import com.kyawhut.atsycast.share.utils.extension.putArg
 import com.kyawhut.atsycast.share.utils.extension.startActivity
@@ -32,7 +34,7 @@ internal class HomeActivity : BaseTvActivity<ActivityMsubHomeBinding>() {
         get() = R.layout.activity_msub_home
 
     private val appName: String by lazy {
-        intent?.getStringExtra(Constants.EXTRA_APP_NAME) ?: "M-Sub"
+        intent?.getStringExtra(Constants.EXTRA_APP_NAME) ?: ""
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -79,6 +81,8 @@ internal class HomeActivity : BaseTvActivity<ActivityMsubHomeBinding>() {
                     description =
                         resources.getStringArray(R.array.array_movies_filter_key)[index]
                 })
+            }.filter {
+                !it.headerItem.name.isAdult || isAdultOpen
             }.toMutableList<Row>().apply {
                 add(0, SectionRow("$appName Movies"))
             }.toList()
@@ -90,6 +94,8 @@ internal class HomeActivity : BaseTvActivity<ActivityMsubHomeBinding>() {
                     description =
                         resources.getStringArray(R.array.array_series_filter_key)[index]
                 })
+            }.filter {
+                !it.headerItem.name.isAdult || isAdultOpen
             }.toMutableList<Row>().apply {
                 add(0, DividerRow())
                 add(1, SectionRow("$appName Series"))

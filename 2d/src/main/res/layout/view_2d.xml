@@ -1,0 +1,476 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="luckyNumber"
+            type="String" />
+
+        <variable
+            name="dateTime"
+            type="String" />
+
+        <variable
+            name="pmSet"
+            type="String" />
+
+        <variable
+            name="pmValue"
+            type="String" />
+
+        <variable
+            name="pmTwoD"
+            type="String" />
+
+        <variable
+            name="amSet"
+            type="String" />
+
+        <variable
+            name="amValue"
+            type="String" />
+
+        <variable
+            name="amTwoD"
+            type="String" />
+
+        <variable
+            name="nineModern"
+            type="String" />
+
+        <variable
+            name="nineInternet"
+            type="String" />
+
+        <variable
+            name="twoModern"
+            type="String" />
+
+        <variable
+            name="twoInternet"
+            type="String" />
+
+        <variable
+            name="threeD"
+            type="String" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/two_d_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingHorizontal="@dimen/margin_large">
+
+        <com.kyawhut.atsycast.share.components.RoundedConstraintLayout
+            android:id="@+id/view_lucky_number"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:cornerLeftSide="@dimen/margin_medium"
+            app:cornerRightSide="@dimen/margin_medium"
+            app:layout_constraintBottom_toTopOf="@+id/tv_two_d_date"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed">
+
+            <TextView
+                android:id="@+id/tv_lucky_number_title"
+                isMMFont="@{true}"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="ယနေ့ အထူးဂဏန်း"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/text_regular_2x"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_lucky_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:text="@{luckyNumber}"
+                android:textColor="@color/color2DPrimary"
+                android:textSize="@dimen/text_heading_2x"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_lucky_number_title"
+                tools:text="2745" />
+
+        </com.kyawhut.atsycast.share.components.RoundedConstraintLayout>
+
+        <TextView
+            android:id="@+id/tv_two_d_date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="monospace"
+            android:gravity="center"
+            android:text="@{dateTime}"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/text_regular_2x"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/view_2d"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view_lucky_number"
+            tools:text="Tuesday, 19 Nov, 2019" />
+
+        <com.kyawhut.atsycast.share.components.RoundedConstraintLayout
+            android:id="@+id/view_3d"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:cornerLeftSide="@dimen/margin_medium"
+            app:cornerRightSide="@dimen/margin_medium"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view_2d">
+
+            <TextView
+                android:id="@+id/tv_today_3d_number"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingTop="@dimen/margin_small"
+                android:paddingBottom="@dimen/margin_small"
+                android:text="@{String.format(`3D - %s`, threeD)}"
+                android:textColor="@color/color2DPrimary"
+                android:textSize="@dimen/text_heading_2x"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_today_3d_date"
+                tools:text="3D - 811" />
+
+        </com.kyawhut.atsycast.share.components.RoundedConstraintLayout>
+
+        <com.kyawhut.atsycast.share.components.RoundedConstraintLayout
+            android:id="@+id/view_2d"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/view_3d"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_two_d_date">
+
+            <TextView
+                android:id="@+id/tv_four_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:fontFamily="monospace"
+                android:text="04:30 PM"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/text_small"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_four_set_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:text="SET"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/text_small"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_four_time" />
+
+            <TextView
+                android:id="@+id/tv_four_set_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:text="@{pmSet}"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/text_regular"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_four_set_title"
+                tools:text="1,607.25" />
+
+            <TextView
+                android:id="@+id/tv_four_value_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:text="VALUE"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/text_small"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_four_time" />
+
+            <TextView
+                android:id="@+id/tv_four_value_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:text="@{pmValue}"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/text_regular"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_four_set_title"
+                tools:text="48,490.56" />
+
+            <TextView
+                android:id="@+id/tv_four_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_2d_number"
+                android:text="@{pmTwoD}"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/text_regular_3x"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_four_set_value"
+                app:layout_constraintEnd_toStartOf="@+id/tv_four_value_value"
+                app:layout_constraintStart_toEndOf="@+id/tv_four_set_value"
+                app:layout_constraintTop_toTopOf="@+id/tv_four_set_title"
+                tools:text="50" />
+
+            <View
+                android:id="@+id/divider_one"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="8dp"
+                android:alpha="0.5"
+                android:background="@color/colorWhite"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_four_set_value" />
+
+            <TextView
+                android:id="@+id/tv_twelve_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="monospace"
+                android:text="12:00 PM"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/text_small"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divider_one" />
+
+            <TextView
+                android:id="@+id/tv_twelve_set_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:text="SET"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/text_small"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_twelve_time" />
+
+            <TextView
+                android:id="@+id/tv_twelve_set_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:text="@{amSet}"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/text_regular"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_twelve_set_title"
+                tools:text="1,607.25" />
+
+            <TextView
+                android:id="@+id/tv_twelve_value_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:text="VALUE"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/text_small"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_twelve_time" />
+
+            <TextView
+                android:id="@+id/tv_twelve_value_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:text="@{amValue}"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/text_regular"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_twelve_set_title"
+                tools:text="48,490.56" />
+
+            <TextView
+                android:id="@+id/tv_twelve_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_2d_number"
+                android:text="@{amTwoD}"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/text_regular_3x"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_twelve_set_value"
+                app:layout_constraintEnd_toStartOf="@+id/tv_twelve_value_value"
+                app:layout_constraintStart_toEndOf="@+id/tv_twelve_set_value"
+                app:layout_constraintTop_toTopOf="@+id/tv_twelve_set_title"
+                tools:text="50" />
+
+            <View
+                android:id="@+id/divider_two"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="8dp"
+                android:alpha="0.5"
+                android:background="@color/colorWhite"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_twelve_set_value" />
+
+            <TextView
+                android:id="@+id/tv_two_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:text="02:00 PM"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/text_regular_3x"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_two_set_value"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tv_two_set_title" />
+
+            <TextView
+                android:id="@+id/tv_two_set_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="monospace"
+                android:text="MODERN"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/text_small"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divider_two" />
+
+            <TextView
+                android:id="@+id/tv_two_set_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:text="@{twoModern}"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/text_regular"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_two_set_title"
+                tools:text="04" />
+
+            <TextView
+                android:id="@+id/tv_two_value_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:text="INTERNET"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/text_small"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tv_two_set_title" />
+
+            <TextView
+                android:id="@+id/tv_two_value_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:text="@{twoInternet}"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/text_regular"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_two_set_title"
+                tools:text="34" />
+
+            <View
+                android:id="@+id/divider_three"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="8dp"
+                android:alpha="0.5"
+                android:background="@color/colorWhite"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_two_set_value" />
+
+            <TextView
+                android:id="@+id/tv_nine_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:text="09:30 AM"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/text_regular_3x"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_nine_set_value"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tv_nine_set_title" />
+
+            <TextView
+                android:id="@+id/tv_nine_set_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="monospace"
+                android:text="MODERN"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/text_small"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divider_three" />
+
+            <TextView
+                android:id="@+id/tv_nine_set_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:text="@{nineModern}"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/text_regular"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_nine_set_title"
+                tools:text="62" />
+
+            <TextView
+                android:id="@+id/tv_nine_value_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:text="INTERNET"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/text_small"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tv_nine_set_title" />
+
+            <TextView
+                android:id="@+id/tv_nine_value_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:text="@{nineInternet}"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/text_regular"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_nine_set_title"
+                tools:text="72" />
+
+        </com.kyawhut.atsycast.share.components.RoundedConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

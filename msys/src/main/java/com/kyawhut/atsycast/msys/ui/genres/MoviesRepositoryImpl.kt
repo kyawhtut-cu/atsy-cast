@@ -1,9 +1,12 @@
 package com.kyawhut.atsycast.msys.ui.genres
 
+import android.content.Context
 import com.kyawhut.atsycast.msys.data.network.MsysAPI
 import com.kyawhut.atsycast.msys.data.network.response.MoviesResponse
 import com.kyawhut.atsycast.share.network.utils.NetworkResponse
 import com.kyawhut.atsycast.share.network.utils.execute
+import com.kyawhut.atsycast.share.utils.ShareUtils.isAdult
+import com.kyawhut.atsycast.share.utils.extension.Extension.isAdultOpen
 import javax.inject.Inject
 
 /**
@@ -15,6 +18,7 @@ internal class MoviesRepositoryImpl @Inject constructor(
 ) : MoviesRepository {
 
     override suspend fun getMovies(
+        context: Context,
         genresID: Int,
         apiKey: String,
         page: Int,
@@ -22,6 +26,10 @@ internal class MoviesRepositoryImpl @Inject constructor(
     ) {
         NetworkResponse.loading(callback)
         val response = execute { api.getMovies(genresID, apiKey, page) }
-        response.post(callback)
+        if (response.isSuccess) {
+            NetworkResponse.success(response.data?.filter {
+                !it.moviesGenres.any { it.genresTitle.isAdult } || context.isAdultOpen
+            } ?: listOf(), callback)
+        } else response.post(callback)
     }
 }

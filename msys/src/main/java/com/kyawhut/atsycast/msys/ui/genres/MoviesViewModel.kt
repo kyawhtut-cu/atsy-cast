@@ -1,5 +1,6 @@
 package com.kyawhut.atsycast.msys.ui.genres
 
+import android.app.Application
 import androidx.lifecycle.SavedStateHandle
 import com.kyawhut.atsycast.msys.data.network.response.MoviesResponse
 import com.kyawhut.atsycast.msys.utils.Constants
@@ -14,6 +15,7 @@ import javax.inject.Inject
  */
 @HiltViewModel
 internal class MoviesViewModel @Inject constructor(
+    private val application: Application,
     private val savedStateHandle: SavedStateHandle,
     private val repository: MoviesRepository
 ) : BaseViewModel() {
@@ -36,7 +38,7 @@ internal class MoviesViewModel @Inject constructor(
     fun getMovies(callback: (NetworkResponse<List<MoviesResponse>>) -> Unit) {
         if (isLoading || !isHasMoreData) return
         viewModelScope {
-            repository.getMovies(genresID, apiKey, page) {
+            repository.getMovies(application, genresID, apiKey, page) {
                 callback(it)
                 isLoading = it.isLoading
                 if (it.isSuccess) {

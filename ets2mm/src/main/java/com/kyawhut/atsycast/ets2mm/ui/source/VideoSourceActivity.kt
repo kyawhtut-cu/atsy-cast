@@ -6,6 +6,7 @@ import com.kyawhut.atsycast.ets2mm.ui.player.PlayerActivity
 import com.kyawhut.atsycast.ets2mm.utils.Constants
 import com.kyawhut.atsycast.share.base.BaseGuidedStepActivity
 import com.kyawhut.atsycast.share.ui.resume.ResumeFragment
+import com.kyawhut.atsycast.share.utils.ShareUtils.isAdult
 import com.kyawhut.atsycast.share.utils.extension.startActivity
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -66,6 +67,7 @@ class VideoSourceActivity : BaseGuidedStepActivity() {
         startActivity<PlayerActivity>(
             Constants.EXTRA_VIDEO_ID to vm.source[linkIndex].sourceId,
             Constants.EXTRA_IS_RESUME to isResume,
+            Constants.EXTRA_IS_ADULT to (vm.videoData?.videoTitle?.isAdult == true),
             Constants.EXTRA_VIDEO_TITLE to vm.videoTitle,
             Constants.EXTRA_VIDEO_COVER to (vm.videoData?.videoCover ?: ""),
             Constants.EXTRA_APP_NAME to vm.appName,

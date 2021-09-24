@@ -53,7 +53,7 @@ jobs:
       - name: Upload Release APK to CDN
         uses: wei/curl@v1
         with:
-          args: --location --request POST ${{ env.FILE_UPLOAD_URL }} -F 'file=@tv/build/outputs/apk/release/${{ env.RELEASE_VERSION }}/atsy-cast.apk;type=application/vnd.android.package-archive' --form 'version=${{ env.RELEASE_VERSION }}' --form 'apk_name=ATSY Cast - New' --form 'file_name=atsy-cast' --form 'update_name=release'
+          args: --location --request POST ${{ env.FILE_UPLOAD_URL }} -F 'file=@tv/build/outputs/apk/release/${{ env.RELEASE_VERSION }}/atsy-cast.apk;type=application/vnd.android.package-archive' --form 'version=${{ env.RELEASE_VERSION }}' --form 'apk_name=ATSY Cast' --form 'file_name=atsy-cast' --form 'update_name=release'
 
       - name: Notift Release status
         if: always()

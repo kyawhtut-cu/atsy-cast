@@ -7,37 +7,35 @@ Application ထဲတွင် အသုံးပြုထားသည့် [AP
 
 Demo Video
 ----------
-
-    [![Demo Video](https://img.youtube.com/vi/qYcI3iJGmFs/0.jpg)](https://www.youtube.com/watch?v=qYcI3iJGmFs)
+  [![Demo Video](https://img.youtube.com/vi/qYcI3iJGmFs/0.jpg)](https://www.youtube.com/watch?v=qYcI3iJGmFs)
     
 Demo App
 --------
-    
-    [![Download](screenshot/download.svg?sanitize=true)](http://kyawhtut-cu.github.io/atsy-cast/)
+  [![Download](screenshot/download.svg?sanitize=true)](http://kyawhtut-cu.github.io/atsy-cast/)
 
 Screenshot
 ----------
-    <img alt="Splash Screen" src="screenshot/splash.jpg"/>
+  <img alt="Splash Screen" src="screenshot/splash.png"/>
 
-    <img alt="Home Screen" src="screenshot/home.png"/>
+  <img alt="Home Screen" src="screenshot/home.png"/>
    
-    <img alt="Page Movies" src="screenshot/page-movies.png"/>
+  <img alt="Page Movies" src="screenshot/page-movies.png"/>
     
-    <img alt="Page Detail Movies" src="screenshot/page-detail-movies.png"/>
+  <img alt="Page Detail Movies" src="screenshot/page-detail-movies.png"/>
     
-    <img alt="Resume" src="screenshot/page-resume.png"/>
+  <img alt="Resume" src="screenshot/page-resume.png"/>
     
-    <img alt="Player Movies" src="screenshot/player-movies.png"/>
+  <img alt="Player Movies" src="screenshot/player-movies.png"/>
     
-    <img alt="Page Detail Series" src="screenshot/page-detail-series.png"/>
+  <img alt="Page Detail Series" src="screenshot/page-detail-series.png"/>
     
-    <img alt="Player Series" src="screenshot/player-series.png"/>
+  <img alt="Player Series" src="screenshot/player-series.png"/>
     
-    <img alt="Player Series Episode" src="screenshot/player-series-episode.png"/>
+  <img alt="Player Series Episode" src="screenshot/player-series-episode.png"/>
     
-    <img alt="Setting" src="screenshot/setting.png"/>
+  <img alt="Setting" src="screenshot/setting.png"/>
     
-    <img alt="Language Setting" src="screenshot/setting-language.png"/>
+  <img alt="Language Setting" src="screenshot/setting-language.png"/>
 
 License
 --------

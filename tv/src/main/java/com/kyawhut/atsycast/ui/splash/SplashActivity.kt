@@ -12,10 +12,12 @@ import com.kyawhut.atsycast.share.network.utils.NetworkResponse
 import com.kyawhut.atsycast.share.ui.dialog.PlayerErrorDialog.Companion.showError
 import com.kyawhut.atsycast.share.utils.color.RandomColor
 import com.kyawhut.atsycast.share.utils.extension.Extension.isAdultOpen
+import com.kyawhut.atsycast.share.utils.extension.Extension.isTv
 import com.kyawhut.atsycast.share.utils.extension.startActivity
 import com.kyawhut.atsycast.ui.home.HomeActivity
 import com.kyawhut.atsycast.ui.password.DialogPassword
 import com.kyawhut.atsycast.ui.password.DialogPassword.Companion.showPasswordDialog
+import com.kyawhut.atsycast.ui.tvconfirm.TvConfirmActivity
 import com.kyawhut.atsycast.ui.update.UpdateActivity
 import com.kyawhut.atsycast.utils.Constants
 import dagger.hilt.android.AndroidEntryPoint
@@ -104,6 +106,11 @@ class SplashActivity : BaseTvActivityWithVM<ActivitySplashBinding, SplashViewMod
     }
 
     override fun onTransitionCompleted(p0: MotionLayout?, p1: Int) {
+        if (!isTv) {
+            finishAndRemoveTask()
+            startActivity<TvConfirmActivity>()
+            return
+        }
         isAnimationComplete = true
         processIntent()
     }

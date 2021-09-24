@@ -40,6 +40,11 @@
         </activity>
 
         <activity
+            android:name=".ui.tvconfirm.TvConfirmActivity"
+            android:screenOrientation="sensorLandscape"
+            android:theme="@style/BaseTvTheme" />
+
+        <activity
             android:name=".ui.home.HomeActivity"
             android:screenOrientation="sensorLandscape"
             android:theme="@style/BaseTvTheme" />

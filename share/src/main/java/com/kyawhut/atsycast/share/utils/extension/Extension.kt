@@ -1,7 +1,9 @@
 package com.kyawhut.atsycast.share.utils.extension
 
 import android.app.Activity
+import android.app.UiModeManager
 import android.content.Context
+import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.graphics.Point
 import android.graphics.drawable.Drawable
@@ -40,6 +42,12 @@ object Extension {
         set(value) = PreferenceManager.getDefaultSharedPreferences(this)
             .put(getString(R.string.pref_adult), value)
 
+    var Context.isTvConfirm: Boolean
+        get() = PreferenceManager.getDefaultSharedPreferences(this)
+            .get("is_tv_confirm", false)
+        set(value) = PreferenceManager.getDefaultSharedPreferences(this)
+            .put("is_tv_confirm", value)
+
     var Context.devicePassword: String
         get() = PreferenceManager.getDefaultSharedPreferences(this)
             .get(ShareUtils.DEVICE_PASSWORD, "")
@@ -51,6 +59,9 @@ object Extension {
         set(value) {
             requireContext().isAdultOpen = value
         }
+
+    val Context.isTv: Boolean
+        get() = isTvConfirm || (this.getSystemService(Context.UI_MODE_SERVICE) as UiModeManager).currentModeType == Configuration.UI_MODE_TYPE_TELEVISION
 
     fun Fragment.getDrawableValue(@DrawableRes res: Int) = requireContext().getDrawableValue(res)
 

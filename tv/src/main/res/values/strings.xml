@@ -12,6 +12,13 @@
     <string name="lbl_check_update_error">Application Update စစ်ဆေးရာတွင် တစ်ခုခုမှားယွင်းနေပါသည်။</string>
     <string name="lbl_wrong_password">လျှို့ဝှက်နံပါတ် မှားယွင်းနေပါသည်။</string>
 
+    <string name="lbl_tv_confirm_title">Tv ဖြစ်ကြေင်းသက်သေပြပါ</string>
+    <string name="lbl_remote_top">Tv Remote မှ အပေါ် သို့ ရွှေ့သည့် ခလုတ်လေးကို နှိပ်ပေးပါ။</string>
+    <string name="lbl_remote_right">Tv Remote မှ ညာဘက် သို့ ရွှေ့သည့် ခလုတ်လေးကို နှိပ်ပေးပါ။</string>
+    <string name="lbl_remote_bottom">Tv Remote မှ အောက် သို့ ရွှေ့သည့် ခလုတ်လေးကို နှိပ်ပေးပါ။</string>
+    <string name="lbl_remote_left">Tv Remote မှ ဘယ်ဘက် သို့ ရွှေ့သည့် ခလုတ်လေးကို နှိပ်ပေးပါ။</string>
+    <string name="lbl_remote_center">Tv Remote မှ OK ခလုတ်လေးကို နှိပ်ပေးပါ။</string>
+
     <string name="lbl_download">Download</string>
     <string name="lbl_permission">Need Permission</string>
     <string name="lbl_retry">Retry</string>

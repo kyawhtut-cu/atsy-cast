@@ -20,7 +20,7 @@ class F2ACardView(context: Context) : BaseCardView<CardChannelBinding>(
     }
 
     override fun bindUI(data: Any) {
-        val channel = data as Free2AirResponse
+        val channel = data as Free2AirResponse.Data
         vb.apply {
             isPlaying = channel.isPlaying
             channelLogo = channel.channelCover

@@ -25,7 +25,7 @@ internal class CacheRepositoryImpl @Inject constructor(
     override fun getRecentlyWatch(context: Context): LiveData<List<RecentlyWatchEntity>> {
         return recently.getLive(SourceType.ET2SMM).map {
             it.filter {
-                it.isAdult || context.isAdultOpen
+                !it.isAdult || context.isAdultOpen
             }
         }.toLiveData()
     }

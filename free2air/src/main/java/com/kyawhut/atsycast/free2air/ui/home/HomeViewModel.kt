@@ -13,7 +13,7 @@ import javax.inject.Inject
  * @date 8/31/21
  */
 @HiltViewModel
-class HomeViewModel @Inject constructor(
+internal class HomeViewModel @Inject constructor(
     private val argument: SavedStateHandle,
     private val repository: HomeRepository
 ) : BaseViewModel() {
@@ -23,7 +23,7 @@ class HomeViewModel @Inject constructor(
     }
 
     fun getFree2Air(
-        callback: (NetworkResponse<HashMap<String, List<Free2AirResponse>>>) -> Unit
+        callback: (NetworkResponse<HashMap<String, List<Free2AirResponse.Data>>>) -> Unit
     ) {
         viewModelScope {
             repository.getFree2Air(argument.get<String>(Constants.EXTRA_API_KEY) ?: "", callback)

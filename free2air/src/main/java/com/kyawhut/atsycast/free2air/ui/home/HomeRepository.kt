@@ -7,10 +7,10 @@ import com.kyawhut.atsycast.share.network.utils.NetworkResponse
  * @author kyawhtut
  * @date 8/31/21
  */
-interface HomeRepository {
+internal interface HomeRepository {
 
     suspend fun getFree2Air(
         key: String,
-        callback: (NetworkResponse<HashMap<String, List<Free2AirResponse>>>) -> Unit
+        callback: (NetworkResponse<HashMap<String, List<Free2AirResponse.Data>>>) -> Unit
     )
 }

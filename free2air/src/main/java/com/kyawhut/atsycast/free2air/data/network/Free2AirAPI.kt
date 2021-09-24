@@ -8,16 +8,11 @@ import retrofit2.http.Query
  * @author kyawhtut
  * @date 8/31/21
  */
-interface Free2AirAPI {
-
-    @GET("exec")
-    suspend fun getMultiFree2Air(
-        @Query("sheet_no") sheetNo: String = "",
-    ): HashMap<String, List<Free2AirResponse>>
+internal interface Free2AirAPI {
 
     @GET("exec")
     suspend fun getFree2Air(
-        @Query("sheet_no") sheetNo: String = "",
-    ): List<Free2AirResponse>
+        @Query("method") sheetNo: String = "",
+    ): Free2AirResponse
 
 }

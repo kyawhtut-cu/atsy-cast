@@ -89,11 +89,11 @@ class SplashRepositoryImpl @Inject constructor(
 
     override suspend fun checkUpdate(
         context: Context,
-        callback: (NetworkResponse<UpdateResponse?>) -> Unit
+        callback: (NetworkResponse<UpdateResponse.Data?>) -> Unit
     ) {
-        val versionResponse = execute { api.checkUpdate() }
+        val versionResponse = execute { api.checkUpdate().data }
         if (versionResponse.isSuccess) {
-            val appStatus: UpdateResponse? = versionResponse.data?.last()
+            val appStatus: UpdateResponse.Data? = versionResponse.data?.last()
             if (appStatus == null) {
                 NetworkResponse.error(
                     NetworkError(context.getString(R.string.lbl_notify_to_developer)),

@@ -16,7 +16,7 @@ import dagger.hilt.components.SingletonComponent
  */
 @Module
 @InstallIn(SingletonComponent::class)
-object ServiceModule {
+internal object ServiceModule {
 
     @Provides
     fun provideFree2AirAPI(@ApplicationContext context: Context): Free2AirAPI {

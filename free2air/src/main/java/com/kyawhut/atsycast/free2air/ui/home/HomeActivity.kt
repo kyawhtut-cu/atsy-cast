@@ -89,7 +89,7 @@ internal class HomeActivity : BaseTvActivityWithVM<ActivityF2aHomeBinding, HomeV
         playerManger.onRestoreInstanceState(savedInstanceState)
     }
 
-    private fun onF2ANetworkState(state: NetworkResponse<HashMap<String, List<Free2AirResponse>>>) {
+    private fun onF2ANetworkState(state: NetworkResponse<HashMap<String, List<Free2AirResponse.Data>>>) {
         vb.loadingView.toggleAnimation(state.isLoading)
         toggleLoading(state.isLoading)
         when {
@@ -150,7 +150,7 @@ internal class HomeActivity : BaseTvActivityWithVM<ActivityF2aHomeBinding, HomeV
         f2aChannelFragment?.setOnItemViewClickedListener { _, item, _, row ->
             if (channelAdapter[playingIndexRow] is ListRow) {
                 ((channelAdapter[playingIndexRow] as ListRow).adapter as ArrayObjectAdapter?)?.let {
-                    it.replace(playingIndex, (it.get(playingIndex) as Free2AirResponse).apply {
+                    it.replace(playingIndex, (it.get(playingIndex) as Free2AirResponse.Data).apply {
                         isPlaying = false
                     })
                 }
@@ -160,7 +160,7 @@ internal class HomeActivity : BaseTvActivityWithVM<ActivityF2aHomeBinding, HomeV
                 (row.adapter as ArrayObjectAdapter?)?.let {
                     playingIndex = it.indexOf(item)
                     if (playingIndex != -1) {
-                        it.replace(playingIndex, (item as Free2AirResponse).apply {
+                        it.replace(playingIndex, (item as Free2AirResponse.Data).apply {
                             isPlaying = true
                         })
                         play(item.channelName, item.channelCover, item.channelStream)

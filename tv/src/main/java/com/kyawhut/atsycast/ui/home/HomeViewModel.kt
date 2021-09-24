@@ -16,11 +16,11 @@ class HomeViewModel @Inject constructor(
     private val repo: HomeRepository
 ) : BaseViewModel() {
 
-    var homeFeatureList: List<HomeFeatureResponse> = mutableListOf()
+    var homeFeatureList: List<HomeFeatureResponse.Data> = mutableListOf()
 
     fun getHomeFeatures(
         context: Context,
-        callback: (NetworkResponse<List<HomeFeatureResponse>>) -> Unit
+        callback: (NetworkResponse<List<HomeFeatureResponse.Data>>) -> Unit
     ) {
         viewModelScope {
             repo.getHomeFeatures(context, callback)

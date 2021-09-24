@@ -13,7 +13,7 @@ class CardPresenter(context: Context) : BaseCardPresenterSelector<CardType>(cont
 
     override fun getCardType(item: Any?): CardType {
         return when (item) {
-            is HomeFeatureResponse -> CardType.FEATURE
+            is HomeFeatureResponse.Data -> CardType.FEATURE
             else -> throw RuntimeException("$item is not supported")
         }
     }

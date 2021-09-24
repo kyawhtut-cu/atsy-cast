@@ -10,29 +10,14 @@ import javax.inject.Inject
  * @author kyawhtut
  * @date 8/31/21
  */
-class HomeRepositoryImpl @Inject constructor(private val api: Free2AirAPI) : HomeRepository {
+internal class HomeRepositoryImpl @Inject constructor(private val api: Free2AirAPI) :
+    HomeRepository {
 
     override suspend fun getFree2Air(
         key: String,
-        callback: (NetworkResponse<HashMap<String, List<Free2AirResponse>>>) -> Unit
+        callback: (NetworkResponse<HashMap<String, List<Free2AirResponse.Data>>>) -> Unit
     ) {
         NetworkResponse.loading(callback)
-        if (key.split(",").size > 1) {
-            execute {
-                api.getMultiFree2Air(key)
-            }.post(callback)
-        } else {
-            val response = execute { api.getFree2Air(key) }
-            if (response.isSuccess) {
-                NetworkResponse.success(
-                    hashMapOf(
-                        "Channels" to response.data!!
-                    ),
-                    callback
-                )
-            } else {
-                NetworkResponse.error(response.error, callback)
-            }
-        }
+        execute { api.getFree2Air(key).data }.post(callback)
     }
 }

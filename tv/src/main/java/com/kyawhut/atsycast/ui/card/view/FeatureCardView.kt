@@ -15,7 +15,7 @@ class FeatureCardView(context: Context) : BaseCardView<CardFeaturesBinding>(
 ) {
 
     override fun bindUI(data: Any) {
-        val feature = data as HomeFeatureResponse
+        val feature = data as HomeFeatureResponse.Data
         vb.apply {
             featureLogo = feature.featureCover
             featureName = feature.featureName

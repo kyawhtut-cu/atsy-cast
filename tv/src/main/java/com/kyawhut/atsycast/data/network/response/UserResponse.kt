@@ -9,7 +9,11 @@ import com.google.gson.annotations.SerializedName
  */
 @Keep
 data class UserResponse(
-    @SerializedName("user_data")
+    @SerializedName("status")
+    val status: Int,
+    @SerializedName("message")
+    val message: String,
+    @SerializedName("data")
     val data: Data?
 ) {
 

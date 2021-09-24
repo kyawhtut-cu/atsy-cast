@@ -41,7 +41,7 @@ class HomeFeaturesFragment : RowsSupportFragment() {
         }
 
         setOnItemViewClickedListener { _, item, _, _ ->
-            if (item is HomeFeatureResponse) {
+            if (item is HomeFeatureResponse.Data) {
                 when (item.featureKey) {
                     1 -> goToFree2Air(item.featureAPIKey, item.featureName)
                     2 -> goToMsubPC(item.featureName, item.featureAPIKey)
@@ -66,7 +66,7 @@ class HomeFeaturesFragment : RowsSupportFragment() {
         vm.getHomeFeatures(requireContext(), ::onStateFeature)
     }
 
-    private fun onStateFeature(state: NetworkResponse<List<HomeFeatureResponse>>) {
+    private fun onStateFeature(state: NetworkResponse<List<HomeFeatureResponse.Data>>) {
         when {
             state.isLoading -> {
                 (requireActivity() as HomeActivity).toggleLoading(true)

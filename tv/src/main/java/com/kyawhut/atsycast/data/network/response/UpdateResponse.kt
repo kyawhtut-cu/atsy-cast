@@ -11,16 +11,26 @@ import java.io.Serializable
  */
 @Keep
 data class UpdateResponse(
-    @SerializedName("version_name")
-    val versionName: String,
-    @SerializedName("is_maintenance")
-    val isMaintenance: Boolean,
-    @SerializedName("update_message")
-    val updatMessage: String,
-    @SerializedName("maintenance_message")
-    val maintenanceMessage: String,
+    @SerializedName("status")
+    val status: Int,
+    @SerializedName("message")
+    val message: String,
+    @SerializedName("data")
+    val data: List<Data>,
 ) : Serializable {
 
-    val downloadURL: String
-        get() = BuildConfig.UPDATE_URL
+    @Keep
+    data class Data(
+        @SerializedName("version_name")
+        val versionName: String,
+        @SerializedName("is_maintenance")
+        val isMaintenance: Boolean,
+        @SerializedName("update_message")
+        val updatMessage: String,
+        @SerializedName("maintenance_message")
+        val maintenanceMessage: String,
+    ) {
+        val downloadURL: String
+            get() = BuildConfig.UPDATE_URL
+    }
 }

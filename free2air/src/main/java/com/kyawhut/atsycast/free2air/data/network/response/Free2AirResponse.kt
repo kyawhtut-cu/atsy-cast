@@ -9,43 +9,53 @@ import com.google.gson.annotations.SerializedName
  * @date 8/31/21
  */
 @Keep
-data class Free2AirResponse(
-    @SerializedName("channel_id")
-    val channelID: String,
-    @SerializedName("channel_name")
-    val channelName: String,
-    @SerializedName("channel_order")
-    val channelOrder: Int,
-    @SerializedName("channel_status")
-    val channelStatus: Boolean,
-    @SerializedName("channel_cover")
-    val channelCover: String,
-    @SerializedName("channel_stream")
-    val channelStream: String,
-    @SerializedName("channel_origin")
-    val channelOrigin: String,
-    @SerializedName("channel_referer")
-    val channelReferer: String,
-    @SerializedName("channel_agent")
-    val channelAgent: String
+internal data class Free2AirResponse(
+    @SerializedName("status")
+    val status: Int,
+    @SerializedName("message")
+    val message: String,
+    @SerializedName("data")
+    val data: HashMap<String, List<Data>>
 ) {
     companion object {
-        val diff = object : DiffCallback<Free2AirResponse>() {
+        val diff = object : DiffCallback<Data>() {
             override fun areItemsTheSame(
-                oldItem: Free2AirResponse,
-                newItem: Free2AirResponse
+                oldItem: Data,
+                newItem: Data
             ): Boolean {
                 return oldItem.channelID == newItem.channelID
             }
 
             override fun areContentsTheSame(
-                oldItem: Free2AirResponse,
-                newItem: Free2AirResponse
+                oldItem: Data,
+                newItem: Data
             ): Boolean {
                 return oldItem == newItem
             }
         }
     }
 
-    var isPlaying: Boolean = false
+    @Keep
+    data class Data(
+        @SerializedName("channel_id")
+        val channelID: String,
+        @SerializedName("channel_name")
+        val channelName: String,
+        @SerializedName("channel_order")
+        val channelOrder: Int,
+        @SerializedName("channel_status")
+        val channelStatus: Boolean,
+        @SerializedName("channel_cover")
+        val channelCover: String,
+        @SerializedName("channel_stream")
+        val channelStream: String,
+        @SerializedName("channel_origin")
+        val channelOrigin: String,
+        @SerializedName("channel_referer")
+        val channelReferer: String,
+        @SerializedName("channel_agent")
+        val channelAgent: String
+    ) {
+        var isPlaying: Boolean = false
+    }
 }

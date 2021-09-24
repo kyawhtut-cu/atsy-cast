@@ -28,7 +28,7 @@ class SplashViewModel @Inject constructor(
         }
     }
 
-    fun checkUpdateStatus(callback: (NetworkResponse<UpdateResponse?>) -> Unit) {
+    fun checkUpdateStatus(callback: (NetworkResponse<UpdateResponse.Data?>) -> Unit) {
         viewModelScope {
             repo.checkUpdate(application, callback)
         }

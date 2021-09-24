@@ -18,6 +18,6 @@ interface SplashRepository {
 
     suspend fun checkUpdate(
         context: Context,
-        callback: (NetworkResponse<UpdateResponse?>) -> Unit
+        callback: (NetworkResponse<UpdateResponse.Data?>) -> Unit
     )
 }

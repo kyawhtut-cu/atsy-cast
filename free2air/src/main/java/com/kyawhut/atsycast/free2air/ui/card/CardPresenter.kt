@@ -13,7 +13,7 @@ class CardPresenter(context: Context) : BaseCardPresenterSelector<CardType>(cont
 
     override fun getCardType(item: Any?): CardType {
         return when (item) {
-            is Free2AirResponse -> CardType.F2A
+            is Free2AirResponse.Data -> CardType.F2A
             else -> throw RuntimeException("$item is not supported")
         }
     }

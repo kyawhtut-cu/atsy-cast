@@ -15,9 +15,9 @@ interface SheetAPI {
     @GET("exec")
     suspend fun getHomeFeature(
         @Query("device_id") deviceID: String,
-        @Query("password") password: String,
-        @Query("sheet_no") sheetNo: Int = 2,
-    ): List<HomeFeatureResponse>
+        @Query("device_password") password: String,
+        @Query("method") method: String = "homeFeatures",
+    ): HomeFeatureResponse
 
     @GET("exec")
     suspend fun registerDevice(
@@ -29,26 +29,26 @@ interface SheetAPI {
     @GET("exec")
     suspend fun checkDevicePassword(
         @Query("device_id") deviceID: String,
-        @Query("password") password: String,
-        @Query("method") method: String = "checkDevice",
+        @Query("device_password") password: String,
+        @Query("method") method: String = "checkDevicePassword",
     ): UserResponse
 
     @GET("exec")
     suspend fun checkAdultPassword(
         @Query("device_id") deviceID: String,
-        @Query("password") password: String,
-        @Query("method") method: String = "checkPassword",
+        @Query("adult_password") password: String,
+        @Query("method") method: String = "checkAdultPassword",
     ): UserResponse
 
     @GET("exec")
     suspend fun changeDisplayName(
         @Query("device_id") deviceID: String,
         @Query("display_name") displayName: String,
-        @Query("method") method: String = "changeName",
+        @Query("method") method: String = "changeDisplayName",
     ): UserResponse
 
     @GET("exec")
     suspend fun checkUpdate(
         @Query("method") method: String = "checkUpdate",
-    ): List<UpdateResponse>
+    ): UpdateResponse
 }

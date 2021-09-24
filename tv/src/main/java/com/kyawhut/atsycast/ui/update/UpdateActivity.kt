@@ -32,8 +32,8 @@ class UpdateActivity : BaseTvActivity<ActivityUpdateBinding>(), View.OnClickList
         private const val FILE_PERMISSION_REQUEST = 0x001
     }
 
-    private val appStatus: UpdateResponse by lazy {
-        intent?.getSerializableExtra(Constants.EXTRA_APP_STATUS) as UpdateResponse
+    private val appStatus: UpdateResponse.Data by lazy {
+        intent?.getSerializableExtra(Constants.EXTRA_APP_STATUS) as UpdateResponse.Data
     }
 
     override val layoutID: Int

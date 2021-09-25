@@ -29,7 +29,7 @@ data class UpdateResponse(
         val updatMessage: String,
         @SerializedName("maintenance_message")
         val maintenanceMessage: String,
-    ) {
+    ) : Serializable {
         val downloadURL: String
             get() = BuildConfig.UPDATE_URL
     }

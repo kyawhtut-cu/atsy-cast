@@ -8,6 +8,7 @@ import com.kyawhut.atsycast.databinding.ActivityHomeBinding
 import com.kyawhut.atsycast.share.base.BaseTvActivity
 import com.kyawhut.atsycast.share.utils.ToggleBackground
 import com.kyawhut.atsycast.share.utils.extension.startActivity
+import com.kyawhut.atsycast.ui.dialog.DialogExit.Companion.showExitDialog
 import com.kyawhut.atsycast.ui.setting.SettingActivity
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
@@ -102,5 +103,9 @@ class HomeActivity : BaseTvActivity<ActivityHomeBinding>() {
         clockCountDown.cancel()
         toggleBackground.stop()
         super.onDestroy()
+    }
+
+    override fun onBackPressed() {
+        showExitDialog()
     }
 }

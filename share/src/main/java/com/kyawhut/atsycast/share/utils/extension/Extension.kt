@@ -155,4 +155,8 @@ object Extension {
     fun Context?.convertDpToPixel(dp: Float): Float {
         return dp * (this!!.resources.displayMetrics.densityDpi / 160f)
     }
+
+    fun Fragment.convertDpToPixel(dp: Float): Float {
+        return requireContext().convertDpToPixel(dp)
+    }
 }

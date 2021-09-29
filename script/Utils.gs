@@ -17,12 +17,17 @@ let MSYS_API_KEY = [
   },
 ]
 
+// Lib
+// Cheerio - 1ReeQ6WO8kKNxoaA_O0XEQ589cIrRvEBA9qcWpNqdOP17i47u6N9M5Xh0
+
 const SHEET_ID = `***`
 
 const DEVICE_SHEET = `Device`
 const HOME_FEATURE_SHEET = `Home Feature`
 const FREE_2_AIR_SHEET = `Free 2 Air`
 const CHECK_UPDATE_SHEET = `Check Update`
+const SPECIAL_FEATURE_SHEET = `Special Feature`
+const ACCESS_DEVICE_SHEET = `Access Device ID`
 
 const POST = "post"
 const GET = "get"

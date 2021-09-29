@@ -65,8 +65,9 @@ let registerDeviceController = (request) => {
 
   let deviceID = parameter.device_id
   let deviceName = parameter.device_name
+  let appPackageName = parameter.app_package_name
 
-  if(deviceID == null || deviceID == `` || deviceName == null || deviceName == ``) {
+  if(deviceID == null || deviceID == `` || deviceName == null || deviceName == `` || appPackageName == `` || appPackageName == null) {
     request.status = BAD_REQUEST
     request.message = BAD_REQUEST_MESSAGE
     return request.responseWithJson()
@@ -88,7 +89,8 @@ let registerDeviceController = (request) => {
       deviceName,
       deviceName,
       devicePassword,
-      adultPassword
+      adultPassword,
+      appPackageName
     ])
 
     user = {

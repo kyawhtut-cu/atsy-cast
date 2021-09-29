@@ -19,6 +19,8 @@
     <string name="lbl_remote_left">Tv Remote မှ ဘယ်ဘက် သို့ ရွှေ့သည့် ခလုတ်လေးကို နှိပ်ပေးပါ။</string>
     <string name="lbl_remote_center">Tv Remote မှ OK ခလုတ်လေးကို နှိပ်ပေးပါ။</string>
 
+    <string name="lbl_download_error">ဒေါင်းလုတ်ဆွဲရာတွင် ပြဿနာရှိသွားပါသဖြင့် ပြန်လည်ကြိုးစားပေးပါ။</string>
+
     <string name="lbl_exit_dialog_title">Are you sure want to exit?</string>
     <string name="lbl_exit_dialog_btn">Exit</string>
 

@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.*
 import com.kyawhut.atsycast.R
 import com.kyawhut.atsycast.databinding.DialogPasswordBinding
+import com.kyawhut.atsycast.share.utils.ShareUtils.deviceID
 import com.kyawhut.atsycast.share.utils.extension.putArg
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -63,6 +64,7 @@ class DialogPassword(
     ): View {
         vb = DialogPasswordBinding.inflate(inflater, container, true)
         vb.apply {
+            deviceID = this@DialogPassword.requireContext().deviceID
             isLoading = false
             errorMessage = ""
             dialogTitle = when (type) {

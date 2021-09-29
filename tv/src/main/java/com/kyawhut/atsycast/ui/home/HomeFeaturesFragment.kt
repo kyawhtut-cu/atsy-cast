@@ -5,6 +5,7 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.leanback.app.RowsSupportFragment
 import androidx.leanback.widget.*
+import com.kyawhut.astycast.gsmovie.GSApplication.goToGSHome
 import com.kyawhut.atsycast.R
 import com.kyawhut.atsycast.data.network.response.HomeFeatureResponse
 import com.kyawhut.atsycast.doujin.DoujinApp.goToDoujin
@@ -43,6 +44,7 @@ class HomeFeaturesFragment : RowsSupportFragment() {
         setOnItemViewClickedListener { _, item, _, _ ->
             if (item is HomeFeatureResponse.Data) {
                 when (item.featureKey) {
+                    -1 -> goToGSHome(item.featureAPIKey, item.featureName)
                     1 -> goToFree2Air(item.featureAPIKey, item.featureName)
                     2 -> goToMsubPC(item.featureName, item.featureAPIKey)
                     3 -> goToZCM(item.featureName, item.featureAPIKey)

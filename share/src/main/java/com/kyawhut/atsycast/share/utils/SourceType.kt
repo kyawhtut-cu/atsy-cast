@@ -9,6 +9,7 @@ enum class SourceType(val type: String) {
     ZCM("z_channel"),
     MSYS("msys"),
     ET2SMM("et2smm"),
+    MYCINEMA("myCinema"),
     UNKNOWN("unknown");
 
     companion object {

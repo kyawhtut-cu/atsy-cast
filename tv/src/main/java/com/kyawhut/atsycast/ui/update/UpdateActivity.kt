@@ -18,6 +18,7 @@ import com.kyawhut.atsycast.share.utils.extension.Extension.convertDpToPixel
 import com.kyawhut.atsycast.utils.Constants
 import com.kyawhut.atsycast.utils.services.DownloaderService
 import com.kyawhut.atsycast.utils.services.DownloaderService.Companion.startDownload
+import es.dmoral.toasty.Toasty
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
 import java.io.File
@@ -83,8 +84,10 @@ class UpdateActivity : BaseTvActivity<ActivityUpdateBinding>(), View.OnClickList
 
     private fun onDownloadProgress(message: String, progress: Int) {
         if (message.isNotEmpty()) {
+            Toasty.warning(this, getString(R.string.lbl_download_error), Toasty.LENGTH_LONG).show()
             vb.apply {
                 actionText = getString(R.string.lbl_retry)
+                percent = ""
                 executePendingBindings()
             }
             return

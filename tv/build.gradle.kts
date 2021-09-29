@@ -182,6 +182,7 @@ dependencies {
     implementation(project(":ets2mm"))
     implementation(project(":2d"))
     implementation(project(":eporner"))
+    implementation(project(":gsmovies"))
 
     testImplementation(Libs.junit)
     androidTestImplementation(Libs.testJunit)

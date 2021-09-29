@@ -1,3 +1,4 @@
+include(":gsmovies")
 include(":eporner")
 include(":2d")
 include(":ets2mm")

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="isFocus"
+            type="Boolean" />
+
+        <variable
+            name="moviesName"
+            type="String" />
+
+        <variable
+            name="moviesPoster"
+            type="String" />
+
+        <variable
+            name="moviesEpisode"
+            type="String" />
+
+        <variable
+            name="moviesViewCount"
+            type="String" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:background="@{isFocus ? @color/colorCardBackgroundFocus : @color/colorCardBackgroundUnFocus}"
+        tools:context=".ui.card.view.VideoCardView">
+
+        <ImageView
+            android:id="@+id/iv_movies_poster"
+            isHorizontal="@{false}"
+            isNeedToCache="@{true}"
+            loadImage="@{moviesPoster}"
+            android:layout_width="0dp"
+            android:layout_height="160dp"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_thumbnail"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/view_episode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_imdb"
+            android:visibility="@{moviesEpisode.isEmpty() ? View.GONE : View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_movies_poster"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <TextView
+                android:id="@+id/tv_episode"
+                isMMFont="@{true}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{moviesEpisode}"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/text_smaller"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="6.3" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/tv_movies_name"
+            isMMFont="@{true}"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:minLines="1"
+            android:padding="2dp"
+            android:text="@{moviesName}"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/text_small"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_movies_poster"
+            tools:text="Movies Name" />
+
+        <TextView
+            android:id="@+id/tv_series_description"
+            isMMFont="@{true}"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:minLines="1"
+            android:paddingHorizontal="2dp"
+            android:paddingBottom="2dp"
+            android:text="@{moviesViewCount}"
+            android:textColor="#979797"
+            android:textSize="@dimen/text_smaller"
+            android:visibility="@{moviesViewCount.isEmpty() ? View.GONE : View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_movies_name"
+            tools:text="2021" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

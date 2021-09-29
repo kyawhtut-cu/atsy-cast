@@ -1,5 +1,6 @@
 package com.kyawhut.atsycast.data.network
 
+import com.kyawhut.atsycast.BuildConfig
 import com.kyawhut.atsycast.data.network.response.HomeFeatureResponse
 import com.kyawhut.atsycast.data.network.response.UpdateResponse
 import com.kyawhut.atsycast.data.network.response.UserResponse
@@ -23,6 +24,7 @@ interface SheetAPI {
     suspend fun registerDevice(
         @Query("device_id") deviceID: String,
         @Query("device_name") deviceName: String,
+        @Query("app_package_name") appPackageName: String = BuildConfig.APPLICATION_ID,
         @Query("method") method: String = "registerDevice",
     ): UserResponse
 

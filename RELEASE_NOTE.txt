@@ -1,2 +1,6 @@
-Whats is included in 1.0.0 version?
+Whats is included in 1.1.0 version?
+    . GS Movie Service Added.
+    . Update error fixed.
+    . Device ID can see in password dialog.
     . Some bug fixed.
+    . Add some bug.

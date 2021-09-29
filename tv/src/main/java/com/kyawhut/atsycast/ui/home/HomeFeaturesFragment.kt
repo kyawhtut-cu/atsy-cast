@@ -68,21 +68,26 @@ class HomeFeaturesFragment : RowsSupportFragment() {
         vm.getHomeFeatures(requireContext(), ::onStateFeature)
     }
 
-    private fun onStateFeature(state: NetworkResponse<List<HomeFeatureResponse.Data>>) {
+    private fun onStateFeature(state: NetworkResponse<HashMap<String, List<HomeFeatureResponse.Data>>>) {
         when {
             state.isLoading -> {
                 (requireActivity() as HomeActivity).toggleLoading(true)
             }
             state.isSuccess -> {
                 (requireActivity() as HomeActivity).toggleLoading(false)
-                vm.homeFeatureList = state.data ?: listOf()
-                if (vm.homeFeatureList.isNotEmpty()) {
-                    rowsAdapter.clear()
+                vm.homeFeatureList = state.data ?: hashMapOf()
+                rowsAdapter.clear()
+                var rowIndex = 1L
+                vm.homeFeatureList.filter {
+                    it.value.isNotEmpty() && it.value.any {
+                        !it.featureRequiredPassword || isAdultOpen
+                    }
+                }.forEach { data ->
                     rowsAdapter.add(
                         ListRow(
-                            HeaderItem(1L, "Features"),
+                            HeaderItem(rowIndex++, data.key),
                             ArrayObjectAdapter(CardPresenter(requireContext())).apply {
-                                setItems(state.data?.filter {
+                                setItems(data.value.sortedBy { it.featureOrder }.filter {
                                     !it.featureRequiredPassword || isAdultOpen
                                 }, HomeFeatureResponse.diff)
                             }
@@ -104,16 +109,40 @@ class HomeFeaturesFragment : RowsSupportFragment() {
     override fun onResume() {
         super.onResume()
         if (rowsAdapter.size() != 0 && vm.homeFeatureList.isNotEmpty()) {
-            with((rowsAdapter.get(0) as ListRow).adapter as ArrayObjectAdapter) {
-                vm.homeFeatureList.mapIndexed { index, featureResponse ->
-                    if (featureResponse.featureRequiredPassword) index to featureResponse
-                    else index to null
-                }.filter { it.second != null }.forEach { (index, feature) ->
-                    if (this.indexOf(feature) == -1 && isAdultOpen) {
-                        add(index, feature)
-                    } else if (this.indexOf(feature) != -1 && !isAdultOpen) {
-                        removeItems(this.indexOf(feature), 1)
+            var rowIndex = 0
+            vm.homeFeatureList.forEach { data ->
+                if (rowIndex < rowsAdapter.size()) {
+                    val listRow = rowsAdapter.get(rowIndex++) as ListRow
+                    val headerTitle = listRow.headerItem.name
+                    with(listRow.adapter as ArrayObjectAdapter) {
+                        vm.homeFeatureList[headerTitle]?.mapIndexed { index, featureResponse ->
+                            if (featureResponse.featureRequiredPassword) index to featureResponse
+                            else index to null
+                        }?.filter { it.second != null }?.forEach { (index, feature) ->
+                            if (this.indexOf(feature) == -1 && isAdultOpen) {
+                                add(index, feature)
+                            } else if (this.indexOf(feature) != -1 && !isAdultOpen) {
+                                removeItems(this.indexOf(feature), 1)
+                            }
+                        }
                     }
+                } else {
+                    if (data.value.isNotEmpty()) rowsAdapter.add(
+                        ListRow(
+                            HeaderItem((rowsAdapter.size() + 1).toLong(), data.key),
+                            ArrayObjectAdapter(CardPresenter(requireContext())).apply {
+                                setItems(data.value.sortedBy { it.featureOrder }.filter {
+                                    !it.featureRequiredPassword || isAdultOpen
+                                }, HomeFeatureResponse.diff)
+                            }
+                        )
+                    )
+                }
+            }
+            (0 until rowsAdapter.size()).forEach { index ->
+                val listRow = rowsAdapter.get(index) as ListRow
+                with(listRow.adapter as ArrayObjectAdapter) {
+                    if (this.size() == 0) rowsAdapter.remove(listRow)
                 }
             }
         }

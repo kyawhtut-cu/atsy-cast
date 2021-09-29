@@ -15,7 +15,7 @@ data class HomeFeatureResponse(
     @SerializedName("message")
     val message: String,
     @SerializedName("data")
-    val data: List<Data>,
+    val data: HashMap<String, List<Data>>,
 ) {
 
     @Keep

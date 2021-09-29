@@ -12,6 +12,6 @@ interface HomeRepository {
 
     suspend fun getHomeFeatures(
         context: Context,
-        callback: (NetworkResponse<List<HomeFeatureResponse.Data>>) -> Unit
+        callback: (NetworkResponse<HashMap<String, List<HomeFeatureResponse.Data>>>) -> Unit
     )
 }

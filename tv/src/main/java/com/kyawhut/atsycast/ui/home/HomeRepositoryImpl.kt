@@ -19,13 +19,11 @@ class HomeRepositoryImpl @Inject constructor(
 
     override suspend fun getHomeFeatures(
         context: Context,
-        callback: (NetworkResponse<List<HomeFeatureResponse.Data>>) -> Unit
+        callback: (NetworkResponse<HashMap<String, List<HomeFeatureResponse.Data>>>) -> Unit
     ) {
         NetworkResponse.loading(callback)
         val features = execute {
-            sheetAPI.getHomeFeature(context.deviceID, context.devicePassword).data.sortedBy {
-                it.featureOrder
-            }
+            sheetAPI.getHomeFeature(context.deviceID, context.devicePassword).data
         }
         features.post(callback)
     }

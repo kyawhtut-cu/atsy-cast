@@ -1,13 +1,12 @@
 package com.kyawhut.atsycast.utils.services
 
+import android.app.IntentService
 import android.content.Intent
 import android.net.Uri
 import android.os.Environment
-import androidx.core.app.JobIntentService
 import androidx.fragment.app.FragmentActivity
-import com.google.gson.Gson
 import com.kyawhut.atsycast.share.network.utils.UnsafeOkHttpClient
-import com.kyawhut.atsycast.share.utils.extension.IntentExtension.createIntent
+import com.kyawhut.atsycast.share.utils.extension.startService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -18,7 +17,7 @@ import timber.log.Timber
 import java.io.File
 import java.io.IOException
 
-class DownloaderService : JobIntentService() {
+class DownloaderService : IntentService("UpdateDownloadService") {
 
     companion object {
         private const val DOWNLOAD_JOB_ID = 2
@@ -26,12 +25,34 @@ class DownloaderService : JobIntentService() {
         var callback: ((message: String, progress: Int) -> Unit)? = null
 
         fun FragmentActivity.startDownload(vararg data: Pair<String, Any>) {
-            enqueueWork(
-                this,
-                DownloaderService::class.java,
-                DOWNLOAD_JOB_ID,
-                createIntent(this, DownloaderService::class.java, data)
+            startService<DownloaderService>(
+                *data
             )
+        }
+    }
+
+    override fun onHandleIntent(intent: Intent?) {
+        intent?.let {
+            try {
+                val apkURL = it.getStringExtra(extraApkURL) ?: ""
+                val apkName = Uri.parse(apkURL).lastPathSegment ?: ""
+                val file = File(
+                    getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS),
+                    apkName
+                )
+                if (file.exists()) {
+                    file.delete()
+                }
+                downloadApk(
+                    apkName,
+                    apkURL
+                )
+            } catch (e: Exception) {
+                e.printStackTrace()
+                CoroutineScope(Dispatchers.Main).launch {
+                    callback?.invoke(e.localizedMessage ?: "", 0)
+                }
+            }
         }
     }
 
@@ -40,7 +61,7 @@ class DownloaderService : JobIntentService() {
         Timber.d("Downloader service started.")
     }
 
-    override fun onHandleWork(intent: Intent) {
+    /*override fun onHandleWork(intent: Intent) {
         Timber.d("onHandleWork => %s", Gson().toJson(intent))
         intent.let {
             try {
@@ -64,7 +85,7 @@ class DownloaderService : JobIntentService() {
                 }
             }
         }
-    }
+    }*/
 
     @Throws(Exception::class)
     private fun downloadApk(apkName: String, downloadURL: String) {

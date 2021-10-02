@@ -12,6 +12,7 @@ plugins {
 val releaseProperties = Properties()
 releaseProperties.load(file("${rootDir}/local.properties").inputStream())
 val BASE_URL: String = releaseProperties.getProperty("MSUB_PC_BASE_URL", "")
+val ENCRYPT_KEY: String = releaseProperties.getProperty("MSUB_PC_ENCRYPT_KEY", "")
 
 android {
     compileSdkVersion(Versions.compileSdkVersion)
@@ -32,6 +33,7 @@ android {
         consumerProguardFiles("consumer-rules.pro")
 
         buildConfigString("BASE_URL", BASE_URL)
+        buildConfigString("ENCRYPT_KEY", ENCRYPT_KEY)
     }
 
     flavorDimensions("env")

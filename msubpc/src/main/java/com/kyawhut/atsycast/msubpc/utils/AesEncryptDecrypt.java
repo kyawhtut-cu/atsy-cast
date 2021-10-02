@@ -5,6 +5,7 @@ import android.util.Base64;
 import androidx.annotation.Keep;
 
 import com.google.gson.Gson;
+import com.kyawhut.atsycast.msubpc.BuildConfig;
 
 import org.apache.commons.codec.binary.Hex;
 
@@ -62,7 +63,7 @@ public class AesEncryptDecrypt {
         paramString = new String(Base64.decode(paramString.getBytes(), 0));
         AesEncryptionData aesEncryptionData = (new Gson()).fromJson(paramString, AesEncryptionData.class);
         try {
-            String str = decrypt("10559675956639794742525499274205".getBytes("UTF-8"), aesEncryptionData.iv, aesEncryptionData.value, aesEncryptionData.mac);
+            String str = decrypt(BuildConfig.ENCRYPT_KEY.getBytes("UTF-8"), aesEncryptionData.iv, aesEncryptionData.value, aesEncryptionData.mac);
             return str;
         } catch (Exception exception) {
             exception.printStackTrace();

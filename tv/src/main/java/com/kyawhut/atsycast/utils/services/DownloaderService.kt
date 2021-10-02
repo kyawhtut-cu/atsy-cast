@@ -61,32 +61,6 @@ class DownloaderService : IntentService("UpdateDownloadService") {
         Timber.d("Downloader service started.")
     }
 
-    /*override fun onHandleWork(intent: Intent) {
-        Timber.d("onHandleWork => %s", Gson().toJson(intent))
-        intent.let {
-            try {
-                val apkURL = it.getStringExtra(extraApkURL) ?: ""
-                val apkName = Uri.parse(apkURL).lastPathSegment ?: ""
-                val file = File(
-                    getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS),
-                    apkName
-                )
-                if (file.exists()) {
-                    file.delete()
-                }
-                downloadApk(
-                    apkName,
-                    apkURL
-                )
-            } catch (e: Exception) {
-                e.printStackTrace()
-                CoroutineScope(Dispatchers.Main).launch {
-                    callback?.invoke(e.localizedMessage ?: "", 0)
-                }
-            }
-        }
-    }*/
-
     @Throws(Exception::class)
     private fun downloadApk(apkName: String, downloadURL: String) {
         val request = Request.Builder().url(downloadURL).build()

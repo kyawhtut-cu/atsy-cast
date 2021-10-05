@@ -41,7 +41,7 @@ import kotlin.math.min
 class PlayerManagerImpl private constructor(
     private val activity: FragmentActivity,
     private val playerView: PlayerView,
-    private val playerLoadingView: IOSLoading,
+    private val playerLoadingView: IOSLoading?,
     private val playerPlayPause: PlayPauseView?,
     private val playerPosterView: ImageView?,
     private val playerTitleView: RowHeaderView?,
@@ -385,7 +385,7 @@ class PlayerManagerImpl private constructor(
 
     private fun toggleLoading(isLoading: Boolean) {
         playerStateListener?.toggleLoading(isLoading)
-        playerLoadingView.toggleAnimation(isLoading)
+        playerLoadingView?.toggleAnimation(isLoading)
     }
 
     private fun onPlayerEnd() {
@@ -485,12 +485,12 @@ class PlayerManagerImpl private constructor(
         var playerStateListener: PlayerManager? = null
 
         fun build(): PlayerManagerImpl {
-            if (playerView == null || playerLoadingView == null)
+            if (playerView == null)
                 throw RuntimeException("Views must not be null.")
             return PlayerManagerImpl(
                 activity,
                 playerView!!,
-                playerLoadingView!!,
+                playerLoadingView,
                 playerPlayPause,
                 playerPosterView,
                 playerTitleView,

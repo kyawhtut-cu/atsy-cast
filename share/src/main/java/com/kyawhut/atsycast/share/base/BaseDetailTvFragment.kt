@@ -142,6 +142,11 @@ abstract class BaseDetailTvFragment<VM : BaseViewModel> : Fragment() {
         }
     }
 
+    fun addAction(index: Int = 0, action: ActionModel.Builder.() -> Unit) {
+        if (actionRowsAdapter.size() == 0) return
+        addAction(index, ActionModel.Builder().also(action).build())
+    }
+
     fun addAction(action: ActionModel) {
         with(actionRowsAdapter.get(0) as ListRow) {
             with(this.adapter as ArrayObjectAdapter) {
@@ -150,9 +155,20 @@ abstract class BaseDetailTvFragment<VM : BaseViewModel> : Fragment() {
         }
     }
 
-    fun replaceAction(index: Int, action: ActionModel) {
+    fun addAction(action: ActionModel.Builder.() -> Unit) {
+        if (actionRowsAdapter.size() == 0) return
         with(actionRowsAdapter.get(0) as ListRow) {
             with(this.adapter as ArrayObjectAdapter) {
+                addAction(this.size(), ActionModel.Builder().also(action).build())
+            }
+        }
+    }
+
+    fun replaceAction(index: Int, action: ActionModel) {
+        if (actionRowsAdapter.size() == 0) return
+        with(actionRowsAdapter.get(0) as ListRow) {
+            with(this.adapter as ArrayObjectAdapter) {
+                if (this.size() == 0) return
                 this.replace(index, action)
             }
         }
@@ -162,25 +178,11 @@ abstract class BaseDetailTvFragment<VM : BaseViewModel> : Fragment() {
         replaceAction(index, ActionModel.Builder().also(block).build())
     }
 
-    fun addAction(action: ActionModel.Builder.() -> Unit) {
-        with(actionRowsAdapter.get(0) as ListRow) {
-            with(this.adapter as ArrayObjectAdapter) {
-                addAction(this.size(), ActionModel.Builder().also(action).build())
-            }
-        }
-    }
-
-    fun addAction(index: Int = 0, action: ActionModel.Builder.() -> Unit) {
-        with(actionRowsAdapter.get(0) as ListRow) {
-            with(this.adapter as ArrayObjectAdapter) {
-                addAction(index, ActionModel.Builder().also(action).build())
-            }
-        }
-    }
-
     fun removeAction(action: ActionModel) {
+        if (actionRowsAdapter.size() == 0) return
         with(actionRowsAdapter.get(0) as ListRow) {
             with(this.adapter as ArrayObjectAdapter) {
+                if (this.size() == 0) return
                 this.remove(action)
             }
         }
@@ -191,8 +193,10 @@ abstract class BaseDetailTvFragment<VM : BaseViewModel> : Fragment() {
     }
 
     fun removeAction(position: Int, count: Int = 1) {
+        if (actionRowsAdapter.size() == 0) return
         with(actionRowsAdapter.get(0) as ListRow) {
             with(this.adapter as ArrayObjectAdapter) {
+                if (this.size() == 0) return
                 this.removeItems(position, count)
             }
         }

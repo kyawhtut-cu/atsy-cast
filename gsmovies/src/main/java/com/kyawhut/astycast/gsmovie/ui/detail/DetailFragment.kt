@@ -46,14 +46,14 @@ internal class DetailFragment : BaseDetailTvFragment<DetailViewModel>() {
 
         vm.videoData?.let {
             bindDetail(
-                it.videoPoster,
+                it.videoCover,
                 it.videoTitle,
                 "",
                 "",
                 R.color.colorWhite
             )
 
-            setGenres("View %s".format(it.videoViewCount))
+            setGenres(it.videoViewCount)
         }
 
         vm.getVideoDetail(::onVideoDetailResult)
@@ -69,7 +69,7 @@ internal class DetailFragment : BaseDetailTvFragment<DetailViewModel>() {
                 result.data?.let {
                     vb.apply {
                         detailDescription = it.videoDescription
-                        detailBackground = it.videoCover
+                        executePendingBindings()
                     }
                     vm.videoDetail = it
                     bindAction(it.videoSource.isNotEmpty())
@@ -123,6 +123,13 @@ internal class DetailFragment : BaseDetailTvFragment<DetailViewModel>() {
 
         addAction {
             id = 2L
+            actionName = if (vm.isWatchLater) "Remove from watch later" else "Add to watch later"
+            icon = if (vm.isWatchLater) R.drawable.ic_remove_watch_later
+            else R.drawable.ic_add_to_watch_later
+        }
+
+        addAction {
+            id = 3L
             actionName = "Detail"
             icon = R.drawable.ic_action_review
         }
@@ -147,7 +154,11 @@ internal class DetailFragment : BaseDetailTvFragment<DetailViewModel>() {
                             } ?: listOf())
                         )
                     }
-                    2L -> showFullScreenDescription()
+                    2L -> {
+                        vm.toggleWatchLater()
+                        toggleWatchLater()
+                    }
+                    3L -> showFullScreenDescription()
                 }
             }
         }
@@ -186,5 +197,22 @@ internal class DetailFragment : BaseDetailTvFragment<DetailViewModel>() {
     }
 
     override fun onItemFocus(item: Any) {
+    }
+
+    private fun toggleWatchLater() {
+        replaceAction(
+            if (vm.videoDetail?.videoSource?.isEmpty() == false) 1 else 0
+        ) {
+            id = 2L
+            actionName = if (vm.isWatchLater) "Remove from watch later"
+            else "Add to watch later"
+            icon = if (vm.isWatchLater) R.drawable.ic_remove_watch_later
+            else R.drawable.ic_add_to_watch_later
+        }
+    }
+
+    override fun onResume() {
+        toggleWatchLater()
+        super.onResume()
     }
 }

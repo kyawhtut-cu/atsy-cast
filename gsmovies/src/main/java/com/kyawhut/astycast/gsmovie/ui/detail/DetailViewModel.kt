@@ -32,6 +32,13 @@ internal class DetailViewModel @Inject constructor(
     }
     var videoDetail: VideoDetailResponse.Data? = null
 
+    val isWatchLater: Boolean
+        get() = repository.isWatchLater(route, videoData!!.videoID)
+
+    fun toggleWatchLater() {
+        repository.toggleWatchLater(route, videoData!!)
+    }
+
     fun getVideoDetail(callback: (NetworkResponse<VideoDetailResponse.Data>) -> Unit) {
         viewModelScope {
             repository.getVideoDetail(

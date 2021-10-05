@@ -1,11 +1,15 @@
 package com.kyawhut.astycast.gsmovie.data.di
 
+import com.kyawhut.astycast.gsmovie.ui.cache.CacheRepository
+import com.kyawhut.astycast.gsmovie.ui.cache.CacheRepositoryImpl
 import com.kyawhut.astycast.gsmovie.ui.detail.DetailRepository
 import com.kyawhut.astycast.gsmovie.ui.detail.DetailRepositoryImpl
 import com.kyawhut.astycast.gsmovie.ui.home.HomeRepository
 import com.kyawhut.astycast.gsmovie.ui.home.HomeRepositoryImpl
 import com.kyawhut.astycast.gsmovie.ui.player.PlayerRepository
 import com.kyawhut.astycast.gsmovie.ui.player.PlayerRepositoryImpl
+import com.kyawhut.astycast.gsmovie.ui.search.SearchRepository
+import com.kyawhut.astycast.gsmovie.ui.search.SearchRepositoryImpl
 import com.kyawhut.astycast.gsmovie.ui.source.VideoSourceRepository
 import com.kyawhut.astycast.gsmovie.ui.source.VideoSourceRepositoryImpl
 import com.kyawhut.astycast.gsmovie.ui.video.VideoRepository
@@ -44,4 +48,12 @@ internal object RepositoryModule {
     @Provides
     @Singleton
     fun providePlayerRepository(repository: PlayerRepositoryImpl): PlayerRepository = repository
+
+    @Provides
+    @Singleton
+    fun provideSearchRepository(repository: SearchRepositoryImpl): SearchRepository = repository
+
+    @Provides
+    @Singleton
+    fun provideCacheRepository(repository: CacheRepositoryImpl): CacheRepository = repository
 }

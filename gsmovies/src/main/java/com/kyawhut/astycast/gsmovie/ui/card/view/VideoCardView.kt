@@ -25,7 +25,7 @@ internal class VideoCardView(context: Context) : BaseCardView<CardGsVideosBindin
                 moviesName = data.videoTitle
                 moviesPoster = data.videoPoster
                 moviesEpisode = data.videoEpisode
-                moviesViewCount = "View - %s".format(data.videoViewCount)
+                moviesViewCount = data.videoViewCount
                 executePendingBindings()
             }
         }

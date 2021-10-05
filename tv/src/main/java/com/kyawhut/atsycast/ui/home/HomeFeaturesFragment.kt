@@ -16,6 +16,7 @@ import com.kyawhut.atsycast.msubpc.MsubPC.goToMsubPC
 import com.kyawhut.atsycast.msys.MsysApp.goToMSYS
 import com.kyawhut.atsycast.share.network.utils.NetworkResponse
 import com.kyawhut.atsycast.share.utils.extension.Extension.isAdultOpen
+import com.kyawhut.atsycast.tiktok.TiktokApp.goToTiktok
 import com.kyawhut.atsycast.twod.TwoDApp.goTo2D
 import com.kyawhut.atsycast.ui.card.CardPresenter
 import com.kyawhut.atsycast.zcm.ZCMApp.goToZCM
@@ -53,6 +54,7 @@ class HomeFeaturesFragment : RowsSupportFragment() {
                     7 -> goToDoujin(item.featureName, item.featureAPIKey)
                     8 -> goToEPorner(item.featureName)
                     9 -> goTo2D(item.featureName)
+                    10 -> goToTiktok(item.featureAPIKey)
                 }
             }
         }

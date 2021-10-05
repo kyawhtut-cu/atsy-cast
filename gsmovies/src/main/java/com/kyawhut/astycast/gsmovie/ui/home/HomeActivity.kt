@@ -10,6 +10,8 @@ import androidx.leanback.widget.SectionRow
 import com.kyawhut.astycast.gsmovie.R
 import com.kyawhut.astycast.gsmovie.data.network.response.CategoryResponse
 import com.kyawhut.astycast.gsmovie.databinding.ActivityGsHomeBinding
+import com.kyawhut.astycast.gsmovie.ui.cache.CacheFragment
+import com.kyawhut.astycast.gsmovie.ui.search.SearchActivity
 import com.kyawhut.astycast.gsmovie.ui.video.VideoFragment
 import com.kyawhut.astycast.gsmovie.utils.Constants
 import com.kyawhut.atsycast.share.base.BaseBrowseSupportFragment
@@ -18,6 +20,7 @@ import com.kyawhut.atsycast.share.network.utils.NetworkResponse
 import com.kyawhut.atsycast.share.network.utils.NetworkStatus
 import com.kyawhut.atsycast.share.utils.extension.FragmentExtension.replaceFragment
 import com.kyawhut.atsycast.share.utils.extension.putArg
+import com.kyawhut.atsycast.share.utils.extension.startActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -50,6 +53,25 @@ internal class HomeActivity : BaseTvActivity<ActivityGsHomeBinding>() {
     @AndroidEntryPoint
     class HomeFragment : BaseBrowseSupportFragment() {
 
+        private val watchLater: PageRow by lazy {
+            PageRow(
+                HeaderItem(
+                    (vm.categoryList.size + 1).toLong(),
+                    getString(R.string.lbl_watch_later)
+                ).apply {
+                    description = getString(R.string.lbl_watch_later_key)
+                })
+        }
+        private val recentlyWatch: PageRow by lazy {
+            PageRow(
+                HeaderItem(
+                    (vm.categoryList.size + 2).toLong(),
+                    getString(R.string.lbl_recently_watch)
+                ).apply {
+                    description = getString(R.string.lbl_recently_watch_key)
+                })
+        }
+
         private val vm: HomeViewModel by viewModels()
 
         override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -63,17 +85,8 @@ internal class HomeActivity : BaseTvActivity<ActivityGsHomeBinding>() {
                 is NetworkStatus.LOADING -> showLoading()
                 is NetworkStatus.SUCCESS -> {
                     hideLoading()
-                    clearRows()
-                    setRowItem(
-                        (result.data ?: listOf()).mapIndexed { index, genresResponse ->
-                            PageRow(
-                                HeaderItem(index.toLong(), genresResponse.categoryTitle).apply {
-                                    description = "${genresResponse.categoryID}"
-                                }
-                            )
-                        }
-                    )
-                    addRowItem(0, SectionRow(vm.appName))
+                    vm.categoryList = result.data ?: listOf()
+                    bindRows()
                 }
                 is NetworkStatus.ERROR -> {
                     hideLoading()
@@ -87,18 +100,71 @@ internal class HomeActivity : BaseTvActivity<ActivityGsHomeBinding>() {
         }
 
         override val onSearchClicked: () -> Unit = {
-            /*startActivity<SearchActivity>(
-                Constants.EXTRA_API_KEY to vm.apiKey,
+            startActivity<SearchActivity>(
+                Constants.EXTRA_API_KEY to vm.route,
                 Constants.EXTRA_APP_NAME to vm.appName,
-            )*/
+            )
+        }
+
+        private fun bindRows() {
+            clearRows()
+            setRowItem(
+                vm.categoryList.mapIndexed { index, genresResponse ->
+                    PageRow(
+                        HeaderItem(index.toLong(), genresResponse.categoryTitle).apply {
+                            description = "${genresResponse.categoryID}"
+                        }
+                    )
+                }
+            )
+            addRowItem(0, SectionRow(vm.appName))
+            checkCache()
         }
 
         override fun onCreateRowFragment(header: HeaderItem): Fragment {
-            return VideoFragment.newInstance(
+            return if (header.description == getString(R.string.lbl_watch_later_key) || header.description == getString(
+                    R.string.lbl_recently_watch_key
+                )
+            ) CacheFragment.newInstance(
+                vm.route,
+                header.description.toString(),
+                vm.appName,
+            ) else VideoFragment.newInstance(
                 vm.route,
                 header.description.toString().toInt(),
                 vm.appName
             )
+        }
+
+        private fun checkCache() {
+            if (vm.categoryList.isEmpty()) return
+            val isHasWatchLater = vm.isHasWatchLater
+            val isHasRecently = vm.isHasRecently
+            with(getRow(2)) {
+                if (this is PageRow) {
+                    if (this.headerItem.id != watchLater.headerItem.id && isHasWatchLater) {
+                        addRowItem(2, watchLater)
+                    } else if (this.headerItem.id == watchLater.headerItem.id && !isHasWatchLater) {
+                        removeRow(2)
+                    }
+                }
+            }
+
+            val index = if (isHasWatchLater) 3 else 2
+            with(getRow(index)) {
+                if (this is PageRow) {
+                    if (this.headerItem.id != recentlyWatch.headerItem.id && isHasRecently) {
+                        addRowItem(index, recentlyWatch)
+                    } else if (this.headerItem.id == recentlyWatch.headerItem.id && !isHasRecently) {
+                        removeRow(index)
+                    }
+                }
+            }
+        }
+
+        override fun onResume() {
+            checkCache()
+            super.onResume()
         }
     }
 }

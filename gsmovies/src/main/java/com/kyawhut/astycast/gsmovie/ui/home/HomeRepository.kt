@@ -10,6 +10,10 @@ import com.kyawhut.atsycast.share.network.utils.NetworkResponse
  */
 internal interface HomeRepository {
 
+    fun isHasRecently(route: String): Boolean
+
+    fun isHasWatchLater(route: String): Boolean
+
     suspend fun getHome(
         context: Context,
         route: String,

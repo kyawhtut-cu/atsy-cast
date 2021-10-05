@@ -4,6 +4,7 @@ import android.content.Context
 import com.kyawhut.astycast.gsmovie.R
 import com.kyawhut.astycast.gsmovie.data.network.GSAPI
 import com.kyawhut.astycast.gsmovie.data.network.response.VideoResponse
+import com.kyawhut.atsycast.share.network.request.scriptRequest
 import com.kyawhut.atsycast.share.network.utils.NetworkError
 import com.kyawhut.atsycast.share.network.utils.NetworkResponse
 import com.kyawhut.atsycast.share.network.utils.execute
@@ -27,7 +28,16 @@ internal class VideoRepositoryImpl @Inject constructor(
     ) {
         NetworkResponse.loading(callback)
         val response = execute {
-            api.getVideoListByCategoryID(route, categoryID, page).data
+            api.getVideoListByCategoryID(
+                scriptRequest {
+                    this.route = route
+                    payload = mutableMapOf(
+                        "category_id" to categoryID,
+                        "page" to page,
+                        "sub_route" to "videoListByCategoryID"
+                    )
+                }
+            ).data
         }
         if (response.isSuccess) {
             if (response.data == null) {

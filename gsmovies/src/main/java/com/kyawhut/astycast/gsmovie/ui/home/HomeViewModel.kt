@@ -20,12 +20,20 @@ internal class HomeViewModel @Inject constructor(
     private val homeRepository: HomeRepository,
 ) : BaseViewModel() {
 
+    var categoryList: List<CategoryResponse.Data> = mutableListOf()
+
     val route: String by lazy {
         savedStateHandle.get(Constants.EXTRA_API_KEY) ?: ""
     }
     val appName: String by lazy {
         savedStateHandle.get(Constants.EXTRA_APP_NAME) ?: ""
     }
+
+    val isHasWatchLater: Boolean
+        get() = homeRepository.isHasWatchLater(route)
+
+    val isHasRecently: Boolean
+        get() = homeRepository.isHasRecently(route)
 
     fun getHome(callback: (NetworkResponse<List<CategoryResponse.Data>>) -> Unit) {
         viewModelScope {

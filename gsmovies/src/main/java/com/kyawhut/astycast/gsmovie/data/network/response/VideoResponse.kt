@@ -27,6 +27,8 @@ internal data class VideoResponse(
         val videoTitle: String,
         @SerializedName("video_poster")
         val videoPoster: String,
+        @SerializedName("video_cover")
+        val videoCover: String,
         @SerializedName("video_view_count")
         val videoViewCount: String,
         @SerializedName("video_episode")

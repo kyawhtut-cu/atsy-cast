@@ -166,15 +166,7 @@ internal class DetailFragment : BaseDetailTvFragment<DetailViewModel>() {
                     }
                     2L -> {
                         vm.toggleWatchLater()
-                        replaceAction(
-                            if (vm.videoData!!.isMovies) 1 else 0
-                        ) {
-                            id = 2L
-                            actionName = if (vm.isWatchLater) "Remove from watch later"
-                            else "Add to watch later"
-                            icon = if (vm.isWatchLater) R.drawable.ic_remove_watch_later
-                            else R.drawable.ic_add_to_watch_later
-                        }
+                        toggleWatchLater()
                     }
                     3L -> showFullScreenDescription()
                 }
@@ -236,7 +228,7 @@ internal class DetailFragment : BaseDetailTvFragment<DetailViewModel>() {
     override fun onItemFocus(item: Any) {
     }
 
-    override fun onResume() {
+    private fun toggleWatchLater() {
         replaceAction(
             if (vm.videoData!!.isMovies) 1 else 0
         ) {
@@ -246,6 +238,10 @@ internal class DetailFragment : BaseDetailTvFragment<DetailViewModel>() {
             icon = if (vm.isWatchLater) R.drawable.ic_remove_watch_later
             else R.drawable.ic_add_to_watch_later
         }
+    }
+
+    override fun onResume() {
+        toggleWatchLater()
         super.onResume()
     }
 

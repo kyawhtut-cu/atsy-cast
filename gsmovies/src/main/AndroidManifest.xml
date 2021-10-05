@@ -22,5 +22,10 @@
             android:name=".ui.source.VideoSourceActivity"
             android:screenOrientation="sensorLandscape"
             android:theme="@style/BaseTvTheme" />
+
+        <activity
+            android:name=".ui.search.SearchActivity"
+            android:screenOrientation="sensorLandscape"
+            android:theme="@style/BaseTvTheme" />
     </application>
 </manifest>

@@ -5,6 +5,8 @@ import com.kyawhut.astycast.gsmovie.data.network.response.VideoEpisodeResponse
 import com.kyawhut.astycast.gsmovie.data.network.response.VideoResponse
 import com.kyawhut.atsycast.share.base.BaseCardPresenter
 import com.kyawhut.atsycast.share.base.BaseCardPresenterSelector
+import com.kyawhut.atsycast.share.db.entity.RecentlyWatchEntity
+import com.kyawhut.atsycast.share.ui.card.RecentlyWatchCardPresenter
 
 /**
  * @author kyawhtut
@@ -19,6 +21,7 @@ internal class CardPresenter(
         return when (item) {
             is VideoResponse.Data -> CardType.VIDEO
             is VideoEpisodeResponse -> CardType.EPISODE
+            is RecentlyWatchEntity -> CardType.RECENTLY_WATCH
             else -> throw RuntimeException("Unknown item type => $item")
         }
     }
@@ -27,6 +30,7 @@ internal class CardPresenter(
         return when (type) {
             is CardType.VIDEO -> VideoCardPresenter(context)
             is CardType.EPISODE -> EpisodeCardPresenter(context, poster)
+            is CardType.RECENTLY_WATCH -> RecentlyWatchCardPresenter(context)
         }
     }
 }

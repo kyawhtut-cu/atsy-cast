@@ -71,7 +71,7 @@ internal class VideoFragment : BaseGridSupportFragment<VideoViewModel>() {
 
     override fun onItemFocus(it: Any) {
         if (it is VideoResponse.Data) {
-            changeBackground(it.videoPoster)
+            changeBackground(it.videoCover)
         }
     }
 

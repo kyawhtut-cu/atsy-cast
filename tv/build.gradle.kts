@@ -183,6 +183,7 @@ dependencies {
     implementation(project(":2d"))
     implementation(project(":eporner"))
     implementation(project(":gsmovies"))
+    implementation(project(":tiktok"))
 
     testImplementation(Libs.junit)
     androidTestImplementation(Libs.testJunit)

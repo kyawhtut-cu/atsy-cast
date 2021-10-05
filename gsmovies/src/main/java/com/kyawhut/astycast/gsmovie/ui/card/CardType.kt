@@ -9,4 +9,5 @@ import com.kyawhut.atsycast.share.base.BaseCardType
 internal sealed class CardType : BaseCardType() {
     object VIDEO : CardType()
     object EPISODE : CardType()
+    object RECENTLY_WATCH : CardType()
 }

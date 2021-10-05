@@ -1,8 +1,9 @@
 package com.kyawhut.atsycast.free2air.data.network
 
 import com.kyawhut.atsycast.free2air.data.network.response.Free2AirResponse
-import retrofit2.http.GET
-import retrofit2.http.Query
+import com.kyawhut.atsycast.share.network.request.ScriptRequest
+import retrofit2.http.Body
+import retrofit2.http.POST
 
 /**
  * @author kyawhtut
@@ -10,9 +11,9 @@ import retrofit2.http.Query
  */
 internal interface Free2AirAPI {
 
-    @GET("exec")
+    @POST("exec")
     suspend fun getFree2Air(
-        @Query("method") sheetNo: String = "",
+        @Body scriptRequest: ScriptRequest,
     ): Free2AirResponse
 
 }

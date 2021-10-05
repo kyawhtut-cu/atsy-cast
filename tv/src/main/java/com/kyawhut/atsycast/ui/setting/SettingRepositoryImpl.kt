@@ -2,6 +2,7 @@ package com.kyawhut.atsycast.ui.setting
 
 import android.content.Context
 import com.kyawhut.atsycast.data.network.SheetAPI
+import com.kyawhut.atsycast.share.network.request.scriptRequest
 import com.kyawhut.atsycast.share.network.utils.execute
 import com.kyawhut.atsycast.share.utils.ShareUtils.deviceID
 import javax.inject.Inject
@@ -19,7 +20,15 @@ class SettingRepositoryImpl @Inject constructor(
         name: String,
         callback: (Boolean, String) -> Unit
     ) {
-        val response = execute { api.changeDisplayName(context.deviceID, name) }
+        val response = execute {
+            api.changeDisplayName(scriptRequest {
+                route = "changeDisplayName"
+                payload = mutableMapOf(
+                    "device_id" to context.deviceID,
+                    "display_name" to name
+                )
+            })
+        }
         if (response.isSuccess) {
             if (response.data?.data != null) {
                 callback(true, "Success")

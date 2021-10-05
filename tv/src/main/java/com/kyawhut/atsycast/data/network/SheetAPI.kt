@@ -1,11 +1,11 @@
 package com.kyawhut.atsycast.data.network
 
-import com.kyawhut.atsycast.BuildConfig
 import com.kyawhut.atsycast.data.network.response.HomeFeatureResponse
 import com.kyawhut.atsycast.data.network.response.UpdateResponse
 import com.kyawhut.atsycast.data.network.response.UserResponse
-import retrofit2.http.GET
-import retrofit2.http.Query
+import com.kyawhut.atsycast.share.network.request.ScriptRequest
+import retrofit2.http.Body
+import retrofit2.http.POST
 
 /**
  * @author kyawhtut
@@ -13,44 +13,33 @@ import retrofit2.http.Query
  */
 interface SheetAPI {
 
-    @GET("exec")
+    @POST("exec")
     suspend fun getHomeFeature(
-        @Query("device_id") deviceID: String,
-        @Query("device_password") password: String,
-        @Query("method") method: String = "homeFeatures",
+        @Body scriptRequest: ScriptRequest,
     ): HomeFeatureResponse
 
-    @GET("exec")
+    @POST("exec")
     suspend fun registerDevice(
-        @Query("device_id") deviceID: String,
-        @Query("device_name") deviceName: String,
-        @Query("app_package_name") appPackageName: String = BuildConfig.APPLICATION_ID,
-        @Query("method") method: String = "registerDevice",
+        @Body scriptRequest: ScriptRequest,
     ): UserResponse
 
-    @GET("exec")
+    @POST("exec")
     suspend fun checkDevicePassword(
-        @Query("device_id") deviceID: String,
-        @Query("device_password") password: String,
-        @Query("method") method: String = "checkDevicePassword",
+        @Body scriptRequest: ScriptRequest,
     ): UserResponse
 
-    @GET("exec")
+    @POST("exec")
     suspend fun checkAdultPassword(
-        @Query("device_id") deviceID: String,
-        @Query("adult_password") password: String,
-        @Query("method") method: String = "checkAdultPassword",
+        @Body scriptRequest: ScriptRequest,
     ): UserResponse
 
-    @GET("exec")
+    @POST("exec")
     suspend fun changeDisplayName(
-        @Query("device_id") deviceID: String,
-        @Query("display_name") displayName: String,
-        @Query("method") method: String = "changeDisplayName",
+        @Body scriptRequest: ScriptRequest,
     ): UserResponse
 
-    @GET("exec")
+    @POST("exec")
     suspend fun checkUpdate(
-        @Query("method") method: String = "checkUpdate",
+        @Body scriptRequest: ScriptRequest,
     ): UpdateResponse
 }

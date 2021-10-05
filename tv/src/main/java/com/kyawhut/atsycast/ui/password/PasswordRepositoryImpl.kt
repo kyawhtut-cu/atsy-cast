@@ -3,6 +3,7 @@ package com.kyawhut.atsycast.ui.password
 import android.content.Context
 import com.kyawhut.atsycast.R
 import com.kyawhut.atsycast.data.network.SheetAPI
+import com.kyawhut.atsycast.share.network.request.scriptRequest
 import com.kyawhut.atsycast.share.network.utils.execute
 import com.kyawhut.atsycast.share.utils.ShareUtils.deviceID
 import com.kyawhut.atsycast.share.utils.extension.Extension.devicePassword
@@ -21,7 +22,15 @@ class PasswordRepositoryImpl @Inject constructor(
         password: String,
         callback: (Boolean, String) -> Unit
     ) {
-        val response = execute { api.checkAdultPassword(context.deviceID, password) }
+        val response = execute {
+            api.checkAdultPassword(scriptRequest {
+                route = "checkAdultPassword"
+                payload = mutableMapOf(
+                    "device_id" to context.deviceID,
+                    "adult_password" to password
+                )
+            })
+        }
         if (response.isSuccess) {
             if (response.data?.data != null) {
                 callback(true, "Success")
@@ -38,7 +47,17 @@ class PasswordRepositoryImpl @Inject constructor(
         password: String,
         callback: (Boolean, String) -> Unit
     ) {
-        val response = execute { api.checkDevicePassword(context.deviceID, password) }
+        val response = execute {
+            api.checkDevicePassword(
+                scriptRequest {
+                    route = "checkDevicePassword"
+                    payload = mutableMapOf(
+                        "device_id" to context.deviceID,
+                        "device_password" to password,
+                    )
+                },
+            )
+        }
         if (response.isSuccess) {
             context.devicePassword = ""
             if (response.data?.data != null) {

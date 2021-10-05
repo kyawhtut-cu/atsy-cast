@@ -3,6 +3,7 @@ package com.kyawhut.atsycast.ui.home
 import android.content.Context
 import com.kyawhut.atsycast.data.network.SheetAPI
 import com.kyawhut.atsycast.data.network.response.HomeFeatureResponse
+import com.kyawhut.atsycast.share.network.request.scriptRequest
 import com.kyawhut.atsycast.share.network.utils.NetworkResponse
 import com.kyawhut.atsycast.share.network.utils.execute
 import com.kyawhut.atsycast.share.utils.ShareUtils.deviceID
@@ -23,7 +24,13 @@ class HomeRepositoryImpl @Inject constructor(
     ) {
         NetworkResponse.loading(callback)
         val features = execute {
-            sheetAPI.getHomeFeature(context.deviceID, context.devicePassword).data
+            sheetAPI.getHomeFeature(scriptRequest {
+                route = "homeFeatures"
+                payload = mutableMapOf(
+                    "device_id" to context.deviceID,
+                    "device_password" to context.devicePassword
+                )
+            }).data
         }
         features.post(callback)
     }

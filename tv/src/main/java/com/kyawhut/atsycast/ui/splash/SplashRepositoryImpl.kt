@@ -7,6 +7,7 @@ import com.kyawhut.atsycast.R
 import com.kyawhut.atsycast.data.network.SheetAPI
 import com.kyawhut.atsycast.data.network.response.UpdateResponse
 import com.kyawhut.atsycast.data.network.response.UserResponse
+import com.kyawhut.atsycast.share.network.request.scriptRequest
 import com.kyawhut.atsycast.share.network.utils.NetworkError
 import com.kyawhut.atsycast.share.network.utils.NetworkResponse
 import com.kyawhut.atsycast.share.network.utils.execute
@@ -41,11 +42,22 @@ class SplashRepositoryImpl @Inject constructor(
         val password = context.devicePassword
         val response = execute {
             if (password.isEmpty()) api.registerDevice(
-                context.deviceID,
-                context.deviceName
+                scriptRequest {
+                    route = "registerDevice"
+                    payload = mutableMapOf(
+                        "device_id" to context.deviceID,
+                        "device_name" to context.deviceName,
+                        "app_package_name" to BuildConfig.APPLICATION_ID
+                    )
+                },
             ) else api.checkDevicePassword(
-                context.deviceID,
-                password
+                scriptRequest {
+                    route = "checkDevicePassword"
+                    payload = mutableMapOf(
+                        "device_id" to context.deviceID,
+                        "device_password" to password,
+                    )
+                },
             )
         }
         if (response.isSuccess) {
@@ -91,7 +103,11 @@ class SplashRepositoryImpl @Inject constructor(
         context: Context,
         callback: (NetworkResponse<UpdateResponse.Data?>) -> Unit
     ) {
-        val versionResponse = execute { api.checkUpdate().data }
+        val versionResponse = execute {
+            api.checkUpdate(scriptRequest {
+                route = "checkUpdate"
+            }).data
+        }
         if (versionResponse.isSuccess) {
             val appStatus: UpdateResponse.Data? = versionResponse.data?.last()
             if (appStatus == null) {

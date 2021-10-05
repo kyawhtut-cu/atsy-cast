@@ -2,6 +2,7 @@ package com.kyawhut.atsycast.free2air.ui.home
 
 import com.kyawhut.atsycast.free2air.data.network.Free2AirAPI
 import com.kyawhut.atsycast.free2air.data.network.response.Free2AirResponse
+import com.kyawhut.atsycast.share.network.request.scriptRequest
 import com.kyawhut.atsycast.share.network.utils.NetworkResponse
 import com.kyawhut.atsycast.share.network.utils.execute
 import javax.inject.Inject
@@ -18,6 +19,10 @@ internal class HomeRepositoryImpl @Inject constructor(private val api: Free2AirA
         callback: (NetworkResponse<HashMap<String, List<Free2AirResponse.Data>>>) -> Unit
     ) {
         NetworkResponse.loading(callback)
-        execute { api.getFree2Air(key).data }.post(callback)
+        execute {
+            api.getFree2Air(scriptRequest {
+                route = key
+            }).data
+        }.post(callback)
     }
 }

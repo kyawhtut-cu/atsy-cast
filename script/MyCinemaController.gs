@@ -37,19 +37,19 @@ let myCinemaController = (request) => {
   let parameter = request.parameter
 
   let subRoute = parameter.sub_route
-  if(subRoute == null || subRoute == ``) {
+  if (subRoute == null || subRoute == ``) {
     request.status = BAD_REQUEST
     request.message = BAD_REQUEST_MESSAGE
     return request.responseWithJson()
   }
 
-  if(subRoute == `category`) {
+  if (subRoute == `category`) {
     return myCinemaCategoryController(request)
-  } else if(subRoute == `videoListByCategoryID`) {
+  } else if (subRoute == `videoListByCategoryID`) {
     return myCinemaVideoListByCategoryIDController(request)
-  } else if(subRoute == `videoDetail`) {
+  } else if (subRoute == `videoDetail`) {
     return myCinemaVideoDetailController(request)
-  } else if(subRoute == `search`) {
+  } else if (subRoute == `search`) {
     return searchMyCinemaVideoController(request)
   } else {
     request.status = NOT_FOUND
@@ -98,7 +98,7 @@ let myCinemaVideoDetailController = (request) => {
   const videoCount = videoList.length
   let videoSource = parseVideoSource(videoID, 1)
   const videoEpisodeSource = []
-  if(videoCount > 1) {
+  if (videoCount > 1) {
     videoSource = []
     videoList.each((index, element) => {
       const episode = parseVideoSource(videoID, index + 1)
@@ -159,7 +159,7 @@ let parseMyCinemaVideo = (content) => {
       video_id: videoID,
       video_title: videoTitle,
       video_poster: videoPoster,
-      video_view_count: videoViewCount,
+      video_view_count: `View - ${videoViewCount}`,
       video_episode: videoEpisode
     })
   })

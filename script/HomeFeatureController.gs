@@ -1,14 +1,15 @@
 let homeFeatureController = (request) => {
-  let requestParameter = request.parameter
-  if (requestParameter.device_id == null || requestParameter.device_password == null || requestParameter.device_id == `` || requestParameter.device_password == ``) {
+  const payload = request.parameter.payload
+
+  const deviceID = payload.device_id
+  const devicePassword = payload.device_password
+
+  if (deviceID == null || devicePassword == null || deviceID == `` || devicePassword == ``) {
     request.status = BAD_REQUEST
     request.message = BAD_REQUEST_MESSAGE
     request.response = []
     return request.responseWithJson()
   }
-
-  let deviceID = requestParameter.device_id
-  let devicePassword = requestParameter.device_password
 
   let requestUser = checkUserDevice(deviceID, devicePassword)
   if (requestUser == null) {
@@ -22,6 +23,21 @@ let homeFeatureController = (request) => {
   response = processFeatureForSpecificDevice(deviceID, response)
 
   request.response = response
+  return request.responseWithJson()
+}
+
+let homeFeatureDetailController = (request) => {
+  const payload = request.parameter.payload
+
+  const featureID = payload.feature_id
+  if (featureID == null || featureID == ``) {
+    request.status = BAD_REQUEST
+    request.message = BAD_REQUEST_MESSAGE
+    return request.responseWithJson()
+  }
+
+  request.response = getSheetDataAsJson(SHEET_ID, HOME_FEATURE_SHEET).filter(feature => feature.feature_id == featureID).pop()
+
   return request.responseWithJson()
 }
 

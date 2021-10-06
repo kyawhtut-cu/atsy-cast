@@ -1,17 +1,17 @@
 let msysFootballController = (request) => {
-  let resultData = {}
-  let page = 0
-  let apiRequest = MSYS_API_KEY.map(value => {
+  const resultData = {}
+  const page = 0
+  const apiRequest = MSYS_API_KEY.map(value => {
     return {
-      url: `http://***/api/channel/by/filtres/${value.key}/0/${page}/***/***/`,
+      url: `http://msubys.xyz/api/channel/by/filtres/${value.key}/0/${page}/4F5A9C3D9A86FA54EACEDDD635185/d506abfd-9fe2-4b71-b979-feff21bcad13/`,
       method: `get`,
       data: value,
     }
   })
 
-  let apiResponse = UrlFetchApp.fetchAll(apiRequest);
+  const apiResponse = UrlFetchApp.fetchAll(apiRequest);
   apiResponse.map(value => renderMsysDataToResponse(JSON.parse(value))).filter(value => value.length > 0).forEach((value, index) => {
-    let title = apiRequest[index].data.title
+    const title = apiRequest[index].data.title
     if (value != null) {
       resultData[title] = value
     }
@@ -23,11 +23,11 @@ let msysFootballController = (request) => {
 }
 
 let renderMsysDataToResponse = (data) => {
-  let result = []
+  const result = []
   data.forEach((channel, index) => {
     if (channel.sources.length != 0) {
       if (channel.sources.some(c => c.type == `m3u8`)) {
-        let stream = channel.sources.filter(c => c.type == `m3u8`)[0].url;
+        const stream = channel.sources.filter(c => c.type == `m3u8`)[0].url;
         result.push({
           channel_id: channel.id,
           channel_name: channel.title,

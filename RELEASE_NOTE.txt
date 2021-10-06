@@ -1,6 +1,6 @@
 Whats is included in 1.1.0 version?
-    . GS Movie Service Added.
-    . Update error fixed.
-    . Device ID can see in password dialog.
+    . Tiktok service added.
+    . Home UI changed.
+    . Added crashlytics for network error.
     . Some bug fixed.
     . Add some bug.

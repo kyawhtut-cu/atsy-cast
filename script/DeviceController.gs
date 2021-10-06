@@ -10,10 +10,10 @@ let checkUserDevice = (deviceID, devicePassword) => {
 }
 
 let checkDevicePasswordController = (request) => {
-  let parameter = request.parameter
+  const payload = request.parameter.payload
 
-  let deviceID = parameter.device_id
-  let devicePassword = parameter.device_password
+  let deviceID = payload.device_id
+  let devicePassword = payload.device_password
 
   if(deviceID == null || deviceID == `` || devicePassword == null || devicePassword == ``) {
     request.status = BAD_REQUEST
@@ -33,10 +33,10 @@ let checkDevicePasswordController = (request) => {
 }
 
 let checkAdultPasswordController = (request) => {
-  let parameter = request.parameter
+  let payload = request.parameter.payload
 
-  let deviceID = parameter.device_id
-  let adultPassword = parameter.adult_password
+  let deviceID = payload.device_id
+  let adultPassword = payload.adult_password
 
   if(deviceID == null || deviceID == `` || adultPassword == null || adultPassword == ``) {
     request.status = BAD_REQUEST
@@ -61,11 +61,11 @@ let checkAdultPasswordController = (request) => {
 }
 
 let registerDeviceController = (request) => {
-  let parameter = request.parameter
+  let payload = request.parameter.payload
 
-  let deviceID = parameter.device_id
-  let deviceName = parameter.device_name
-  let appPackageName = parameter.app_package_name
+  let deviceID = payload.device_id
+  let deviceName = payload.device_name
+  let appPackageName = payload.app_package_name
 
   if(deviceID == null || deviceID == `` || deviceName == null || deviceName == `` || appPackageName == `` || appPackageName == null) {
     request.status = BAD_REQUEST
@@ -105,10 +105,10 @@ let registerDeviceController = (request) => {
 }
 
 let changeDisplayNameController = (request) => {
-  let parameter = request.parameter
+  let payload = request.parameter.payload
 
-  let deviceID = parameter.device_id
-  let displayName = parameter.display_name
+  let deviceID = payload.device_id
+  let displayName = payload.display_name
 
   if(deviceID == null || deviceID == `` || displayName == null || displayName == ``) {
     request.status = BAD_REQUEST

@@ -1,8 +1,10 @@
 package com.kyawhut.atsycast.share.db.entity
 
+import androidx.leanback.widget.DiffCallback
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.google.gson.Gson
 import com.kyawhut.atsycast.share.utils.SourceType
 import java.util.*
 
@@ -21,6 +23,28 @@ data class WatchLaterEntity(
     @ColumnInfo(name = "created_at")
     val createdAt: Date
 ) {
+
+    inline fun <reified C : Any> getData(): C {
+        return Gson().fromJson(videoData, C::class.java)
+    }
+
+    companion object {
+        val diff = object : DiffCallback<WatchLaterEntity>() {
+            override fun areItemsTheSame(
+                oldItem: WatchLaterEntity,
+                newItem: WatchLaterEntity
+            ): Boolean {
+                return oldItem.id == newItem.id
+            }
+
+            override fun areContentsTheSame(
+                oldItem: WatchLaterEntity,
+                newItem: WatchLaterEntity
+            ): Boolean {
+                return oldItem == newItem
+            }
+        }
+    }
 
     class Builder {
         var id: Int = 0

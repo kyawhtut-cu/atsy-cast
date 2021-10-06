@@ -31,6 +31,10 @@
         <variable
             name="showThumbnail"
             type="Boolean" />
+
+        <variable
+            name="showTuto"
+            type="Boolean" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -157,6 +161,14 @@
                 tools:textColor="@color/colorBlack" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ImageView
+            android:id="@+id/iv_tuto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/tiktok_remote_tuto"
+            android:visibility="@{showTuto ? View.VISIBLE : View.GONE}" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/view_loading"

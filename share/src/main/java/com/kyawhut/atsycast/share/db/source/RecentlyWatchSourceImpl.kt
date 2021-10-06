@@ -1,6 +1,5 @@
 package com.kyawhut.atsycast.share.db.source
 
-import androidx.lifecycle.LiveData
 import com.kyawhut.atsycast.share.db.dao.RecentlyWatchDao
 import com.kyawhut.atsycast.share.db.entity.RecentlyWatchEntity
 import com.kyawhut.atsycast.share.utils.SourceType
@@ -20,6 +19,10 @@ class RecentlyWatchSourceImpl(private val dao: RecentlyWatchDao) : RecentlyWatch
         return dao.insert(*block.map {
             RecentlyWatchEntity.Builder().also(it).build()
         }.toTypedArray())
+    }
+
+    override fun getAll(): Flowable<List<RecentlyWatchEntity>> {
+        return dao.getAll()
     }
 
     override fun get(videoID: String, sourceType: SourceType): RecentlyWatchEntity? {

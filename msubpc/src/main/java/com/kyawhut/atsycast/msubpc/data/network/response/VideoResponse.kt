@@ -11,7 +11,7 @@ import java.io.Serializable
  * @date 9/2/21
  */
 @Keep
-internal data class VideoResponse(
+data class VideoResponse(
     @SerializedName("id")
     var videoId: Int,
     @SerializedName("movietitle", alternate = ["seriestitle", "live_title"])

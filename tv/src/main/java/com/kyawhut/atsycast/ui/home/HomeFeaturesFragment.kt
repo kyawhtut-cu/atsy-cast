@@ -1,26 +1,41 @@
 package com.kyawhut.atsycast.ui.home
 
 import android.os.Bundle
+import android.os.Handler
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.leanback.app.RowsSupportFragment
 import androidx.leanback.widget.*
+import com.kyawhut.astycast.gsmovie.GSApplication.goToGSDetail
 import com.kyawhut.astycast.gsmovie.GSApplication.goToGSHome
+import com.kyawhut.astycast.gsmovie.GSApplication.goToGSPlayer
 import com.kyawhut.atsycast.R
 import com.kyawhut.atsycast.data.network.response.HomeFeatureResponse
 import com.kyawhut.atsycast.doujin.DoujinApp.goToDoujin
 import com.kyawhut.atsycast.eporner.EPorner.goToEPorner
 import com.kyawhut.atsycast.ets2mm.ET2SMMApp.goToETS2MM
+import com.kyawhut.atsycast.ets2mm.ET2SMMApp.goToETS2MMDetail
+import com.kyawhut.atsycast.ets2mm.ET2SMMApp.goToETS2MMPlayer
 import com.kyawhut.atsycast.free2air.Free2Air.goToFree2Air
+import com.kyawhut.atsycast.msubpc.MsubPC.goToMSubPCDetail
+import com.kyawhut.atsycast.msubpc.MsubPC.goToMSubPCPlayer
 import com.kyawhut.atsycast.msubpc.MsubPC.goToMsubPC
+import com.kyawhut.atsycast.msys.MsysApp.goMSYSPlayer
 import com.kyawhut.atsycast.msys.MsysApp.goToMSYS
+import com.kyawhut.atsycast.msys.MsysApp.goToMSYSDetail
+import com.kyawhut.atsycast.share.db.entity.RecentlyWatchEntity
+import com.kyawhut.atsycast.share.db.entity.WatchLaterEntity
 import com.kyawhut.atsycast.share.network.utils.NetworkResponse
+import com.kyawhut.atsycast.share.utils.SourceType
 import com.kyawhut.atsycast.share.utils.extension.Extension.isAdultOpen
 import com.kyawhut.atsycast.tiktok.TiktokApp.goToTiktok
 import com.kyawhut.atsycast.twod.TwoDApp.goTo2D
 import com.kyawhut.atsycast.ui.card.CardPresenter
 import com.kyawhut.atsycast.zcm.ZCMApp.goToZCM
+import com.kyawhut.atsycast.zcm.ZCMApp.goToZCMDetail
+import com.kyawhut.atsycast.zcm.ZCMApp.goToZCMPlayer
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 /**
  * @author kyawhtut
@@ -56,12 +71,74 @@ class HomeFeaturesFragment : RowsSupportFragment() {
                     9 -> goTo2D(item.featureName)
                     10 -> goToTiktok(item.featureAPIKey)
                 }
+            } else if (item is WatchLaterEntity) {
+                vm.getFeatureDetail(item, ::onFeatureDetailState)
+            } else if (item is RecentlyWatchEntity) {
+                vm.getFeatureDetail(item, ::onFeatureDetailStateForPlay)
             }
         }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        rowsAdapter.clear()
+
+        vm.cacheDB.observe(viewLifecycleOwner) { (watchLater, recentlyWatch) ->
+
+            Timber.d("viewLifecycleOwner => %s %s", watchLater.size, recentlyWatch.size)
+
+            var foundIndex: Int = -1
+            (0 until rowsAdapter.size()).forEach { index ->
+                with(rowsAdapter.get(index) as ListRow) {
+                    if (this.headerItem.id == 3L) {
+                        foundIndex = index
+                        return@forEach
+                    }
+                }
+            }
+            if (watchLater.isNotEmpty() && foundIndex == -1) rowsAdapter.add(
+                ListRow(
+                    HeaderItem(3L, "WatchLater"),
+                    ArrayObjectAdapter(CardPresenter(requireContext())).apply {
+                        setItems(watchLater, WatchLaterEntity.diff)
+                    }
+                )
+            ) else if (watchLater.isNotEmpty() && foundIndex != -1) {
+                with((rowsAdapter.get(foundIndex) as ListRow).adapter as ArrayObjectAdapter) {
+                    this.clear()
+                    this.addAll(this.size(), watchLater)
+                }
+            } else if (watchLater.isEmpty() && foundIndex != -1) {
+                rowsAdapter.removeItems(foundIndex, 1)
+            }
+
+            foundIndex = -1
+            (0 until rowsAdapter.size()).forEach { index ->
+                with(rowsAdapter.get(index) as ListRow) {
+                    if (this.headerItem.id == 4L) {
+                        foundIndex = index
+                        return@forEach
+                    }
+                }
+            }
+
+            if (recentlyWatch.isNotEmpty() && foundIndex == -1) rowsAdapter.add(
+                ListRow(
+                    HeaderItem(4L, "Recently Watch"),
+                    ArrayObjectAdapter(CardPresenter(requireContext())).apply {
+                        setItems(recentlyWatch, RecentlyWatchEntity.diff)
+                    }
+                )
+            ) else if (recentlyWatch.isNotEmpty() && foundIndex != -1) {
+                with((rowsAdapter.get(foundIndex) as ListRow).adapter as ArrayObjectAdapter) {
+                    this.clear()
+                    this.addAll(this.size(), recentlyWatch)
+                }
+            } else if (recentlyWatch.isEmpty() && foundIndex != -1) {
+                rowsAdapter.removeItems(foundIndex, 1)
+            }
+        }
 
         refreshPage()
     }
@@ -78,7 +155,6 @@ class HomeFeaturesFragment : RowsSupportFragment() {
             state.isSuccess -> {
                 (requireActivity() as HomeActivity).toggleLoading(false)
                 vm.homeFeatureList = state.data ?: hashMapOf()
-                rowsAdapter.clear()
                 var rowIndex = 1L
                 vm.homeFeatureList.filter {
                     it.value.isNotEmpty() && it.value.any {
@@ -86,7 +162,7 @@ class HomeFeaturesFragment : RowsSupportFragment() {
                     }
                 }.forEach { data ->
                     rowsAdapter.add(
-                        ListRow(
+                        rowIndex.toInt() - 1, ListRow(
                             HeaderItem(rowIndex++, data.key),
                             ArrayObjectAdapter(CardPresenter(requireContext())).apply {
                                 setItems(data.value.sortedBy { it.featureOrder }.filter {
@@ -96,6 +172,10 @@ class HomeFeaturesFragment : RowsSupportFragment() {
                         )
                     )
                 }
+                Handler().postDelayed({
+                    setSelectedPosition(0, true)
+                    verticalGridView.requestFocus()
+                }, 500)
             }
             state.isError -> {
                 (requireActivity() as HomeActivity).showError(
@@ -104,6 +184,110 @@ class HomeFeaturesFragment : RowsSupportFragment() {
                     )
                     else state.error?.message ?: getString(R.string.lbl_no_internet_connection)
                 )
+            }
+        }
+    }
+
+    private fun onFeatureDetailState(state: NetworkResponse<Pair<WatchLaterEntity, HomeFeatureResponse.Data?>>) {
+        when {
+            state.isLoading -> (requireActivity() as HomeActivity).toggleLoading(true)
+            state.isSuccess -> {
+                (requireActivity() as HomeActivity).toggleLoading(false)
+                val feature = state.data?.second
+                if (feature != null) {
+                    when (state.data?.first?.videoSourceType) {
+                        is SourceType.MSUB_PC -> {
+                            goToMSubPCDetail(
+                                feature.featureName,
+                                feature.featureAPIKey,
+                                state.data?.first!!
+                            )
+                        }
+                        is SourceType.ZCM -> {
+                            goToZCMDetail(
+                                feature.featureName,
+                                feature.featureAPIKey,
+                                state.data?.first!!
+                            )
+                        }
+                        is SourceType.MSYS -> {
+                            goToMSYSDetail(
+                                feature.featureName,
+                                feature.featureAPIKey,
+                                state.data?.first!!
+                            )
+                        }
+                        is SourceType.ET2SMM -> {
+                            goToETS2MMDetail(
+                                feature.featureName,
+                                feature.featureAPIKey,
+                                state.data?.first!!
+                            )
+                        }
+                        is SourceType.GS_API_SOURCE -> {
+                            goToGSDetail(
+                                feature.featureName,
+                                feature.featureAPIKey,
+                                state.data?.first!!
+                            )
+                        }
+                    }
+                }
+            }
+            state.isError -> {
+                (requireActivity() as HomeActivity).toggleLoading(false)
+            }
+        }
+    }
+
+    private fun onFeatureDetailStateForPlay(state: NetworkResponse<Pair<RecentlyWatchEntity, HomeFeatureResponse.Data?>>) {
+        when {
+            state.isLoading -> (requireActivity() as HomeActivity).toggleLoading(true)
+            state.isSuccess -> {
+                (requireActivity() as HomeActivity).toggleLoading(false)
+                val feature = state.data?.second
+                if (feature != null) {
+                    when (state.data?.first?.videoSourceType) {
+                        is SourceType.MSUB_PC -> {
+                            goToMSubPCPlayer(
+                                feature.featureName,
+                                feature.featureAPIKey,
+                                state.data?.first!!
+                            )
+                        }
+                        is SourceType.ZCM -> {
+                            goToZCMPlayer(
+                                feature.featureName,
+                                feature.featureAPIKey,
+                                state.data?.first!!
+                            )
+                        }
+                        is SourceType.MSYS -> {
+                            goMSYSPlayer(
+                                feature.featureName,
+                                feature.featureAPIKey,
+                                state.data?.first!!
+                            )
+                        }
+                        is SourceType.ET2SMM -> {
+                            goToETS2MMPlayer(
+                                feature.featureName,
+                                feature.featureAPIKey,
+                                state.data?.first!!
+                            )
+                        }
+                        is SourceType.GS_API_SOURCE -> {
+                            goToGSPlayer(
+                                feature.featureName,
+                                feature.featureAPIKey,
+                                state.data?.first!!
+                            )
+                        }
+                    }
+                }
+            }
+            state.isError -> {
+                (requireActivity() as HomeActivity).toggleLoading(false)
             }
         }
     }
@@ -130,8 +314,9 @@ class HomeFeaturesFragment : RowsSupportFragment() {
                     }
                 } else {
                     if (data.value.isNotEmpty()) rowsAdapter.add(
+                        rowIndex,
                         ListRow(
-                            HeaderItem((rowsAdapter.size() + 1).toLong(), data.key),
+                            HeaderItem((rowIndex + 1).toLong(), data.key),
                             ArrayObjectAdapter(CardPresenter(requireContext())).apply {
                                 setItems(data.value.sortedBy { it.featureOrder }.filter {
                                     !it.featureRequiredPassword || isAdultOpen

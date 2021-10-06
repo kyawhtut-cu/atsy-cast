@@ -1,5 +1,6 @@
 package com.kyawhut.atsycast.share.network.utils
 
+import com.kyawhut.atsycast.share.utils.Crashlytics
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -50,6 +51,18 @@ suspend fun <T> execute(execute: suspend () -> T): NetworkResponse<T> {
         val response = execute()
         NetworkResponse(NetworkStatus.SUCCESS, response)
     } catch (e: Exception) {
+        with(e.error) {
+            NetworkResponse(NetworkStatus.ERROR, error = this)
+        }
+    }
+}
+
+suspend fun <T> execute(crashlytics: Crashlytics, execute: suspend () -> T): NetworkResponse<T> {
+    return try {
+        val response = execute()
+        NetworkResponse(NetworkStatus.SUCCESS, response)
+    } catch (e: Exception) {
+        crashlytics.sendCrashlytics(e)
         with(e.error) {
             NetworkResponse(NetworkStatus.ERROR, error = this)
         }

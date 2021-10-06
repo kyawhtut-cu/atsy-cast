@@ -8,4 +8,6 @@ import com.kyawhut.atsycast.share.base.BaseCardType
  */
 sealed class CardType : BaseCardType() {
     object FEATURE : CardType()
+    object WATCHLATER : CardType()
+    object RECENTLYWATCH : CardType()
 }

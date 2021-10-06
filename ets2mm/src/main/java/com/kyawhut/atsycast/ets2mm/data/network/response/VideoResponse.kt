@@ -11,7 +11,7 @@ import java.io.Serializable
  * @date 9/15/21
  */
 @Keep
-internal data class VideoResponse(
+data class VideoResponse(
     @SerializedName("videos_id")
     val videoID: Int,
     @SerializedName("title")

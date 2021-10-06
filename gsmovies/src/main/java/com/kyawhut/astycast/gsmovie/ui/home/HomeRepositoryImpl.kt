@@ -11,6 +11,7 @@ import com.kyawhut.atsycast.share.network.utils.NetworkError
 import com.kyawhut.atsycast.share.network.utils.NetworkResponse
 import com.kyawhut.atsycast.share.network.utils.execute
 import com.kyawhut.atsycast.share.telegram.utils.TelegramHelper
+import com.kyawhut.atsycast.share.utils.Crashlytics
 import com.kyawhut.atsycast.share.utils.SourceType
 import javax.inject.Inject
 
@@ -22,6 +23,7 @@ internal class HomeRepositoryImpl @Inject constructor(
     private val api: GSAPI,
     private val recentlyWatchSource: RecentlyWatchSource,
     private val watchLaterSource: WatchLaterSource,
+    private val crashlytics: Crashlytics,
 ) : HomeRepository {
 
     override fun isHasRecently(route: String): Boolean {
@@ -38,12 +40,14 @@ internal class HomeRepositoryImpl @Inject constructor(
         callback: (NetworkResponse<List<CategoryResponse.Data>>) -> Unit
     ) {
         NetworkResponse.loading(callback)
-        val response = execute { api.getCategory(scriptRequest {
-            this.route = route
-            payload = mutableMapOf(
-                "sub_route" to "category"
-            )
-        }).data ?: listOf() }
+        val response = execute(crashlytics) {
+            api.getCategory(scriptRequest {
+                this.route = route
+                payload = mutableMapOf(
+                    "sub_route" to "category"
+                )
+            }).data ?: listOf()
+        }
         if (response.isSuccess) {
             if (response.data!!.isNotEmpty()) {
                 NetworkResponse.success(response.data ?: listOf(), callback)

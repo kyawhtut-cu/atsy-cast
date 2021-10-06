@@ -5,6 +5,7 @@ import com.kyawhut.atsycast.msubpc.data.network.response.VideoResponse
 import com.kyawhut.atsycast.msubpc.utils.AesEncryptDecrypt
 import com.kyawhut.atsycast.share.network.utils.NetworkResponse
 import com.kyawhut.atsycast.share.network.utils.execute
+import com.kyawhut.atsycast.share.utils.Crashlytics
 import kotlinx.coroutines.delay
 import java.util.*
 import javax.inject.Inject
@@ -14,7 +15,8 @@ import javax.inject.Inject
  * @date 9/6/21
  */
 internal class SeriesRepositoryImpl @Inject constructor(
-    private val api: MSubAPI
+    private val api: MSubAPI,
+    private val crashlytics: Crashlytics,
 ) : SeriesRepository {
 
     private var _tmpSeriesData = mutableListOf<VideoResponse>()
@@ -28,7 +30,7 @@ internal class SeriesRepositoryImpl @Inject constructor(
         isFirstTime = key == "-" || _tmpSeriesData.isEmpty()
         if (key == "-" || _tmpSeriesData.isEmpty()) {
             _tmpSeriesData.clear()
-            val response = execute { api.getAllSeries() }
+            val response = execute(crashlytics) { api.getAllSeries() }
             if (response.isSuccess) {
                 response.data?.map {
                     it.apply {

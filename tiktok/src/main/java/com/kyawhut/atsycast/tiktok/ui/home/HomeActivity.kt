@@ -1,10 +1,14 @@
 package com.kyawhut.atsycast.tiktok.ui.home
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.KeyEvent
 import androidx.activity.viewModels
+import androidx.preference.PreferenceManager
 import com.kyawhut.atsycast.share.base.BaseTvActivityWithVM
 import com.kyawhut.atsycast.share.network.utils.NetworkResponse
+import com.kyawhut.atsycast.share.utils.extension.get
+import com.kyawhut.atsycast.share.utils.extension.put
 import com.kyawhut.atsycast.share.utils.player.PlayerManager
 import com.kyawhut.atsycast.share.utils.player.PlayerManagerImpl
 import com.kyawhut.atsycast.tiktok.R
@@ -26,6 +30,14 @@ internal class HomeActivity : BaseTvActivityWithVM<ActivityTiktokHomeBinding, Ho
 
     override val vm: HomeViewModel by viewModels()
 
+    private val sh: SharedPreferences by lazy {
+        PreferenceManager.getDefaultSharedPreferences(this)
+    }
+
+    private var isShowTuto: Boolean
+        get() = sh.get("tiktok_tuto", true)
+        set(value) = sh.put("tiktok_tuto", value)
+
     private val playerManger: PlayerManagerImpl by lazy {
         PlayerManagerImpl.Builder(this).apply {
             playerView = vb.tiktokPlayer
@@ -36,6 +48,8 @@ internal class HomeActivity : BaseTvActivityWithVM<ActivityTiktokHomeBinding, Ho
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        vb.showTuto = isShowTuto
 
         vm.getVideoList(::onVideoResult)
     }
@@ -90,7 +104,10 @@ internal class HomeActivity : BaseTvActivityWithVM<ActivityTiktokHomeBinding, Ho
     }
 
     override fun onPlayerEnd() {
-        playerManger.replay()
+        if (PreferenceManager.getDefaultSharedPreferences(this)
+                .get("pref_tiktok_auto_play", false)
+        ) playTiktok(true)
+        else playerManger.replay()
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
@@ -99,6 +116,8 @@ internal class HomeActivity : BaseTvActivityWithVM<ActivityTiktokHomeBinding, Ho
             KeyEvent.KEYCODE_DPAD_DOWN, KeyEvent.KEYCODE_DPAD_RIGHT -> playTiktok(true)
             KeyEvent.KEYCODE_ENTER, KeyEvent.KEYCODE_DPAD_CENTER -> playerManger.togglePlay()
         }
+        isShowTuto = false
+        vb.showTuto = isShowTuto
         return super.onKeyDown(keyCode, event)
     }
 

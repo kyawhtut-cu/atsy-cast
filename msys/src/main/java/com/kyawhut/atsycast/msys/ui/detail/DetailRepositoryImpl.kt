@@ -8,6 +8,7 @@ import com.kyawhut.atsycast.share.db.entity.WatchLaterEntity
 import com.kyawhut.atsycast.share.db.source.WatchLaterSource
 import com.kyawhut.atsycast.share.network.utils.NetworkResponse
 import com.kyawhut.atsycast.share.network.utils.execute
+import com.kyawhut.atsycast.share.utils.Crashlytics
 import com.kyawhut.atsycast.share.utils.SourceType
 import javax.inject.Inject
 
@@ -18,6 +19,7 @@ import javax.inject.Inject
 internal class DetailRepositoryImpl @Inject constructor(
     private val api: MsysAPI,
     private val watchLater: WatchLaterSource,
+    private val crashlytics: Crashlytics,
 ) : DetailRepository {
 
     private fun getWatchLater(moviesID: Int): WatchLaterEntity? {
@@ -49,7 +51,7 @@ internal class DetailRepositoryImpl @Inject constructor(
         callback: (NetworkResponse<List<MoviesResponse>>) -> Unit
     ) {
         NetworkResponse.loading(callback)
-        val response = execute { api.getRelated(genresID, apiKey) }
+        val response = execute(crashlytics) { api.getRelated(genresID, apiKey) }
         response.post(callback)
     }
 
@@ -59,7 +61,7 @@ internal class DetailRepositoryImpl @Inject constructor(
         callback: (NetworkResponse<List<SeasonResponse>>) -> Unit
     ) {
         NetworkResponse.loading(callback)
-        val response = execute { api.getSeriesSeason(seriesID, apiKey) }
+        val response = execute(crashlytics) { api.getSeriesSeason(seriesID, apiKey) }
         response.post(callback)
     }
 }

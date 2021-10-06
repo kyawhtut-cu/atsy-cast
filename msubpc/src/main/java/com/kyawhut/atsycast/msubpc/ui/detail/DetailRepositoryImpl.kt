@@ -10,6 +10,7 @@ import com.kyawhut.atsycast.share.db.entity.WatchLaterEntity
 import com.kyawhut.atsycast.share.db.source.WatchLaterSource
 import com.kyawhut.atsycast.share.network.utils.NetworkResponse
 import com.kyawhut.atsycast.share.network.utils.execute
+import com.kyawhut.atsycast.share.utils.Crashlytics
 import com.kyawhut.atsycast.share.utils.SourceType
 import javax.inject.Inject
 
@@ -19,7 +20,8 @@ import javax.inject.Inject
  */
 internal class DetailRepositoryImpl @Inject constructor(
     private val api: MSubAPI,
-    private val watchLater: WatchLaterSource
+    private val watchLater: WatchLaterSource,
+    private val crashlytics: Crashlytics,
 ) : DetailRepository {
 
     private fun getWatchLater(videoID: Int): WatchLaterEntity? {
@@ -50,7 +52,7 @@ internal class DetailRepositoryImpl @Inject constructor(
         callback: (NetworkResponse<MovieStreamResponse>) -> Unit
     ) {
         NetworkResponse.loading(callback)
-        val response = execute { api.getMovieStream("$videoID") }
+        val response = execute(crashlytics) { api.getMovieStream("$videoID") }
         if (response.isSuccess) {
             response.data?.apply {
                 if (stream != null) stream = AesEncryptDecrypt.getDecryptedString(stream)
@@ -66,7 +68,7 @@ internal class DetailRepositoryImpl @Inject constructor(
     ) {
         if (genres.isEmpty()) return
         NetworkResponse.loading(callback)
-        val response = execute { api.getRelatedMovies(genres.substring(0, 4)) }
+        val response = execute(crashlytics) { api.getRelatedMovies(genres.substring(0, 4)) }
         if (response.isSuccess) {
             NetworkResponse.success((response.data ?: listOf()).map {
                 it.apply {
@@ -81,8 +83,8 @@ internal class DetailRepositoryImpl @Inject constructor(
         callback: (NetworkResponse<Pair<List<VideoResponse>, List<EpisodeResponse>>>) -> Unit
     ) {
         NetworkResponse.loading(callback)
-        val relatedSeason = execute { api.getRelatedSeason(seasonID) }
-        val episodeResponse = execute { api.getSeriesEpisode(seasonID) }
+        val relatedSeason = execute(crashlytics) { api.getRelatedSeason(seasonID) }
+        val episodeResponse = execute(crashlytics) { api.getSeriesEpisode(seasonID) }
         if (episodeResponse.isError) {
             NetworkResponse.error(
                 episodeResponse.error,

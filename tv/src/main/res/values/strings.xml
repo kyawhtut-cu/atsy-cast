@@ -68,6 +68,10 @@
     <string name="pref_dialog_display_name">Enter Your Name</string>
     <string name="pref_summary_display_name">Your Name</string>
 
+    <string name="pref_key_tiktok_auto_play">pref_tiktok_auto_play</string>
+    <string name="pref_title_tiktok_auto_play">Tiktok Play</string>
+    <string name="pref_summary_tiktok_auto_play">Auto play next video after finished playing video.</string>
+
     <string name="pref_title_recommendations">Recommendations</string>
     <string name="pref_key_recommendations">pref_recommendations</string>
     <string name="pref_key_screen_general">general_settings</string>

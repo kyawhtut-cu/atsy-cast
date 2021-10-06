@@ -5,6 +5,7 @@ import com.kyawhut.atsycast.msys.data.network.MsysAPI
 import com.kyawhut.atsycast.msys.data.network.response.MoviesResponse
 import com.kyawhut.atsycast.share.network.utils.NetworkResponse
 import com.kyawhut.atsycast.share.network.utils.execute
+import com.kyawhut.atsycast.share.utils.Crashlytics
 import com.kyawhut.atsycast.share.utils.ShareUtils.isAdult
 import com.kyawhut.atsycast.share.utils.extension.Extension.isAdultOpen
 import javax.inject.Inject
@@ -14,7 +15,8 @@ import javax.inject.Inject
  * @date 9/10/21
  */
 internal class MoviesRepositoryImpl @Inject constructor(
-    private val api: MsysAPI
+    private val api: MsysAPI,
+    private val crashlytics: Crashlytics,
 ) : MoviesRepository {
 
     override suspend fun getMovies(
@@ -25,7 +27,7 @@ internal class MoviesRepositoryImpl @Inject constructor(
         callback: (NetworkResponse<List<MoviesResponse>>) -> Unit
     ) {
         NetworkResponse.loading(callback)
-        val response = execute { api.getMovies(genresID, apiKey, page) }
+        val response = execute(crashlytics) { api.getMovies(genresID, apiKey, page) }
         if (response.isSuccess) {
             NetworkResponse.success(response.data?.filter {
                 !it.moviesGenres.any { it.genresTitle.isAdult } || context.isAdultOpen

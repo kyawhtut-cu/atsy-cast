@@ -7,6 +7,7 @@ import com.kyawhut.atsycast.share.db.source.RecentlyWatchSource
 import com.kyawhut.atsycast.share.db.source.WatchLaterSource
 import com.kyawhut.atsycast.share.network.utils.NetworkResponse
 import com.kyawhut.atsycast.share.network.utils.execute
+import com.kyawhut.atsycast.share.utils.Crashlytics
 import com.kyawhut.atsycast.share.utils.ShareUtils.isAdult
 import com.kyawhut.atsycast.share.utils.SourceType
 import com.kyawhut.atsycast.share.utils.extension.Extension.isAdultOpen
@@ -19,7 +20,8 @@ import javax.inject.Inject
 internal class HomeRepositoryImpl @Inject constructor(
     private val api: Et2API,
     private val recentlyWatchSource: RecentlyWatchSource,
-    private val watchLaterSource: WatchLaterSource
+    private val watchLaterSource: WatchLaterSource,
+    private val crashlytics: Crashlytics,
 ) : HomeRepository {
 
     override val isHasRecently: Boolean
@@ -33,7 +35,7 @@ internal class HomeRepositoryImpl @Inject constructor(
         callback: (NetworkResponse<List<GenresResponse>>) -> Unit
     ) {
         NetworkResponse.loading(callback)
-        val response = execute { api.getHome() }
+        val response = execute(crashlytics) { api.getHome() }
         if (response.isSuccess) {
             val genresList = response.data?.filter { it.genreName.isNotEmpty() }?.filter {
                 !it.genreName.isAdult || context.isAdultOpen

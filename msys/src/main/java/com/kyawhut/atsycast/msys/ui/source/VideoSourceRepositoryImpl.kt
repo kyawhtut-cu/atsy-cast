@@ -2,6 +2,7 @@ package com.kyawhut.atsycast.msys.ui.source
 
 import com.kyawhut.atsycast.msys.data.network.MsysAPI
 import com.kyawhut.atsycast.share.db.source.RecentlyWatchSource
+import com.kyawhut.atsycast.share.utils.Crashlytics
 import com.kyawhut.atsycast.share.utils.SourceType
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -14,7 +15,8 @@ import javax.inject.Inject
  */
 internal class VideoSourceRepositoryImpl @Inject constructor(
     private val api: MsysAPI,
-    private val recentlyWatch: RecentlyWatchSource
+    private val recentlyWatch: RecentlyWatchSource,
+    private val crashlytics: Crashlytics,
 ) : VideoSourceRepository {
 
     override fun isHasResume(videoID: Int): Boolean {
@@ -33,6 +35,7 @@ internal class VideoSourceRepositoryImpl @Inject constructor(
             }
         } catch (e: Exception) {
             e.printStackTrace()
+            crashlytics.sendCrashlytics(e)
             CoroutineScope(Dispatchers.Main).launch {
                 callback(false, "Something went wrong. Please contact to admin.")
             }

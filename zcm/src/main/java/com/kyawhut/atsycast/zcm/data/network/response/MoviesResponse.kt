@@ -10,7 +10,7 @@ import java.io.Serializable
  * @date 9/10/21
  */
 @Keep
-internal data class MoviesResponse(
+data class MoviesResponse(
     @SerializedName("id")
     val moviesID: Int,
     @SerializedName("type")

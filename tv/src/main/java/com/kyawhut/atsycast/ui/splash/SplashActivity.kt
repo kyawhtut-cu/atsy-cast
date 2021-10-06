@@ -49,7 +49,13 @@ class SplashActivity : BaseTvActivityWithVM<ActivitySplashBinding, SplashViewMod
             viewSplash.setTransitionListener(this@SplashActivity)
         }
 
-        checkUpdate()
+        if (!isTv) {
+            finishAndRemoveTask()
+            startActivity<TvConfirmActivity>()
+            return
+        }
+
+        if (!BuildConfig.DEBUG) checkUpdate()
     }
 
     private fun checkDeviceStatus() {
@@ -106,13 +112,9 @@ class SplashActivity : BaseTvActivityWithVM<ActivitySplashBinding, SplashViewMod
     }
 
     override fun onTransitionCompleted(p0: MotionLayout?, p1: Int) {
-        if (!isTv) {
-            finishAndRemoveTask()
-            startActivity<TvConfirmActivity>()
-            return
-        }
         isAnimationComplete = true
-        processIntent()
+        if (!BuildConfig.DEBUG) processIntent()
+        else startActivity<HomeActivity>()
     }
 
     override fun onTransitionChange(p0: MotionLayout?, p1: Int, p2: Int, p3: Float) {

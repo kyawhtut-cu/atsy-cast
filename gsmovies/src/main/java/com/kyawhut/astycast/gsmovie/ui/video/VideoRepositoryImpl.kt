@@ -9,6 +9,7 @@ import com.kyawhut.atsycast.share.network.utils.NetworkError
 import com.kyawhut.atsycast.share.network.utils.NetworkResponse
 import com.kyawhut.atsycast.share.network.utils.execute
 import com.kyawhut.atsycast.share.telegram.utils.TelegramHelper
+import com.kyawhut.atsycast.share.utils.Crashlytics
 import javax.inject.Inject
 
 /**
@@ -16,7 +17,8 @@ import javax.inject.Inject
  * @date 9/10/21
  */
 internal class VideoRepositoryImpl @Inject constructor(
-    private val api: GSAPI
+    private val api: GSAPI,
+    private val crashlytics: Crashlytics,
 ) : VideoRepository {
 
     override suspend fun getVideoList(
@@ -27,7 +29,7 @@ internal class VideoRepositoryImpl @Inject constructor(
         callback: (NetworkResponse<List<VideoResponse.Data>>) -> Unit
     ) {
         NetworkResponse.loading(callback)
-        val response = execute {
+        val response = execute(crashlytics) {
             api.getVideoListByCategoryID(
                 scriptRequest {
                     this.route = route

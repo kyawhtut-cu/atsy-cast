@@ -12,6 +12,7 @@ import com.kyawhut.atsycast.share.network.utils.NetworkError
 import com.kyawhut.atsycast.share.network.utils.NetworkResponse
 import com.kyawhut.atsycast.share.network.utils.execute
 import com.kyawhut.atsycast.share.telegram.utils.TelegramHelper
+import com.kyawhut.atsycast.share.utils.Crashlytics
 import com.kyawhut.atsycast.share.utils.ShareUtils.deviceID
 import com.kyawhut.atsycast.share.utils.ShareUtils.deviceName
 import com.kyawhut.atsycast.share.utils.extension.Extension.devicePassword
@@ -24,7 +25,8 @@ import javax.inject.Inject
  * @date 9/17/21
  */
 class SplashRepositoryImpl @Inject constructor(
-    private val api: SheetAPI
+    private val api: SheetAPI,
+    private val crashlytics: Crashlytics,
 ) : SplashRepository {
 
     private fun saveUserInfo(context: Context, data: UserResponse.Data?) {
@@ -40,7 +42,7 @@ class SplashRepositoryImpl @Inject constructor(
         callback: (NetworkResponse<UserResponse.Data?>) -> Unit
     ) {
         val password = context.devicePassword
-        val response = execute {
+        val response = execute(crashlytics) {
             if (password.isEmpty()) api.registerDevice(
                 scriptRequest {
                     route = "registerDevice"
@@ -103,7 +105,7 @@ class SplashRepositoryImpl @Inject constructor(
         context: Context,
         callback: (NetworkResponse<UpdateResponse.Data?>) -> Unit
     ) {
-        val versionResponse = execute {
+        val versionResponse = execute(crashlytics) {
             api.checkUpdate(scriptRequest {
                 route = "checkUpdate"
             }).data
@@ -148,6 +150,15 @@ class SplashRepositoryImpl @Inject constructor(
     }
 
     private fun error(errorMessage: String, place: String = "checkDeviceStatus") {
+        crashlytics.sendCrashlytics(
+            RuntimeException(
+                """
+            Error occur in $place
+            
+            $errorMessage
+        """.trimIndent()
+            )
+        )
         TelegramHelper.sendLog(
             """
                 Error occur in <strong>$place</strong>

@@ -1,6 +1,5 @@
 package com.kyawhut.atsycast.share.db.source
 
-import androidx.lifecycle.LiveData
 import com.kyawhut.atsycast.share.db.entity.RecentlyWatchEntity
 import com.kyawhut.atsycast.share.utils.SourceType
 import io.reactivex.Flowable
@@ -16,6 +15,8 @@ interface RecentlyWatchSource {
     fun insert(vararg block: RecentlyWatchEntity.Builder.() -> Unit): List<Long>
 
     fun isHasRecentlyWatch(sourceType: SourceType): Boolean
+
+    fun getAll(): Flowable<List<RecentlyWatchEntity>>
 
     fun get(videoID: String, sourceType: SourceType): RecentlyWatchEntity?
 

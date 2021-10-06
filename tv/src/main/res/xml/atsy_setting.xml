@@ -29,6 +29,11 @@
             android:summary="@string/pref_summary_device_id"
             android:title="@string/pref_title_device_id"
             app:enableCopying="true" />
+
+        <CheckBoxPreference
+            android:key="@string/pref_key_tiktok_auto_play"
+            android:summary="@string/pref_summary_tiktok_auto_play"
+            android:title="@string/pref_title_tiktok_auto_play" />
     </PreferenceCategory>
 
     <PreferenceCategory

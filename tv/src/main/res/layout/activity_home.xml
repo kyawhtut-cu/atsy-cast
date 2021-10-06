@@ -34,18 +34,11 @@
         tools:context=".ui.home.HomeActivity">
 
         <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guide_feature"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.65" />
-
-        <androidx.constraintlayout.widget.Guideline
             android:id="@+id/end"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.93" />
+            app:layout_constraintGuide_percent="0.97" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/top"
@@ -53,7 +46,7 @@
             android:layout_height="wrap_content"
             android:background="#FFFFFF"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.1" />
+            app:layout_constraintGuide_percent="0.03" />
 
         <ImageView
             android:id="@+id/iv_background"
@@ -114,7 +107,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/guide_feature" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_clock" />
 
         <com.kyawhut.atsycast.share.components.NetworkStateComponent
             android:id="@+id/home_state"

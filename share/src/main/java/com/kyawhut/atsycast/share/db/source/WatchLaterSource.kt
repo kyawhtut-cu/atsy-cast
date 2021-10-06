@@ -14,6 +14,8 @@ interface WatchLaterSource {
 
     fun insert(vararg block: WatchLaterEntity.Builder.() -> Unit): List<Long>
 
+    fun getAll(): Flowable<List<WatchLaterEntity>>
+
     fun get(sourceType: SourceType): List<WatchLaterEntity>
 
     fun getLive(sourceType: SourceType): Flowable<List<WatchLaterEntity>>

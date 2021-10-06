@@ -21,6 +21,9 @@ abstract class WatchLaterDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract fun insert(vararg data: WatchLaterEntity): List<Long>
 
+    @Query("select * from table_watch_later")
+    abstract fun getAll(): Flowable<List<WatchLaterEntity>>
+
     @Query("select * from table_watch_later where video_source_type = :sourceType order by created_at")
     abstract fun get(sourceType: SourceType): List<WatchLaterEntity>
 

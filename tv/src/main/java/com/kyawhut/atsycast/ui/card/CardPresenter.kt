@@ -4,6 +4,8 @@ import android.content.Context
 import com.kyawhut.atsycast.data.network.response.HomeFeatureResponse
 import com.kyawhut.atsycast.share.base.BaseCardPresenter
 import com.kyawhut.atsycast.share.base.BaseCardPresenterSelector
+import com.kyawhut.atsycast.share.db.entity.RecentlyWatchEntity
+import com.kyawhut.atsycast.share.db.entity.WatchLaterEntity
 
 /**
  * @author kyawhtut
@@ -14,6 +16,8 @@ class CardPresenter(context: Context) : BaseCardPresenterSelector<CardType>(cont
     override fun getCardType(item: Any?): CardType {
         return when (item) {
             is HomeFeatureResponse.Data -> CardType.FEATURE
+            is WatchLaterEntity -> CardType.WATCHLATER
+            is RecentlyWatchEntity -> CardType.RECENTLYWATCH
             else -> throw RuntimeException("$item is not supported")
         }
     }
@@ -21,6 +25,8 @@ class CardPresenter(context: Context) : BaseCardPresenterSelector<CardType>(cont
     override fun getPresenter(type: CardType, context: Context): BaseCardPresenter<*> {
         return when (type) {
             is CardType.FEATURE -> FeaturePresenter(context)
+            is CardType.WATCHLATER -> WatchLaterCardPresenter(context)
+            is CardType.RECENTLYWATCH -> RecentlyWatchCardPresenter(context)
         }
     }
 }

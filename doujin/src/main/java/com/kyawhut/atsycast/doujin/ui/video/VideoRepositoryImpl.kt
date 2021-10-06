@@ -5,6 +5,7 @@ import com.kyawhut.atsycast.doujin.data.network.response.DoujinVideoDetailRespon
 import com.kyawhut.atsycast.doujin.data.network.response.DoujinVideoResponse
 import com.kyawhut.atsycast.share.network.utils.NetworkResponse
 import com.kyawhut.atsycast.share.network.utils.execute
+import com.kyawhut.atsycast.share.utils.Crashlytics
 import javax.inject.Inject
 
 /**
@@ -12,7 +13,8 @@ import javax.inject.Inject
  * @date 9/14/21
  */
 internal class VideoRepositoryImpl @Inject constructor(
-    private val api: DoujinAPI
+    private val api: DoujinAPI,
+    private val crashlytics: Crashlytics,
 ) : VideoRepository {
 
     override suspend fun getVideoData(
@@ -21,7 +23,7 @@ internal class VideoRepositoryImpl @Inject constructor(
         callback: (NetworkResponse<List<DoujinVideoResponse>>) -> Unit
     ) {
         NetworkResponse.loading(callback)
-        val response = execute {
+        val response = execute(crashlytics) {
             when (page) {
                 -1 -> api.getHotData()
                 else -> api.getDataWithPage(pageKey, page).data
@@ -35,7 +37,7 @@ internal class VideoRepositoryImpl @Inject constructor(
         callback: (NetworkResponse<DoujinVideoDetailResponse>) -> Unit
     ) {
         NetworkResponse.loading(callback)
-        val response = execute { api.getVideoDetail(doujinID) }
+        val response = execute(crashlytics) { api.getVideoDetail(doujinID) }
         response.post(callback)
     }
 }

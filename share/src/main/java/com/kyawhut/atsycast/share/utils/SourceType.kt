@@ -24,4 +24,10 @@ sealed class SourceType(val type: String) {
             }
         }
     }
+
+    val featureID: String
+        get() = when (this) {
+            is UNKNOWN -> ""
+            else -> type
+        }
 }

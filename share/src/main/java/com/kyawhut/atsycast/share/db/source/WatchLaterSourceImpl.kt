@@ -25,6 +25,10 @@ class WatchLaterSourceImpl(private val dao: WatchLaterDao) : WatchLaterSource {
         return dao.get(sourceType)
     }
 
+    override fun getAll(): Flowable<List<WatchLaterEntity>> {
+        return dao.getAll()
+    }
+
     override fun getLive(sourceType: SourceType): Flowable<List<WatchLaterEntity>> {
         return dao.getLive(sourceType)
     }

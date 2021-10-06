@@ -6,6 +6,7 @@ import com.kyawhut.astycast.gsmovie.data.network.response.VideoResponse
 import com.kyawhut.atsycast.share.network.request.scriptRequest
 import com.kyawhut.atsycast.share.network.utils.NetworkResponse
 import com.kyawhut.atsycast.share.network.utils.execute
+import com.kyawhut.atsycast.share.utils.Crashlytics
 import javax.inject.Inject
 
 /**
@@ -13,7 +14,8 @@ import javax.inject.Inject
  * @date 9/7/21
  */
 internal class SearchRepositoryImpl @Inject constructor(
-    private val api: GSAPI
+    private val api: GSAPI,
+    private val crashlytics: Crashlytics,
 ) : SearchRepository {
 
     override suspend fun search(
@@ -23,7 +25,7 @@ internal class SearchRepositoryImpl @Inject constructor(
         callback: (NetworkResponse<List<VideoResponse.Data>>) -> Unit
     ) {
         NetworkResponse.loading(callback)
-        val response = execute {
+        val response = execute(crashlytics) {
             api.search(scriptRequest {
                 this.route = route
                 payload = mutableMapOf(

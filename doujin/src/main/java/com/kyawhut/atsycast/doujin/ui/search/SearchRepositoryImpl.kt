@@ -6,6 +6,7 @@ import com.kyawhut.atsycast.doujin.data.network.response.DoujinPageVideoResponse
 import com.kyawhut.atsycast.doujin.data.network.response.DoujinVideoDetailResponse
 import com.kyawhut.atsycast.share.network.utils.NetworkResponse
 import com.kyawhut.atsycast.share.network.utils.execute
+import com.kyawhut.atsycast.share.utils.Crashlytics
 import javax.inject.Inject
 
 /**
@@ -13,7 +14,8 @@ import javax.inject.Inject
  * @date 9/7/21
  */
 internal class SearchRepositoryImpl @Inject constructor(
-    private val api: DoujinAPI
+    private val api: DoujinAPI,
+    private val crashlytics: Crashlytics,
 ) : SearchRepository {
 
     override suspend fun search(
@@ -22,7 +24,7 @@ internal class SearchRepositoryImpl @Inject constructor(
         callback: (NetworkResponse<DoujinPageVideoResponse>) -> Unit
     ) {
         NetworkResponse.loading(callback)
-        val response = execute {
+        val response = execute(crashlytics) {
             api.searchVideo(DoujinSearchRequest(query, page))
         }
         response.post(callback)
@@ -33,7 +35,7 @@ internal class SearchRepositoryImpl @Inject constructor(
         callback: (NetworkResponse<DoujinVideoDetailResponse>) -> Unit
     ) {
         NetworkResponse.loading(callback)
-        val response = execute { api.getVideoDetail(doujinID) }
+        val response = execute(crashlytics) { api.getVideoDetail(doujinID) }
         response.post(callback)
     }
 }

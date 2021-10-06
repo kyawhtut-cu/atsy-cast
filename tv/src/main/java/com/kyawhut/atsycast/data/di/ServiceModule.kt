@@ -5,6 +5,8 @@ import com.kyawhut.atsycast.data.network.SheetAPI
 import com.kyawhut.atsycast.share.BuildConfig
 import com.kyawhut.atsycast.share.network.providers.createService
 import com.kyawhut.atsycast.share.telegram.TelegramBotAPI
+import com.kyawhut.atsycast.share.utils.Crashlytics
+import com.kyawhut.atsycast.utils.CrashlyticsImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -33,4 +35,8 @@ object ServiceModule {
         TelegramBotAPI.provideTelegramBotAPI(
             context
         )
+
+    @Provides
+    @Singleton
+    fun provideCrashlytics(crashlytics: CrashlyticsImpl): Crashlytics = crashlytics
 }

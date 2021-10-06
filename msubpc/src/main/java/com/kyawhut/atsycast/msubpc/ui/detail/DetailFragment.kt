@@ -228,6 +228,7 @@ internal class DetailFragment : BaseDetailTvFragment<DetailViewModel>() {
                 startActivity<DetailActivity>(
                     Constants.EXTRA_VIDEO_ID to item.videoId,
                     Constants.EXTRA_VIDEO_DATA to item,
+                    Constants.EXTRA_APP_NAME to vm.appName,
                 )
             }
             is EpisodeResponse -> {

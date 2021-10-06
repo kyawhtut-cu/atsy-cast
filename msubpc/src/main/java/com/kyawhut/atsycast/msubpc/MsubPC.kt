@@ -3,8 +3,17 @@ package com.kyawhut.atsycast.msubpc
 import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import com.kyawhut.atsycast.msubpc.data.network.response.EpisodeResponse
+import com.kyawhut.atsycast.msubpc.data.network.response.VideoResponse
+import com.kyawhut.atsycast.msubpc.ui.detail.DetailActivity
 import com.kyawhut.atsycast.msubpc.ui.home.HomeActivity
+import com.kyawhut.atsycast.msubpc.ui.player.PlayerActivity
 import com.kyawhut.atsycast.msubpc.utils.Constants
+import com.kyawhut.atsycast.share.db.entity.RecentlyWatchEntity
+import com.kyawhut.atsycast.share.db.entity.WatchLaterEntity
+import com.kyawhut.atsycast.share.model.VideoSourceModel
 import com.kyawhut.atsycast.share.utils.extension.put
 import com.kyawhut.atsycast.share.utils.extension.startActivity
 
@@ -33,5 +42,37 @@ object MsubPC {
 
     fun Fragment.goToMsubPC(appName: String, apiKey: String) {
         requireContext().goToMsubPC(appName, apiKey)
+    }
+
+    fun Fragment.goToMSubPCDetail(appName: String, apiKey: String, data: WatchLaterEntity) {
+        requireContext().setAPIKey(apiKey)
+        requireContext().startActivity<DetailActivity>(
+            Constants.EXTRA_VIDEO_DATA to data.getData<VideoResponse>(),
+            Constants.EXTRA_APP_NAME to appName,
+        )
+    }
+
+    fun Fragment.goToMSubPCPlayer(appName: String, apiKey: String, data: RecentlyWatchEntity) {
+        context.startActivity<PlayerActivity>(
+            Constants.EXTRA_VIDEO_ID to data.videoID.toInt(),
+            Constants.EXTRA_IS_RESUME to true,
+            Constants.EXTRA_VIDEO_TITLE to data.videoTitle,
+            Constants.EXTRA_VIDEO_COVER to data.videoCover,
+            Constants.EXTRA_APP_NAME to appName,
+            Constants.EXTRA_IS_ADULT to data.isAdult,
+            Constants.EXTRA_VIDEO_SOURCE to VideoSourceModel(
+                data.videoID.toInt(),
+                data.videoTitle,
+                null,
+                data.videoURL,
+                data.videoAgent,
+                data.videoCookies,
+                data.videoCustomHeader
+            ),
+            Constants.EXTRA_RELATED_EPISODE to Gson().fromJson<List<EpisodeResponse>>(
+                data.videoRelatedVideo,
+                object : TypeToken<List<EpisodeResponse>>() {}.type
+            )
+        )
     }
 }

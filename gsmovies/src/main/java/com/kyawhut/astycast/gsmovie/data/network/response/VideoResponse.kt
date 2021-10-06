@@ -10,7 +10,7 @@ import java.io.Serializable
  * @date 9/29/21
  */
 @Keep
-internal data class VideoResponse(
+data class VideoResponse(
     @SerializedName("status")
     val status: Int,
     @SerializedName("message")
@@ -20,7 +20,7 @@ internal data class VideoResponse(
 ) {
 
     @Keep
-    internal data class Data(
+    data class Data(
         @SerializedName("video_id")
         val videoID: String,
         @SerializedName("video_title")

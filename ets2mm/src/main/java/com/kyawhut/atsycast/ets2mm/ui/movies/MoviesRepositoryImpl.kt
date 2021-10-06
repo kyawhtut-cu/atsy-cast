@@ -5,6 +5,7 @@ import com.kyawhut.atsycast.ets2mm.data.network.Et2API
 import com.kyawhut.atsycast.ets2mm.data.network.response.VideoResponse
 import com.kyawhut.atsycast.share.network.utils.NetworkResponse
 import com.kyawhut.atsycast.share.network.utils.execute
+import com.kyawhut.atsycast.share.utils.Crashlytics
 import com.kyawhut.atsycast.share.utils.ShareUtils.isAdult
 import com.kyawhut.atsycast.share.utils.extension.Extension.isAdultOpen
 import javax.inject.Inject
@@ -14,7 +15,8 @@ import javax.inject.Inject
  * @date 9/10/21
  */
 internal class MoviesRepositoryImpl @Inject constructor(
-    private val api: Et2API
+    private val api: Et2API,
+    private val crashlytics: Crashlytics,
 ) : MoviesRepository {
 
     override suspend fun getMovies(
@@ -24,7 +26,7 @@ internal class MoviesRepositoryImpl @Inject constructor(
         callback: (NetworkResponse<List<VideoResponse>>) -> Unit
     ) {
         NetworkResponse.loading(callback)
-        val response = execute {
+        val response = execute(crashlytics) {
             when (genresID) {
                 "-1" -> api.getLatestMovies(page)
                 "0" -> api.getLatestTvSeries(page)

@@ -4,6 +4,7 @@ import com.kyawhut.atsycast.eporner.data.network.EPornerAPI
 import com.kyawhut.atsycast.eporner.data.network.response.EPornerVideoResponse
 import com.kyawhut.atsycast.share.network.utils.NetworkResponse
 import com.kyawhut.atsycast.share.network.utils.execute
+import com.kyawhut.atsycast.share.utils.Crashlytics
 import javax.inject.Inject
 
 /**
@@ -11,7 +12,8 @@ import javax.inject.Inject
  * @date 9/7/21
  */
 internal class SearchRepositoryImpl @Inject constructor(
-    private val api: EPornerAPI
+    private val api: EPornerAPI,
+    private val crashlytics: Crashlytics,
 ) : SearchRepository {
 
     override suspend fun search(
@@ -20,7 +22,7 @@ internal class SearchRepositoryImpl @Inject constructor(
         callback: (NetworkResponse<List<EPornerVideoResponse>>) -> Unit
     ) {
         NetworkResponse.loading(callback)
-        val response = execute { api.getVideos(query, page).videoList }
+        val response = execute(crashlytics) { api.getVideos(query, page).videoList }
         response.post(callback)
     }
 }

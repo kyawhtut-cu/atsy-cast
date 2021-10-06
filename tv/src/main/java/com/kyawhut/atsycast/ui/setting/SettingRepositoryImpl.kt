@@ -4,6 +4,7 @@ import android.content.Context
 import com.kyawhut.atsycast.data.network.SheetAPI
 import com.kyawhut.atsycast.share.network.request.scriptRequest
 import com.kyawhut.atsycast.share.network.utils.execute
+import com.kyawhut.atsycast.share.utils.Crashlytics
 import com.kyawhut.atsycast.share.utils.ShareUtils.deviceID
 import javax.inject.Inject
 
@@ -12,7 +13,8 @@ import javax.inject.Inject
  * @date 9/16/21
  */
 class SettingRepositoryImpl @Inject constructor(
-    private val api: SheetAPI
+    private val api: SheetAPI,
+    private val crashlytics: Crashlytics,
 ) : SettingRepository {
 
     override suspend fun changeDisplayName(
@@ -20,7 +22,7 @@ class SettingRepositoryImpl @Inject constructor(
         name: String,
         callback: (Boolean, String) -> Unit
     ) {
-        val response = execute {
+        val response = execute(crashlytics) {
             api.changeDisplayName(scriptRequest {
                 route = "changeDisplayName"
                 payload = mutableMapOf(

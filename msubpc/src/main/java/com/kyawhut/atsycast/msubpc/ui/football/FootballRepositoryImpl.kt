@@ -5,6 +5,7 @@ import com.kyawhut.atsycast.msubpc.data.network.response.FootballResponse
 import com.kyawhut.atsycast.msubpc.data.network.response.FootballStreamResponse
 import com.kyawhut.atsycast.share.network.utils.NetworkResponse
 import com.kyawhut.atsycast.share.network.utils.execute
+import com.kyawhut.atsycast.share.utils.Crashlytics
 import javax.inject.Inject
 
 /**
@@ -12,14 +13,15 @@ import javax.inject.Inject
  * @date 9/6/21
  */
 internal class FootballRepositoryImpl @Inject constructor(
-    private val api: MSubAPI
+    private val api: MSubAPI,
+    private val crashlytics: Crashlytics,
 ) : FootballRepository {
 
     override suspend fun getFootball(
         callback: (NetworkResponse<List<FootballResponse.Data>>) -> Unit
     ) {
         NetworkResponse.loading(callback)
-        val response = execute { api.getFootball() }
+        val response = execute(crashlytics) { api.getFootball() }
         if (response.isSuccess) {
             NetworkResponse.success(response.data?.football ?: listOf(), callback)
         } else {
@@ -32,7 +34,7 @@ internal class FootballRepositoryImpl @Inject constructor(
         callback: (NetworkResponse<FootballStreamResponse>) -> Unit
     ) {
         NetworkResponse.loading(callback)
-        val response = execute { api.getFootballStream(footballID) }
+        val response = execute(crashlytics) { api.getFootballStream(footballID) }
         response.post(callback)
     }
 }

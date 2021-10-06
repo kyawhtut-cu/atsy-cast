@@ -1,5 +1,6 @@
 package com.kyawhut.atsycast.data.network
 
+import com.kyawhut.atsycast.data.network.response.FeatureDetailResponse
 import com.kyawhut.atsycast.data.network.response.HomeFeatureResponse
 import com.kyawhut.atsycast.data.network.response.UpdateResponse
 import com.kyawhut.atsycast.data.network.response.UserResponse
@@ -17,6 +18,11 @@ interface SheetAPI {
     suspend fun getHomeFeature(
         @Body scriptRequest: ScriptRequest,
     ): HomeFeatureResponse
+
+    @POST("exec")
+    suspend fun getFeatureDetail(
+        @Body scriptRequest: ScriptRequest,
+    ): FeatureDetailResponse
 
     @POST("exec")
     suspend fun registerDevice(

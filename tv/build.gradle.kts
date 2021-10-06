@@ -208,8 +208,11 @@ dependencies {
     implementation(Libs.retrofit)
 
     // Room
+    implementation(Libs.roomKtx)
     implementation(Libs.roomRuntime)
     kapt(Libs.roomCompiler)
+    // RxJava support for Room
+    implementation(Libs.roomRxJava)
 
     implementation(Libs.gson)
 

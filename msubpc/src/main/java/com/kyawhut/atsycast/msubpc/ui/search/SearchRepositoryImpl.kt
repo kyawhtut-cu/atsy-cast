@@ -7,6 +7,7 @@ import com.kyawhut.atsycast.msubpc.data.network.response.VideoResponse
 import com.kyawhut.atsycast.msubpc.utils.AesEncryptDecrypt
 import com.kyawhut.atsycast.share.network.utils.NetworkResponse
 import com.kyawhut.atsycast.share.network.utils.execute
+import com.kyawhut.atsycast.share.utils.Crashlytics
 import com.kyawhut.atsycast.share.utils.ShareUtils.isAdult
 import com.kyawhut.atsycast.share.utils.extension.Extension.isAdultOpen
 import kotlinx.coroutines.delay
@@ -17,7 +18,8 @@ import javax.inject.Inject
  * @date 9/7/21
  */
 internal class SearchRepositoryImpl @Inject constructor(
-    private val api: MSubAPI
+    private val api: MSubAPI,
+    private val crashlytics: Crashlytics,
 ) : SearchRepository {
 
     private var searchResponse: SearchResponse? = null
@@ -31,7 +33,7 @@ internal class SearchRepositoryImpl @Inject constructor(
         NetworkResponse.loading(callback)
         isFirstTime = searchResponse == null
         if (searchResponse == null) {
-            val response = execute { api.search() }
+            val response = execute(crashlytics) { api.search() }
             if (response.isSuccess) {
                 searchResponse = response.data
             } else if (response.isError) {

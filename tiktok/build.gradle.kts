@@ -1,5 +1,3 @@
-import java.util.*
-
 plugins {
     androidGitVersion()
     library()
@@ -8,10 +6,6 @@ plugins {
     kotlinExtension()
     dagger()
 }
-
-val releaseProperties = Properties()
-releaseProperties.load(file("${rootDir}/local.properties").inputStream())
-val BASE_URL: String = releaseProperties.getProperty("TIKTOK_BASE_URL", "")
 
 android {
     compileSdkVersion(Versions.compileSdkVersion)
@@ -30,8 +24,6 @@ android {
 
         testInstrumentationRunner("androidx.test.runner.AndroidJUnitRunner")
         consumerProguardFiles("consumer-rules.pro")
-
-        buildConfigString("BASE_URL", BASE_URL)
     }
 
     flavorDimensions("env")

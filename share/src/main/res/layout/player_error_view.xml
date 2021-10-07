@@ -89,6 +89,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/bg_default_focus"
+            android:focusable="true"
             android:focusableInTouchMode="true"
             android:text="@{actionText}"
             android:textColor="@color/colorWhite"
@@ -96,7 +97,10 @@
             app:layout_constraintBottom_toTopOf="@+id/bottom"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            tools:text="Action Text" />
+            tools:text="Action Text">
+
+            <requestFocus />
+        </TextView>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

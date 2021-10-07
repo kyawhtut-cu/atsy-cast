@@ -128,7 +128,10 @@ class UpdateActivity : BaseTvActivity<ActivityUpdateBinding>(), View.OnClickList
     }
 
     private fun installApp() {
-        val file = File(getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "msys-app.apk")
+        val file = File(
+            getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS),
+            Uri.parse(appStatus.downloadURL).lastPathSegment ?: ""
+        )
         val install = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             val contentUri = FileProvider.getUriForFile(
                 this,

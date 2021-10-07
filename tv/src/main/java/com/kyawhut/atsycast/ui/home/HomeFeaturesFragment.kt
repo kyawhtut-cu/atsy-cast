@@ -155,6 +155,7 @@ class HomeFeaturesFragment : RowsSupportFragment() {
             state.isSuccess -> {
                 (requireActivity() as HomeActivity).toggleLoading(false)
                 vm.homeFeatureList = state.data ?: hashMapOf()
+                vm.homeFeatureList.toSortedMap()
                 var rowIndex = 1L
                 vm.homeFeatureList.filter {
                     it.value.isNotEmpty() && it.value.any {

@@ -45,7 +45,7 @@ abstract class AppDatabase : RoomDatabase() {
             override fun migrate(database: SupportSQLiteDatabase) {
                 database.execSQL(
                     """
-                    ALTER TABLE `table_recently_watch` ADD `video_subtitle` TEXT NOT NULL DEFAULT ``;
+                    ALTER TABLE `table_recently_watch` ADD `video_subtitle` TEXT NOT NULL DEFAULT "";
                 """.trimIndent()
                 )
             }

@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.kyawhut.atsycast.gs_mm.data.network.response.EpisodeResponse
+import com.kyawhut.atsycast.gs_mm.data.network.response.VideoResponse
 import com.kyawhut.atsycast.gs_mm.ui.detail.DetailActivity
 import com.kyawhut.atsycast.gs_mm.ui.home.HomeActivity
 import com.kyawhut.atsycast.gs_mm.ui.player.PlayerActivity
@@ -47,7 +48,7 @@ object GSMMApp {
             Constants.EXTRA_API_KEY to route,
             Constants.EXTRA_APP_NAME to appName,
             Constants.EXTRA_CHANNEL_LOGO to channelLogo,
-            Constants.EXTRA_VIDEO_DATA to data.getData()
+            Constants.EXTRA_VIDEO_DATA to data.getData<VideoResponse>()
         )
     }
 

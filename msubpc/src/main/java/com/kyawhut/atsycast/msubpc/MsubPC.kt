@@ -42,7 +42,7 @@ object MsubPC {
     }
 
     fun Fragment.goToMsubPC(appName: String, channelLogo: String, apiKey: String) {
-        requireContext().goToMsubPC(appName, apiKey, channelLogo)
+        requireContext().goToMsubPC(appName, channelLogo, apiKey)
     }
 
     fun Fragment.goToMSubPCDetail(

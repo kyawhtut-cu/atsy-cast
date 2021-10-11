@@ -11,7 +11,6 @@ import com.kyawhut.astycast.gsmovie.data.network.response.VideoEpisodeResponse
 import com.kyawhut.astycast.gsmovie.ui.card.CardPresenter
 import com.kyawhut.astycast.gsmovie.ui.card.view.EpisodeCardView
 import com.kyawhut.atsycast.share.base.BasePlayerActivity
-import com.kyawhut.atsycast.share.model.VideoSourceModel
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -24,6 +23,8 @@ class PlayerActivity : BasePlayerActivity() {
     private val vm: PlayerViewModel by viewModels()
     override val appName: String
         get() = vm.appName
+    override val channelLogo: String
+        get() = vm.channelLogo
 
     override fun isRelatedView(view: View): Boolean {
         return view is EpisodeCardView

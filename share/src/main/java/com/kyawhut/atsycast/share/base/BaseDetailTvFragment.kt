@@ -10,10 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.leanback.app.RowsSupportFragment
-import androidx.leanback.widget.ArrayObjectAdapter
-import androidx.leanback.widget.FocusHighlight
-import androidx.leanback.widget.ListRow
-import androidx.leanback.widget.ListRowPresenter
+import androidx.leanback.widget.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kyawhut.atsycast.share.R
 import com.kyawhut.atsycast.share.adapter.GenresAdapter
@@ -65,6 +62,8 @@ abstract class BaseDetailTvFragment<VM : BaseViewModel> : Fragment() {
     abstract fun onClickedItem(rowIndex: Int, item: Any)
 
     abstract fun onItemFocus(item: Any)
+
+    open val onLoadMoreItem: ((headerItem: Any) -> Unit)? = null
 
     open val appName: String = ""
 
@@ -210,13 +209,26 @@ abstract class BaseDetailTvFragment<VM : BaseViewModel> : Fragment() {
     }
 
     fun getDetailRow(index: Int): ArrayObjectAdapter? {
-        return if (rowsAdapter.size() != 0) {
+        if (rowsAdapter.size() != 0) {
             with(rowsAdapter.get(index)) {
-                if (this is ListRow) {
+                return if (this is ListRow) {
                     this.adapter as ArrayObjectAdapter
                 } else null
             }
-        } else null
+        } else return null
+    }
+
+    fun getDetailRow(prediction: (Any) -> Boolean): ArrayObjectAdapter? {
+        if (rowsAdapter.size() != 0) {
+            (0 until rowsAdapter.size()).forEach {
+                with(rowsAdapter.get(it)) {
+                    if (this is ListRow) {
+                        if (prediction(this.headerItem)) return this.adapter as ArrayObjectAdapter
+                    }
+                }
+            }
+            return null
+        } else return null
     }
 
     private fun bindAction() {
@@ -303,8 +315,15 @@ abstract class BaseDetailTvFragment<VM : BaseViewModel> : Fragment() {
         }
 
         rowsSupportFragment?.setOnItemViewSelectedListener { _, item, _, row ->
-            item?.let {
-                onItemFocus(item)
+            if (row is ListRow) {
+                item?.let {
+                    onItemFocus(item)
+
+                    val listRowAdapter = row.adapter as ArrayObjectAdapter
+                    if (onLoadMoreItem != null && listRowAdapter.indexOf(item) == listRowAdapter.size() - 1) {
+                        onLoadMoreItem?.invoke(row.headerItem)
+                    }
+                }
             }
         }
 

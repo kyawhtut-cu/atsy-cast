@@ -22,6 +22,9 @@ internal class DetailViewModel @Inject constructor(
     val appName: String by lazy {
         savedStateHandle.get(Constants.EXTRA_APP_NAME) ?: ""
     }
+    val channelLogo: String by lazy {
+        savedStateHandle.get(Constants.EXTRA_CHANNEL_LOGO) ?: ""
+    }
     val apiKey: String by lazy {
         savedStateHandle.get(Constants.EXTRA_API_KEY) ?: ""
     }

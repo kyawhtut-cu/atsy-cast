@@ -11,17 +11,19 @@ import com.kyawhut.atsycast.share.utils.extension.startActivity
  * @date 9/9/21
  */
 object Free2Air {
-    fun FragmentActivity.goToFree2Air(key: String, title: String) {
+    fun FragmentActivity.goToFree2Air(key: String, title: String, channelLogo: String) {
         startActivity<HomeActivity>(
             Constants.EXTRA_API_KEY to key,
             Constants.EXTRA_APP_NAME to title,
+            Constants.EXTRA_CHANNEL_LOGO to channelLogo,
         )
     }
 
-    fun Fragment.goToFree2Air(key: String, title: String) {
+    fun Fragment.goToFree2Air(key: String, title: String, channelLogo: String) {
         startActivity<HomeActivity>(
             Constants.EXTRA_API_KEY to key,
             Constants.EXTRA_APP_NAME to title,
+            Constants.EXTRA_CHANNEL_LOGO to channelLogo,
         )
     }
 }

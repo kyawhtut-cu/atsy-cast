@@ -28,11 +28,17 @@ import dagger.hilt.android.AndroidEntryPoint
 internal class CacheFragment : BaseGridSupportFragment<CacheViewModel>() {
 
     companion object {
-        fun newInstance(route: String, key: String, appName: String): CacheFragment {
+        fun newInstance(
+            route: String,
+            key: String,
+            appName: String,
+            channelLogo: String
+        ): CacheFragment {
             return CacheFragment().putArg(
                 Constants.EXTRA_API_KEY to route,
                 Constants.EXTRA_PAGE_KEY to key,
                 Constants.EXTRA_APP_NAME to appName,
+                Constants.EXTRA_CHANNEL_LOGO to channelLogo,
             )
         }
     }
@@ -67,6 +73,7 @@ internal class CacheFragment : BaseGridSupportFragment<CacheViewModel>() {
                 Constants.EXTRA_API_KEY to vm.route,
                 Constants.EXTRA_VIDEO_DATA to it,
                 Constants.EXTRA_APP_NAME to vm.appName,
+                Constants.EXTRA_CHANNEL_LOGO to vm.channelLogo,
             )
         } else if (it is RecentlyWatchEntity) {
             startActivity<PlayerActivity>(
@@ -75,9 +82,10 @@ internal class CacheFragment : BaseGridSupportFragment<CacheViewModel>() {
                 Constants.EXTRA_VIDEO_TITLE to it.videoTitle,
                 Constants.EXTRA_VIDEO_COVER to it.videoCover,
                 Constants.EXTRA_APP_NAME to vm.appName,
+                Constants.EXTRA_CHANNEL_LOGO to vm.channelLogo,
                 Constants.EXTRA_IS_ADULT to it.isAdult,
                 Constants.EXTRA_VIDEO_SOURCE to VideoSourceModel(
-                    it.videoID.toInt(),
+                    it.videoID,
                     it.videoTitle,
                     null,
                     it.videoURL,

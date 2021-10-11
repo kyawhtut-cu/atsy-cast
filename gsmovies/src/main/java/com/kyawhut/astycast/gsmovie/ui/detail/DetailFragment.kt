@@ -142,12 +142,13 @@ internal class DetailFragment : BaseDetailTvFragment<DetailViewModel>() {
                     1L -> {
                         startActivity<VideoSourceActivity>(
                             Constants.EXTRA_APP_NAME to vm.appName,
+                            Constants.EXTRA_CHANNEL_LOGO to vm.channelLogo,
                             Constants.EXTRA_API_KEY to vm.route,
                             Constants.EXTRA_VIDEO_DATA to vm.videoDetail,
                             Constants.EXTRA_VIDEO_TITLE to (vm.videoData?.videoTitle ?: ""),
                             Constants.EXTRA_VIDEO_SOURCE to (vm.videoDetail?.videoSource?.map {
                                 VideoSourceModel(
-                                    (vm.videoData?.videoID ?: "0").toInt(),
+                                    vm.videoData?.videoID ?: "0",
                                     it.quality,
                                     url = it.videoURL
                                 )
@@ -171,11 +172,13 @@ internal class DetailFragment : BaseDetailTvFragment<DetailViewModel>() {
                     Constants.EXTRA_API_KEY to vm.route,
                     Constants.EXTRA_VIDEO_DATA to item,
                     Constants.EXTRA_APP_NAME to vm.appName,
+                    Constants.EXTRA_CHANNEL_LOGO to vm.channelLogo,
                 )
             }
             is VideoEpisodeResponse -> {
                 startActivity<VideoSourceActivity>(
                     Constants.EXTRA_APP_NAME to vm.appName,
+                    Constants.EXTRA_CHANNEL_LOGO to vm.channelLogo,
                     Constants.EXTRA_API_KEY to vm.route,
                     Constants.EXTRA_VIDEO_DATA to vm.videoDetail,
                     Constants.EXTRA_VIDEO_TITLE to "%s - %s".format(
@@ -184,7 +187,7 @@ internal class DetailFragment : BaseDetailTvFragment<DetailViewModel>() {
                     ),
                     Constants.EXTRA_VIDEO_SOURCE to item.episodeSource.map {
                         VideoSourceModel(
-                            item.episodeID,
+                            item.episodeID.toString(),
                             "%sP".format(it.quality),
                             null,
                             url = it.videoURL

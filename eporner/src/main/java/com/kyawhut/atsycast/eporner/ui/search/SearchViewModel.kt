@@ -27,6 +27,9 @@ internal class SearchViewModel @Inject constructor(
     val appName: String by lazy {
         savedStateHandle.get(Constants.EXTRA_APP_NAME) ?: ""
     }
+    val channelLogo: String by lazy {
+        savedStateHandle.get(Constants.EXTRA_CHANNEL_LOGO) ?: ""
+    }
 
     fun search(
         query: String,

@@ -23,6 +23,9 @@ internal class VideoSourceViewModel @Inject constructor(
     val appName: String by lazy {
         savedStateHandle.get(Constants.EXTRA_APP_NAME) ?: ""
     }
+    val channelLogo: String by lazy {
+        savedStateHandle.get(Constants.EXTRA_CHANNEL_LOGO) ?: ""
+    }
     val videoTitle: String by lazy {
         savedStateHandle.get(Constants.EXTRA_VIDEO_TITLE) ?: ""
     }
@@ -40,7 +43,7 @@ internal class VideoSourceViewModel @Inject constructor(
     var cloudMBSource: List<Media> = mutableListOf()
     var sourceURL: String = ""
 
-    fun isHasResume(sourceID: Int): Boolean = repository.isHasResume(sourceID)
+    fun isHasResume(sourceID: String): Boolean = repository.isHasResume(sourceID)
 
     fun getRedirectURL(url: String, callback: (Boolean, String) -> Unit) {
         viewModelScope {

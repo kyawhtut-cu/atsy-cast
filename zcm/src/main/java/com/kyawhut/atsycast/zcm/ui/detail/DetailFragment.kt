@@ -150,6 +150,7 @@ internal class DetailFragment : BaseDetailTvFragment<DetailViewModel>() {
                     1L -> {
                         startActivity<VideoSourceActivity>(
                             Constants.EXTRA_APP_NAME to vm.appName,
+                            Constants.EXTRA_CHANNEL_LOGO to vm.channelLogo,
                             Constants.EXTRA_VIDEO_DATA to vm.videoData,
                             Constants.EXTRA_VIDEO_TITLE to "%s (%s)".format(
                                 vm.videoData!!.moviesTitle,
@@ -157,7 +158,7 @@ internal class DetailFragment : BaseDetailTvFragment<DetailViewModel>() {
                             ),
                             Constants.EXTRA_VIDEO_SOURCE to checkSource(vm.videoData?.moviesSource).map {
                                 VideoSourceModel(
-                                    vm.videoData!!.moviesID,
+                                    vm.videoData!!.moviesID.toString(),
                                     it.sourceTitle,
                                     url = it.sourceURL
                                 )
@@ -181,11 +182,13 @@ internal class DetailFragment : BaseDetailTvFragment<DetailViewModel>() {
                     Constants.EXTRA_API_KEY to vm.apiKey,
                     Constants.EXTRA_VIDEO_DATA to item,
                     Constants.EXTRA_APP_NAME to vm.appName,
+                    Constants.EXTRA_CHANNEL_LOGO to vm.channelLogo,
                 )
             }
             is EpisodeResponse -> {
                 startActivity<VideoSourceActivity>(
                     Constants.EXTRA_APP_NAME to vm.appName,
+                    Constants.EXTRA_CHANNEL_LOGO to vm.channelLogo,
                     Constants.EXTRA_VIDEO_DATA to vm.videoData,
                     Constants.EXTRA_VIDEO_TITLE to "%s - %s".format(
                         vm.videoData!!.moviesTitle,
@@ -193,7 +196,7 @@ internal class DetailFragment : BaseDetailTvFragment<DetailViewModel>() {
                     ),
                     Constants.EXTRA_VIDEO_SOURCE to checkSource(item.episodeSource).map {
                         VideoSourceModel(
-                            it.sourceID,
+                            it.sourceID.toString(),
                             if (it.quality == null) it.sourceTitle else "%sP".format(
                                 it.quality
                             ),

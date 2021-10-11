@@ -19,8 +19,8 @@ internal class VideoSourceRepositoryImpl @Inject constructor(
     private val crashlytics: Crashlytics,
 ) : VideoSourceRepository {
 
-    override fun isHasResume(videoID: Int): Boolean {
-        return recentlyWatch.get("$videoID", SourceType.MSYS) != null
+    override fun isHasResume(videoID: String): Boolean {
+        return recentlyWatch.get(videoID, SourceType.MSYS) != null
     }
 
     override suspend fun getRedirectURL(url: String, callback: (Boolean, String) -> Unit) {

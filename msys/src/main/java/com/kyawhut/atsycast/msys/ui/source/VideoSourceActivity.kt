@@ -135,6 +135,7 @@ class VideoSourceActivity : BaseGuidedStepActivity() {
             Constants.EXTRA_VIDEO_COVER to (vm.videoData?.moviesCover
                 ?: vm.videoData?.moviesImage ?: ""),
             Constants.EXTRA_APP_NAME to vm.appName,
+            Constants.EXTRA_CHANNEL_LOGO to vm.channelLogo,
             Constants.EXTRA_IS_ADULT to (vm.videoData?.moviesGenres?.any { it.genresTitle.isAdult } == true),
             Constants.EXTRA_VIDEO_SOURCE to vm.source[linkIndex].apply {
                 if (vm.sourceURL.isNotEmpty())

@@ -91,6 +91,7 @@ internal class DetailFragment : BaseDetailTvFragment<DetailViewModel>() {
                 toggleLoading(false)
                 startActivity<VideoSourceActivity>(
                     Constants.EXTRA_APP_NAME to vm.appName,
+                    Constants.EXTRA_CHANNEL_LOGO to vm.channelLogo,
                     Constants.EXTRA_VIDEO_DATA to vm.detailData,
                     Constants.EXTRA_VIDEO_TITLE to "%s (%s)".format(
                         vm.detailData!!.videoTitle,
@@ -101,7 +102,7 @@ internal class DetailFragment : BaseDetailTvFragment<DetailViewModel>() {
                             if (it.stream != null) {
                                 add(
                                     VideoSourceModel(
-                                        vm.detailData!!.videoId,
+                                        vm.detailData!!.videoId.toString(),
                                         "Free Stream",
                                         url = it.stream!!
                                     )
@@ -110,7 +111,7 @@ internal class DetailFragment : BaseDetailTvFragment<DetailViewModel>() {
                             if (it.vStream != null) {
                                 add(
                                     VideoSourceModel(
-                                        vm.detailData!!.videoId,
+                                        vm.detailData!!.videoId.toString(),
                                         "VIP Stream",
                                         url = it.vStream!!
                                     )
@@ -229,11 +230,13 @@ internal class DetailFragment : BaseDetailTvFragment<DetailViewModel>() {
                     Constants.EXTRA_VIDEO_ID to item.videoId,
                     Constants.EXTRA_VIDEO_DATA to item,
                     Constants.EXTRA_APP_NAME to vm.appName,
+                    Constants.EXTRA_CHANNEL_LOGO to vm.channelLogo,
                 )
             }
             is EpisodeResponse -> {
                 startActivity<VideoSourceActivity>(
                     Constants.EXTRA_APP_NAME to vm.appName,
+                    Constants.EXTRA_CHANNEL_LOGO to vm.channelLogo,
                     Constants.EXTRA_VIDEO_DATA to vm.detailData,
                     Constants.EXTRA_VIDEO_TITLE to "%s - %s".format(
                         vm.detailData!!.videoTitle,
@@ -273,7 +276,7 @@ internal class DetailFragment : BaseDetailTvFragment<DetailViewModel>() {
                         if (item.stream != null) {
                             add(
                                 VideoSourceModel(
-                                    item.id.toInt(),
+                                    item.id,
                                     "Free Stream",
                                     url = item.stream!!
                                 )
@@ -282,7 +285,7 @@ internal class DetailFragment : BaseDetailTvFragment<DetailViewModel>() {
                         if (item.vStream != null) {
                             add(
                                 VideoSourceModel(
-                                    item.id.toInt(),
+                                    item.id,
                                     "VIP Stream",
                                     url = item.vStream!!
                                 )

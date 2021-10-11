@@ -70,6 +70,7 @@ class VideoSourceActivity : BaseGuidedStepActivity() {
             Constants.EXTRA_VIDEO_TITLE to vm.videoTitle,
             Constants.EXTRA_VIDEO_COVER to (vm.videoData?.videoCover ?: ""),
             Constants.EXTRA_APP_NAME to vm.appName,
+            Constants.EXTRA_CHANNEL_LOGO to vm.channelLogo,
             Constants.EXTRA_VIDEO_SOURCE to vm.source[linkIndex],
             Constants.EXTRA_RELATED_EPISODE to vm.relatedEpisode,
             Constants.EXTRA_IS_ADULT to false,

@@ -33,26 +33,38 @@ object ET2SMMApp {
         setAPIKey("")
     }
 
-    fun Context.goToETS2MM(appName: String, apiKey: String) {
+    fun Context.goToETS2MM(appName: String, apiKey: String, channelLogo: String) {
         setAPIKey(apiKey)
         startActivity<HomeActivity>(
             Constants.EXTRA_APP_NAME to appName,
+            Constants.EXTRA_CHANNEL_LOGO to channelLogo,
         )
     }
 
-    fun Fragment.goToETS2MM(appName: String, apiKey: String) {
-        requireContext().goToETS2MM(appName, apiKey)
+    fun Fragment.goToETS2MM(appName: String, apiKey: String, channelLogo: String) {
+        requireContext().goToETS2MM(appName, apiKey, channelLogo)
     }
 
-    fun Fragment.goToETS2MMDetail(appName: String, apiKey: String, data: WatchLaterEntity) {
+    fun Fragment.goToETS2MMDetail(
+        appName: String,
+        apiKey: String,
+        channelLogo: String,
+        data: WatchLaterEntity
+    ) {
         requireContext().setAPIKey(apiKey)
         requireContext().startActivity<DetailActivity>(
             Constants.EXTRA_VIDEO_DATA to data.getData<VideoResponse>(),
             Constants.EXTRA_APP_NAME to appName,
+            Constants.EXTRA_CHANNEL_LOGO to channelLogo,
         )
     }
 
-    fun Fragment.goToETS2MMPlayer(appName: String, apiKey: String, data: RecentlyWatchEntity) {
+    fun Fragment.goToETS2MMPlayer(
+        appName: String,
+        apiKey: String,
+        channelLogo: String,
+        data: RecentlyWatchEntity
+    ) {
         context.startActivity<PlayerActivity>(
             Constants.EXTRA_VIDEO_ID to data.videoID.toInt(),
             Constants.EXTRA_IS_RESUME to true,
@@ -60,8 +72,9 @@ object ET2SMMApp {
             Constants.EXTRA_VIDEO_TITLE to data.videoTitle,
             Constants.EXTRA_VIDEO_COVER to data.videoCover,
             Constants.EXTRA_APP_NAME to appName,
+            Constants.EXTRA_CHANNEL_LOGO to channelLogo,
             Constants.EXTRA_VIDEO_SOURCE to VideoSourceModel(
-                data.videoID.toInt(),
+                data.videoID,
                 data.videoTitle,
                 null,
                 data.videoURL,

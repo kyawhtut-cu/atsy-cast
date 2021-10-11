@@ -17,6 +17,7 @@ internal class DetailActivity : BaseDetailTvActivity<DetailFragment>() {
         DetailFragment().putArg(
             Constants.EXTRA_API_KEY to intent?.getStringExtra(Constants.EXTRA_API_KEY),
             Constants.EXTRA_APP_NAME to intent?.getStringExtra(Constants.EXTRA_APP_NAME),
+            Constants.EXTRA_CHANNEL_LOGO to intent?.getStringExtra(Constants.EXTRA_CHANNEL_LOGO),
             Constants.EXTRA_VIDEO_DATA to intent?.getSerializableExtra(Constants.EXTRA_VIDEO_DATA) as VideoResponse?
         )
     }

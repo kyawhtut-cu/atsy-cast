@@ -23,11 +23,17 @@ import dagger.hilt.android.AndroidEntryPoint
 internal class VideoFragment : BaseGridSupportFragment<VideoViewModel>() {
 
     companion object {
-        fun newInstance(route: String, categoryID: Int, appName: String): VideoFragment {
+        fun newInstance(
+            route: String,
+            categoryID: Int,
+            appName: String,
+            channelLogo: String,
+        ): VideoFragment {
             return VideoFragment().putArg(
                 Constants.EXTRA_API_KEY to route,
                 Constants.EXTRA_PAGE_KEY to categoryID,
                 Constants.EXTRA_APP_NAME to appName,
+                Constants.EXTRA_CHANNEL_LOGO to channelLogo,
             )
         }
     }
@@ -64,7 +70,8 @@ internal class VideoFragment : BaseGridSupportFragment<VideoViewModel>() {
             startActivity<DetailActivity>(
                 Constants.EXTRA_APP_NAME to vm.appName,
                 Constants.EXTRA_API_KEY to vm.route,
-                Constants.EXTRA_VIDEO_DATA to it
+                Constants.EXTRA_VIDEO_DATA to it,
+                Constants.EXTRA_CHANNEL_LOGO to vm.channelLogo,
             )
         }
     }

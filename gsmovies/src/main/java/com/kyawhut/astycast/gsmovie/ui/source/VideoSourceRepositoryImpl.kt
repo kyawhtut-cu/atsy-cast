@@ -12,7 +12,7 @@ internal class VideoSourceRepositoryImpl @Inject constructor(
     private val recentlyWatch: RecentlyWatchSource
 ) : VideoSourceRepository {
 
-    override fun isHasResume(route: String, videoID: Int): Boolean {
-        return recentlyWatch.get("$videoID", SourceType.getSourceType(route)) != null
+    override fun isHasResume(route: String, videoID: String): Boolean {
+        return recentlyWatch.get(videoID, SourceType.getSourceType(route)) != null
     }
 }

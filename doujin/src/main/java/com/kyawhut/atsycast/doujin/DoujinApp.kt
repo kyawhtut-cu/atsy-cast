@@ -29,17 +29,19 @@ object DoujinApp {
         setAPIKey("")
     }
 
-    fun Fragment.goToDoujin(appName: String, apiKey: String) {
+    fun Fragment.goToDoujin(appName: String, channelLogo: String, apiKey: String) {
         requireContext().setAPIKey(apiKey)
         startActivity<HomeActivity>(
             Constants.EXTRA_APP_NAME to appName,
+            Constants.EXTRA_CHANNEL_LOGO to channelLogo,
         )
     }
 
-    fun FragmentActivity.goToDoujin(appName: String, apiKey: String) {
+    fun FragmentActivity.goToDoujin(appName: String, channelLogo: String, apiKey: String) {
         setAPIKey(apiKey)
         startActivity<HomeActivity>(
             Constants.EXTRA_APP_NAME to appName,
+            Constants.EXTRA_CHANNEL_LOGO to channelLogo,
         )
     }
 }

@@ -8,5 +8,6 @@ internal object Constants {
 
     const val EXTRA_PAGE_KEY = "EXTRA_PAGE_KEY"
     const val EXTRA_APP_NAME = "EXTRA_APP_NAME"
+    const val EXTRA_CHANNEL_LOGO = "EXTRA_CHANNEL_LOGO"
     const val EXTRA_PLAYER_URL = "EXTRA_PLAYER_URL"
 }

@@ -21,6 +21,9 @@ internal class SeriesViewModel @Inject constructor(
     val appName: String by lazy {
         savedStateHandle.get(Constants.EXTRA_APP_NAME) ?: ""
     }
+    val channelLogo: String by lazy {
+        savedStateHandle.get(Constants.EXTRA_CHANNEL_LOGO) ?: ""
+    }
     private val key: String by lazy {
         savedStateHandle.get(Constants.EXTRA_PAGE_KEY) ?: ""
     }

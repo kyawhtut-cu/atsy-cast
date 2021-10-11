@@ -63,6 +63,77 @@
         app:layout_constraintTop_toTopOf="@+id/top"
         tools:text="App name" />
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/view_channel"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:padding="@dimen/margin_medium"
+        app:layout_constraintBottom_toTopOf="@+id/bottom"
+        app:layout_constraintStart_toStartOf="@+id/left">
+
+        <com.kyawhut.atsycast.share.components.RoundedConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:cornerAll="56dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/iv_channel_logo"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:id="@+id/iv_channel_focus"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/bg_channel_focus"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </com.kyawhut.atsycast.share.components.RoundedConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageView
+        android:id="@+id/btn_quality"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_player_action_focus"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:padding="@dimen/margin_medium_2"
+        android:src="@drawable/ic_quality"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/bottom"
+        app:layout_constraintStart_toEndOf="@+id/view_channel">
+
+        <requestFocus />
+    </ImageView>
+
+    <ImageView
+        android:id="@+id/btn_subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_player_action_focus"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:padding="@dimen/margin_medium_2"
+        android:src="@drawable/ic_subtitle"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_quality"
+        app:layout_constraintStart_toEndOf="@+id/btn_quality" />
+
     <TextView
         android:id="@+id/exo_position"
         android:layout_width="wrap_content"
@@ -103,7 +174,7 @@
         android:id="@+id/view_progress_bar"
         android:layout_width="0dp"
         android:layout_height="56dp"
-        app:layout_constraintBottom_toTopOf="@+id/bottom"
+        app:layout_constraintBottom_toTopOf="@+id/view_channel"
         app:layout_constraintEnd_toStartOf="@+id/right_one"
         app:layout_constraintStart_toStartOf="@+id/left">
 

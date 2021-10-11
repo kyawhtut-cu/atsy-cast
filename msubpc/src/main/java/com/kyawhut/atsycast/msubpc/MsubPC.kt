@@ -33,35 +33,48 @@ object MsubPC {
         setAPIKey("")
     }
 
-    fun Context.goToMsubPC(appName: String, apiKey: String) {
+    fun Context.goToMsubPC(appName: String, channelLogo: String, apiKey: String) {
         setAPIKey(apiKey)
         startActivity<HomeActivity>(
             Constants.EXTRA_APP_NAME to appName,
+            Constants.EXTRA_CHANNEL_LOGO to channelLogo,
         )
     }
 
-    fun Fragment.goToMsubPC(appName: String, apiKey: String) {
-        requireContext().goToMsubPC(appName, apiKey)
+    fun Fragment.goToMsubPC(appName: String, channelLogo: String, apiKey: String) {
+        requireContext().goToMsubPC(appName, apiKey, channelLogo)
     }
 
-    fun Fragment.goToMSubPCDetail(appName: String, apiKey: String, data: WatchLaterEntity) {
+    fun Fragment.goToMSubPCDetail(
+        appName: String,
+        channelLogo: String,
+        apiKey: String,
+        data: WatchLaterEntity
+    ) {
         requireContext().setAPIKey(apiKey)
         requireContext().startActivity<DetailActivity>(
             Constants.EXTRA_VIDEO_DATA to data.getData<VideoResponse>(),
             Constants.EXTRA_APP_NAME to appName,
+            Constants.EXTRA_CHANNEL_LOGO to channelLogo,
         )
     }
 
-    fun Fragment.goToMSubPCPlayer(appName: String, apiKey: String, data: RecentlyWatchEntity) {
+    fun Fragment.goToMSubPCPlayer(
+        appName: String,
+        channelLogo: String,
+        apiKey: String,
+        data: RecentlyWatchEntity
+    ) {
         context.startActivity<PlayerActivity>(
             Constants.EXTRA_VIDEO_ID to data.videoID.toInt(),
             Constants.EXTRA_IS_RESUME to true,
             Constants.EXTRA_VIDEO_TITLE to data.videoTitle,
             Constants.EXTRA_VIDEO_COVER to data.videoCover,
             Constants.EXTRA_APP_NAME to appName,
+            Constants.EXTRA_CHANNEL_LOGO to channelLogo,
             Constants.EXTRA_IS_ADULT to data.isAdult,
             Constants.EXTRA_VIDEO_SOURCE to VideoSourceModel(
-                data.videoID.toInt(),
+                data.videoID,
                 data.videoTitle,
                 null,
                 data.videoURL,

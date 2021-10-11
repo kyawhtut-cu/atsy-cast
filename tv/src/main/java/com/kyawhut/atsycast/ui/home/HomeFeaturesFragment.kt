@@ -17,6 +17,9 @@ import com.kyawhut.atsycast.ets2mm.ET2SMMApp.goToETS2MM
 import com.kyawhut.atsycast.ets2mm.ET2SMMApp.goToETS2MMDetail
 import com.kyawhut.atsycast.ets2mm.ET2SMMApp.goToETS2MMPlayer
 import com.kyawhut.atsycast.free2air.Free2Air.goToFree2Air
+import com.kyawhut.atsycast.gs_mm.GSMMApp.goToGSMMDetail
+import com.kyawhut.atsycast.gs_mm.GSMMApp.goToGSMMHome
+import com.kyawhut.atsycast.gs_mm.GSMMApp.goToGSMMPlayer
 import com.kyawhut.atsycast.msubpc.MsubPC.goToMSubPCDetail
 import com.kyawhut.atsycast.msubpc.MsubPC.goToMSubPCPlayer
 import com.kyawhut.atsycast.msubpc.MsubPC.goToMsubPC
@@ -60,16 +63,17 @@ class HomeFeaturesFragment : RowsSupportFragment() {
         setOnItemViewClickedListener { _, item, _, _ ->
             if (item is HomeFeatureResponse.Data) {
                 when (item.featureKey) {
-                    -1 -> goToGSHome(item.featureAPIKey, item.featureName)
-                    1 -> goToFree2Air(item.featureAPIKey, item.featureName)
-                    2 -> goToMsubPC(item.featureName, item.featureAPIKey)
-                    3 -> goToZCM(item.featureName, item.featureAPIKey)
-                    4 -> goToMSYS(item.featureName, item.featureAPIKey)
-                    6 -> goToETS2MM(item.featureName, item.featureAPIKey)
-                    7 -> goToDoujin(item.featureName, item.featureAPIKey)
-                    8 -> goToEPorner(item.featureName)
+                    -1 -> goToGSHome(item.featureAPIKey, item.featureCover, item.featureName)
+                    1 -> goToFree2Air(item.featureAPIKey, item.featureName, item.featureCover)
+                    2 -> goToMsubPC(item.featureName, item.featureCover, item.featureAPIKey)
+                    3 -> goToZCM(item.featureName, item.featureCover, item.featureAPIKey)
+                    4 -> goToMSYS(item.featureName, item.featureCover, item.featureAPIKey)
+                    6 -> goToETS2MM(item.featureName, item.featureCover, item.featureAPIKey)
+                    7 -> goToDoujin(item.featureName, item.featureCover, item.featureAPIKey)
+                    8 -> goToEPorner(item.featureName, item.featureCover)
                     9 -> goTo2D(item.featureName)
                     10 -> goToTiktok(item.featureAPIKey)
+                    11 -> goToGSMMHome(item.featureName, item.featureCover, item.featureAPIKey)
                 }
             } else if (item is WatchLaterEntity) {
                 vm.getFeatureDetail(item, ::onFeatureDetailState)
@@ -196,10 +200,11 @@ class HomeFeaturesFragment : RowsSupportFragment() {
                 (requireActivity() as HomeActivity).toggleLoading(false)
                 val feature = state.data?.second
                 if (feature != null) {
-                    when (state.data?.first?.videoSourceType) {
+                    when (val source = state.data?.first?.videoSourceType) {
                         is SourceType.MSUB_PC -> {
                             goToMSubPCDetail(
                                 feature.featureName,
+                                feature.featureCover,
                                 feature.featureAPIKey,
                                 state.data?.first!!
                             )
@@ -207,6 +212,7 @@ class HomeFeaturesFragment : RowsSupportFragment() {
                         is SourceType.ZCM -> {
                             goToZCMDetail(
                                 feature.featureName,
+                                feature.featureCover,
                                 feature.featureAPIKey,
                                 state.data?.first!!
                             )
@@ -214,6 +220,7 @@ class HomeFeaturesFragment : RowsSupportFragment() {
                         is SourceType.MSYS -> {
                             goToMSYSDetail(
                                 feature.featureName,
+                                feature.featureCover,
                                 feature.featureAPIKey,
                                 state.data?.first!!
                             )
@@ -221,16 +228,26 @@ class HomeFeaturesFragment : RowsSupportFragment() {
                         is SourceType.ET2SMM -> {
                             goToETS2MMDetail(
                                 feature.featureName,
+                                feature.featureCover,
                                 feature.featureAPIKey,
                                 state.data?.first!!
                             )
                         }
-                        is SourceType.GS_API_SOURCE -> {
-                            goToGSDetail(
-                                feature.featureName,
-                                feature.featureAPIKey,
-                                state.data?.first!!
-                            )
+                        else -> {
+                            when (source?.type ?: "") {
+                                "myCinema" -> goToGSDetail(
+                                    feature.featureName,
+                                    feature.featureCover,
+                                    feature.featureAPIKey,
+                                    state.data?.first!!
+                                )
+                                "viu" -> goToGSMMDetail(
+                                    feature.featureName,
+                                    feature.featureCover,
+                                    feature.featureAPIKey,
+                                    state.data?.first!!
+                                )
+                            }
                         }
                     }
                 }
@@ -248,10 +265,11 @@ class HomeFeaturesFragment : RowsSupportFragment() {
                 (requireActivity() as HomeActivity).toggleLoading(false)
                 val feature = state.data?.second
                 if (feature != null) {
-                    when (state.data?.first?.videoSourceType) {
+                    when (val source = state.data?.first?.videoSourceType) {
                         is SourceType.MSUB_PC -> {
                             goToMSubPCPlayer(
                                 feature.featureName,
+                                feature.featureCover,
                                 feature.featureAPIKey,
                                 state.data?.first!!
                             )
@@ -259,6 +277,7 @@ class HomeFeaturesFragment : RowsSupportFragment() {
                         is SourceType.ZCM -> {
                             goToZCMPlayer(
                                 feature.featureName,
+                                feature.featureCover,
                                 feature.featureAPIKey,
                                 state.data?.first!!
                             )
@@ -266,6 +285,7 @@ class HomeFeaturesFragment : RowsSupportFragment() {
                         is SourceType.MSYS -> {
                             goMSYSPlayer(
                                 feature.featureName,
+                                feature.featureCover,
                                 feature.featureAPIKey,
                                 state.data?.first!!
                             )
@@ -273,16 +293,26 @@ class HomeFeaturesFragment : RowsSupportFragment() {
                         is SourceType.ET2SMM -> {
                             goToETS2MMPlayer(
                                 feature.featureName,
+                                feature.featureCover,
                                 feature.featureAPIKey,
                                 state.data?.first!!
                             )
                         }
-                        is SourceType.GS_API_SOURCE -> {
-                            goToGSPlayer(
-                                feature.featureName,
-                                feature.featureAPIKey,
-                                state.data?.first!!
-                            )
+                        else -> {
+                            when (source?.type ?: "") {
+                                "myCinema" -> goToGSPlayer(
+                                    feature.featureName,
+                                    feature.featureCover,
+                                    feature.featureAPIKey,
+                                    state.data?.first!!
+                                )
+                                "viu" -> goToGSMMPlayer(
+                                    feature.featureName,
+                                    feature.featureCover,
+                                    feature.featureAPIKey,
+                                    state.data?.first!!
+                                )
+                            }
                         }
                     }
                 }

@@ -22,39 +22,52 @@ import com.kyawhut.atsycast.share.utils.extension.startActivity
  */
 object GSApplication {
 
-    private fun goToHome(context: Context, appName: String, apiKey: String) {
+    private fun goToHome(context: Context, appName: String, channelLogo: String, apiKey: String) {
         context.startActivity<HomeActivity>(
             Constants.EXTRA_API_KEY to apiKey,
+            Constants.EXTRA_CHANNEL_LOGO to channelLogo,
             Constants.EXTRA_APP_NAME to appName,
         )
     }
 
-    fun FragmentActivity.goToGSHome(apiKey: String, appName: String) {
-        goToHome(this, appName, apiKey)
+    fun FragmentActivity.goToGSHome(apiKey: String, channelLogo: String, appName: String) {
+        goToHome(this, appName, channelLogo, apiKey)
     }
 
-    fun Fragment.goToGSHome(apiKey: String, appName: String) {
-        goToHome(requireContext(), appName, apiKey)
+    fun Fragment.goToGSHome(apiKey: String, appName: String, channelLogo: String) {
+        goToHome(requireContext(), appName, channelLogo, apiKey)
     }
 
-    fun Fragment.goToGSDetail(appName: String, apiKey: String, data: WatchLaterEntity) {
+    fun Fragment.goToGSDetail(
+        appName: String,
+        channelLogo: String,
+        apiKey: String,
+        data: WatchLaterEntity
+    ) {
         requireContext().startActivity<DetailActivity>(
             Constants.EXTRA_API_KEY to apiKey,
             Constants.EXTRA_VIDEO_DATA to data.getData<VideoResponse.Data>(),
             Constants.EXTRA_APP_NAME to appName,
+            Constants.EXTRA_CHANNEL_LOGO to channelLogo,
         )
     }
 
-    fun Fragment.goToGSPlayer(appName: String, apiKey: String, data: RecentlyWatchEntity) {
+    fun Fragment.goToGSPlayer(
+        appName: String,
+        channelLogo: String,
+        apiKey: String,
+        data: RecentlyWatchEntity
+    ) {
         context.startActivity<PlayerActivity>(
             Constants.EXTRA_VIDEO_ID to data.videoID.toInt(),
             Constants.EXTRA_IS_RESUME to true,
             Constants.EXTRA_VIDEO_TITLE to data.videoTitle,
             Constants.EXTRA_VIDEO_COVER to data.videoCover,
             Constants.EXTRA_APP_NAME to appName,
+            Constants.EXTRA_CHANNEL_LOGO to channelLogo,
             Constants.EXTRA_IS_ADULT to data.isAdult,
             Constants.EXTRA_VIDEO_SOURCE to VideoSourceModel(
-                data.videoID.toInt(),
+                data.videoID,
                 data.videoTitle,
                 null,
                 data.videoURL,

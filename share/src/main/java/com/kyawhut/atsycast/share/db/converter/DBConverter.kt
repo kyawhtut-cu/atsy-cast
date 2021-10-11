@@ -3,6 +3,7 @@ package com.kyawhut.atsycast.share.db.converter
 import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.kyawhut.atsycast.share.model.SubTitleModel
 import com.kyawhut.atsycast.share.utils.SourceType
 import java.text.SimpleDateFormat
 import java.util.*
@@ -49,5 +50,18 @@ internal object DBConverter {
     @JvmStatic
     fun String.toCustomHeader(): List<Pair<String, String>> {
         return Gson().fromJson(this, object : TypeToken<List<Pair<String, String>>>() {}.type)
+    }
+
+    @TypeConverter
+    @JvmStatic
+    fun List<SubTitleModel>.toJson(): String {
+        return Gson().toJson(this)
+    }
+
+    @TypeConverter
+    @JvmStatic
+    fun String.toSubTitleList(): List<SubTitleModel> {
+        if (this.isEmpty()) return emptyList()
+        return Gson().fromJson(this, object : TypeToken<List<SubTitleModel>>() {}.type)
     }
 }

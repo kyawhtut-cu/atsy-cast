@@ -34,12 +34,16 @@ internal class HomeActivity : BaseTvActivity<ActivityEpornerHomeBinding>() {
     private val appName: String by lazy {
         intent?.getStringExtra(Constants.EXTRA_APP_NAME) ?: ""
     }
+    private val channelLogo: String by lazy {
+        intent?.getStringExtra(Constants.EXTRA_CHANNEL_LOGO) ?: ""
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (savedInstanceState == null) replaceFragment(
             R.id.content_frame, HomeFragment().putArg(
                 Constants.EXTRA_APP_NAME to appName,
+                Constants.EXTRA_CHANNEL_LOGO to channelLogo,
             )
         )
     }
@@ -49,6 +53,8 @@ internal class HomeActivity : BaseTvActivity<ActivityEpornerHomeBinding>() {
 
         private val appName: String
             get() = arguments?.getString(Constants.EXTRA_APP_NAME) ?: ""
+        private val channelLogo: String
+            get() = arguments?.getString(Constants.EXTRA_CHANNEL_LOGO) ?: ""
 
         override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
             super.onViewCreated(view, savedInstanceState)
@@ -70,12 +76,14 @@ internal class HomeActivity : BaseTvActivity<ActivityEpornerHomeBinding>() {
         override val onSearchClicked: () -> Unit = {
             startActivity<SearchActivity>(
                 Constants.EXTRA_APP_NAME to appName,
+                Constants.EXTRA_CHANNEL_LOGO to channelLogo,
             )
         }
 
         override fun onCreateRowFragment(header: HeaderItem): Fragment {
             return VideoFragment.newInstance(
                 appName,
+                channelLogo,
                 header.description.toString(),
             )
         }

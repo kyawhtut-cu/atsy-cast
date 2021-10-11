@@ -23,6 +23,9 @@ internal class PlayerViewModel @Inject constructor(
     val appName: String by lazy {
         savedStateHandle.get(Constants.EXTRA_APP_NAME) ?: ""
     }
+    val channelLogo: String by lazy {
+        savedStateHandle.get(Constants.EXTRA_CHANNEL_LOGO) ?: ""
+    }
     val route: String by lazy {
         savedStateHandle.get(Constants.EXTRA_API_KEY) ?: ""
     }

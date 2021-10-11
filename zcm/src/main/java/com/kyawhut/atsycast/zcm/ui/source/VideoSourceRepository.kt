@@ -6,5 +6,5 @@ package com.kyawhut.atsycast.zcm.ui.source
  */
 internal interface VideoSourceRepository {
 
-    fun isHasResume(videoID: Int): Boolean
+    fun isHasResume(videoID: String): Boolean
 }

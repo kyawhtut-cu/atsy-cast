@@ -33,7 +33,8 @@ internal class SearchFragment : BaseSearchSupportFragment<SearchViewModel>() {
             startActivity<DetailActivity>(
                 Constants.EXTRA_API_KEY to vm.apiKey,
                 Constants.EXTRA_VIDEO_DATA to it,
-                Constants.EXTRA_APP_NAME to vm.appName
+                Constants.EXTRA_APP_NAME to vm.appName,
+                Constants.EXTRA_CHANNEL_LOGO to vm.channelLogo,
             )
         }
     }

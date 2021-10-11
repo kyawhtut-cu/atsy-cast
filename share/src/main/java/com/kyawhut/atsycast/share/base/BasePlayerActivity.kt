@@ -49,6 +49,7 @@ abstract class BasePlayerActivity : BaseTvActivity<AtsyPlayerBinding>(), PlayerM
     private val playerManger: PlayerManagerImpl by lazy {
         PlayerManagerImpl.Builder(this).apply {
             playerView = vb.playerView
+            channelLogo = this@BasePlayerActivity.channelLogo
             playerLoadingView = vb.iosLoading
             playerPosterView = vb.playerView.findViewById(R.id.iv_exo_poster)
             playerStateListener = this@BasePlayerActivity
@@ -69,6 +70,7 @@ abstract class BasePlayerActivity : BaseTvActivity<AtsyPlayerBinding>(), PlayerM
     open fun onRelatedItemClicked(item: Any) {}
 
     open val appName: String = ""
+    open val channelLogo: String = ""
 
     @CallSuper
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -86,7 +88,7 @@ abstract class BasePlayerActivity : BaseTvActivity<AtsyPlayerBinding>(), PlayerM
                     else Handler().postDelayed({
                         isPlayerControllerShowed = true
                     }, 300)
-                    i != 4
+                    i == 23 || i == 66 || i == 19 || i == 20 || i == 21 || i == 22
                 }
         }
     }
@@ -125,12 +127,13 @@ abstract class BasePlayerActivity : BaseTvActivity<AtsyPlayerBinding>(), PlayerM
         title: String,
         poster: String,
         source: VideoSourceModel,
-        lastPosition: Long = 0L
+        lastPosition: Long = 0L,
     ) {
         vb.isVideoEnd = false
         playerManger.setPlayerTitle(title)
             .setPlayerPoster(poster)
             .setPlayerSource(source.url)
+            .setPlayerSubtitle(source.subTitle)
             .setPlayerAgent(source.agent)
             .setPlayerCookies(source.cookies)
             .setPlayerCustomHeader(source.customHeader)
@@ -206,17 +209,13 @@ abstract class BasePlayerActivity : BaseTvActivity<AtsyPlayerBinding>(), PlayerM
                 19 -> {
                     // move to up
                     Timber.d("exo_progress key move up")
+                    vb.playerView.hideController()
                     changeRelatedHeight()
                 }
                 20 -> {
-                    // move to up
+                    // move to down
                     Timber.d("exo_progress key move down")
-                    if (numberOfRowCount > 0) {
-                        vb.focusEpisode = true
-                        vb.viewEpisode.requestFocus()
-                        vb.bottomDetail.setGuidelinePercent(0.5f)
-                        vb.playerView.hideController()
-                    } else changeRelatedHeight()
+                    vb.playerView.findViewById<View>(R.id.iv_channel_focus).requestFocus()
                 }
                 21 -> {
                     // move to left
@@ -233,10 +232,6 @@ abstract class BasePlayerActivity : BaseTvActivity<AtsyPlayerBinding>(), PlayerM
                         playerManger.fastForward()
                     }
                     changeRelatedHeight()
-                }
-                4 -> {
-                    // back handle
-                    onBackPressed()
                 }
             }
             object : CountDownTimer(300, 1) {
@@ -255,6 +250,7 @@ abstract class BasePlayerActivity : BaseTvActivity<AtsyPlayerBinding>(), PlayerM
     private fun changeRelatedHeight() {
         if ((vb.bottomDetail.layoutParams as ConstraintLayout.LayoutParams).guidePercent == 0.75f) return
         vb.focusEpisode = false
+        vb.showEpisode = false
         focusRowCount = 0
         vb.bottomDetail.setGuidelinePercent(0.75f)
     }
@@ -262,6 +258,19 @@ abstract class BasePlayerActivity : BaseTvActivity<AtsyPlayerBinding>(), PlayerM
     private fun handleKeyEvent(keyCode: Int) {
         if (keyCode == 20 || keyCode == 19) {
             currentFocus?.let {
+                if (it.id == R.id.btn_quality || it.id == R.id.btn_subtitle || it.id == R.id.iv_channel_focus) {
+                    if (keyCode == 19) {
+                        vb.playerView.findViewById<DefaultTimeBar>(R.id.exo_progress).requestFocus()
+                    } else if (keyCode == 20 || (keyCode == 22 && it.id == R.id.btn_subtitle)) {
+                        if (numberOfRowCount > 0) {
+                            vb.focusEpisode = true
+                            episodeFragment?.verticalGridView?.requestFocus()
+                            vb.bottomDetail.setGuidelinePercent(0.5f)
+                            vb.playerView.hideController()
+                        } else changeRelatedHeight()
+                    }
+                    return@let
+                }
                 val percent = if (keyCode == 20) {
                     if (numberOfRowCount > 1) {
                         focusRowCount += 1
@@ -293,7 +302,7 @@ abstract class BasePlayerActivity : BaseTvActivity<AtsyPlayerBinding>(), PlayerM
                 if (percent == 0.75f) {
                     vb.focusEpisode = false
                     vb.playerView.showController()
-                    vb.playerView.findViewById<DefaultTimeBar>(R.id.exo_progress).requestFocus()
+                    vb.playerView.findViewById<View>(R.id.iv_channel_focus).requestFocus()
                 }
             }
         }

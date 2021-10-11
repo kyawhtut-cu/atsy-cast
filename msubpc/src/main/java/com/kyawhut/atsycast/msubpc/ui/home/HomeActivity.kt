@@ -42,6 +42,7 @@ internal class HomeActivity : BaseTvActivity<ActivityMsubHomeBinding>() {
         if (savedInstanceState == null) replaceFragment(
             R.id.content_frame, HomeFragment().putArg(
                 Constants.EXTRA_APP_NAME to appName,
+                Constants.EXTRA_CHANNEL_LOGO to intent?.getStringExtra(Constants.EXTRA_CHANNEL_LOGO)
             )
         )
     }
@@ -67,6 +68,8 @@ internal class HomeActivity : BaseTvActivity<ActivityMsubHomeBinding>() {
 
         private val appName: String
             get() = arguments?.getString(Constants.EXTRA_APP_NAME) ?: ""
+        private val channelLogo: String
+            get() = arguments?.getString(Constants.EXTRA_CHANNEL_LOGO) ?: ""
 
         @Inject
         lateinit var homeRepository: HomeRepository
@@ -120,15 +123,19 @@ internal class HomeActivity : BaseTvActivity<ActivityMsubHomeBinding>() {
             ) CacheFragment.newInstance(
                 header.description.toString(),
                 appName,
+                channelLogo,
             ) else if (header.description == getString(R.string.lbl_football_key)) FootballFragment.newInstance(
                 header.description.toString(),
-                appName
+                appName,
+                channelLogo,
             ) else if (header.name.endsWith("Series")) SeriesFragment.newInstance(
                 header.description.toString(),
                 appName,
+                channelLogo,
             ) else MoviesFragment.newInstance(
                 header.description.toString(),
-                appName
+                appName,
+                channelLogo,
             )
         }
 

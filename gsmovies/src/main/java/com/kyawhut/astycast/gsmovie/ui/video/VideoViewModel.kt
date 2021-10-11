@@ -31,6 +31,9 @@ internal class VideoViewModel @Inject constructor(
     val appName: String by lazy {
         savedStateHandle.get(Constants.EXTRA_APP_NAME) ?: ""
     }
+    val channelLogo: String by lazy {
+        savedStateHandle.get(Constants.EXTRA_CHANNEL_LOGO) ?: ""
+    }
     private val categoryID: Int by lazy {
         savedStateHandle.get(Constants.EXTRA_PAGE_KEY) ?: 0
     }

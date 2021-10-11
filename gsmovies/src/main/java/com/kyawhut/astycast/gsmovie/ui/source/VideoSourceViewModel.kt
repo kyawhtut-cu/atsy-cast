@@ -22,6 +22,9 @@ internal class VideoSourceViewModel @Inject constructor(
     val appName: String by lazy {
         savedStateHandle.get(Constants.EXTRA_APP_NAME) ?: ""
     }
+    val channelLogo: String by lazy {
+        savedStateHandle.get(Constants.EXTRA_CHANNEL_LOGO) ?: ""
+    }
     val route: String by lazy {
         savedStateHandle.get(Constants.EXTRA_API_KEY) ?: ""
     }
@@ -40,5 +43,5 @@ internal class VideoSourceViewModel @Inject constructor(
             ?: listOf()
     }
 
-    fun isHasResume(sourceID: Int): Boolean = repository.isHasResume(route, sourceID)
+    fun isHasResume(sourceID: String): Boolean = repository.isHasResume(route, sourceID)
 }

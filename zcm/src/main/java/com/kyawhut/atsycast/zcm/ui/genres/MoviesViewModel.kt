@@ -31,6 +31,9 @@ internal class MoviesViewModel @Inject constructor(
     val appName: String by lazy {
         savedStateHandle.get(Constants.EXTRA_APP_NAME) ?: ""
     }
+    val channelLogo: String by lazy {
+        savedStateHandle.get(Constants.EXTRA_CHANNEL_LOGO) ?: ""
+    }
     val genresID: Int by lazy {
         savedStateHandle.get(Constants.EXTRA_PAGE_KEY) ?: 0
     }

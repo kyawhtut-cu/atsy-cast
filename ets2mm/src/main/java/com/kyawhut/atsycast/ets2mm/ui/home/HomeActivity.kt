@@ -43,6 +43,7 @@ internal class HomeActivity : BaseTvActivity<ActivityEts2mmHomeBinding>() {
         if (savedInstanceState == null) replaceFragment(
             R.id.content_frame, HomeFragment().putArg(
                 Constants.EXTRA_APP_NAME to appName,
+                Constants.EXTRA_CHANNEL_LOGO to intent?.getStringExtra(Constants.EXTRA_CHANNEL_LOGO)
             )
         )
     }
@@ -120,6 +121,7 @@ internal class HomeActivity : BaseTvActivity<ActivityEts2mmHomeBinding>() {
         override val onSearchClicked: () -> Unit = {
             startActivity<SearchActivity>(
                 Constants.EXTRA_APP_NAME to vm.appName,
+                Constants.EXTRA_CHANNEL_LOGO to vm.channelLogo,
             )
         }
 
@@ -130,9 +132,11 @@ internal class HomeActivity : BaseTvActivity<ActivityEts2mmHomeBinding>() {
             ) CacheFragment.newInstance(
                 header.description.toString(),
                 vm.appName,
+                vm.channelLogo,
             ) else MoviesFragment.newInstance(
                 header.description.toString(),
                 vm.appName,
+                vm.channelLogo,
             )
         }
 

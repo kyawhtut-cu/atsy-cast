@@ -1,5 +1,7 @@
 package com.kyawhut.atsycast.share.utils.player
 
+import android.graphics.Color
+import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -14,20 +16,30 @@ import com.google.android.exoplayer2.*
 import com.google.android.exoplayer2.ext.mediasession.MediaSessionConnector
 import com.google.android.exoplayer2.ext.okhttp.OkHttpDataSource
 import com.google.android.exoplayer2.ext.rtmp.RtmpDataSourceFactory
+import com.google.android.exoplayer2.source.MediaSource
+import com.google.android.exoplayer2.source.MergingMediaSource
 import com.google.android.exoplayer2.source.ProgressiveMediaSource
+import com.google.android.exoplayer2.source.SingleSampleMediaSource
 import com.google.android.exoplayer2.source.dash.DashMediaSource
 import com.google.android.exoplayer2.source.hls.HlsMediaSource
 import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
+import com.google.android.exoplayer2.ui.CaptionStyleCompat
+import com.google.android.exoplayer2.ui.DefaultTimeBar
 import com.google.android.exoplayer2.ui.PlayerView
 import com.google.android.exoplayer2.upstream.DataSource
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSource
+import com.google.android.exoplayer2.util.MimeTypes
 import com.google.android.exoplayer2.util.Util
+import com.kyawhut.atsycast.share.R
 import com.kyawhut.atsycast.share.components.IOSLoading
 import com.kyawhut.atsycast.share.components.PlayPauseView
+import com.kyawhut.atsycast.share.model.SubTitleModel
 import com.kyawhut.atsycast.share.network.utils.UnsafeOkHttpClient
+import com.kyawhut.atsycast.share.ui.dialog.TrackDialog
+import com.kyawhut.atsycast.share.ui.dialog.TrackDialog.Companion.showTrackDialog
 import com.kyawhut.atsycast.share.utils.binding.ImageBinding.loadImage
 import com.kyawhut.atsycast.share.utils.binding.TextViewBinding.applyMMFont
 import timber.log.Timber
@@ -40,6 +52,7 @@ import kotlin.math.min
  */
 class PlayerManagerImpl private constructor(
     private val activity: FragmentActivity,
+    private val channelLogo: String,
     private val playerView: PlayerView,
     private val playerLoadingView: IOSLoading?,
     private val playerPlayPause: PlayPauseView?,
@@ -64,7 +77,7 @@ class PlayerManagerImpl private constructor(
     private var playerCookies: String = ""
     private var playerCustomHeader: MutableList<Pair<String, String>> = mutableListOf()
     private var playerTitle: String = ""
-    private var playerDescription: String = ""
+    private var playerSubtitle: MutableList<SubTitleModel> = mutableListOf()
     private var playerPoster: String = ""
 
     private var _playbackPosition: Long = 0
@@ -73,6 +86,9 @@ class PlayerManagerImpl private constructor(
         get() = _simpleExoPlayer.duration
     val position: Long
         get() = _simpleExoPlayer.currentPosition
+    private val trackSelector: DefaultTrackSelector by lazy {
+        DefaultTrackSelector(activity, AdaptiveTrackSelection.Factory())
+    }
     private val _bandwidthMeter by lazy {
         DefaultBandwidthMeter.Builder(activity).build()
     }
@@ -80,18 +96,16 @@ class PlayerManagerImpl private constructor(
         SimpleExoPlayer.Builder(
             activity,
             DefaultRenderersFactory(activity)
-        ).setTrackSelector(
-            DefaultTrackSelector(
-                activity,
-                AdaptiveTrackSelection.Factory()
-            )
-        ).setLoadControl(DefaultLoadControl())
+        ).setTrackSelector(trackSelector).setLoadControl(DefaultLoadControl())
             .setBandwidthMeter(_bandwidthMeter)
             .build()
     }
     private val componentListener: ComponentListener by lazy {
         ComponentListener(::onPlayerStateChanged, ::onPlayerError)
     }
+
+    private var trackSelectorHelper: TrackSelectionHelper? = null
+    private var lastSelectedSub: Int = 0
 
     private val playerPositionCountDown: CountDownTimer by lazy {
         object : CountDownTimer(100, 1) {
@@ -138,7 +152,51 @@ class PlayerManagerImpl private constructor(
         }
 
         playerView.setControllerVisibilityListener {
+            if (it == View.VISIBLE) playerView.findViewById<DefaultTimeBar>(R.id.exo_progress)
+                .requestFocus()
             playerStateListener?.onPlayerControlState(it == View.VISIBLE)
+        }
+
+        val style = CaptionStyleCompat(
+            Color.WHITE,
+            Color.TRANSPARENT,
+            Color.TRANSPARENT,
+            CaptionStyleCompat.EDGE_TYPE_OUTLINE,
+            Color.BLACK,
+            Typeface.createFromAsset(activity.assets, "fonts/mmrtext.ttf")
+        )
+        playerView.subtitleView?.setStyle(style)
+
+        playerView.findViewById<ImageView>(R.id.iv_channel_logo)?.loadImage(channelLogo)
+
+        playerView.findViewById<ImageView>(R.id.btn_quality)?.let {
+            it.setOnClickListener {
+                trackSelectorHelper?.let {
+                    activity.supportFragmentManager.showTrackDialog(
+                        TrackDialog.TrackType.QUALITY,
+                        it.qualityTrackList
+                    ) { index ->
+                        it.changeQuality(index)
+                    }
+                }
+            }
+        }
+
+        playerView.findViewById<ImageView>(R.id.btn_subtitle)?.let {
+            it.setOnClickListener {
+                trackSelectorHelper?.let {
+                    activity.supportFragmentManager.showTrackDialog(
+                        TrackDialog.TrackType.SUBTITLES,
+                        playerSubtitle
+                    ) { index ->
+                        lastSelectedSub = index
+                        it.overrideLanguage(playerSubtitle[index].language)
+                        playerSubtitle.forEachIndexed { i, subTitleModel ->
+                            subTitleModel.isSelected = index == i
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -201,6 +259,16 @@ class PlayerManagerImpl private constructor(
         return this
     }
 
+    fun setPlayerSubtitle(subtitle: List<SubTitleModel>): PlayerManagerImpl {
+        playerSubtitle.clear()
+        if (subtitle.isEmpty()) return this
+        playerSubtitle.addAll(playerSubtitle.size, subtitle)
+        playerSubtitle.forEachIndexed { index, subTitleModel ->
+            subTitleModel.isSelected = index == lastSelectedSub
+        }
+        return this
+    }
+
     fun replay() {
         _playbackPosition = _simpleExoPlayer.currentPosition
         _simpleExoPlayer.seekTo(
@@ -245,6 +313,9 @@ class PlayerManagerImpl private constructor(
             return
         }
 
+        trackSelectorHelper = null
+        toggleAction(false)
+
         this.playerSource = source
 
         playerPlayPause?.toPlay()
@@ -267,7 +338,7 @@ class PlayerManagerImpl private constructor(
         val dataSourceFactory = if (playerCookies.isNotEmpty() || playerCustomHeader.isNotEmpty()) {
             val httpDataSourceFactory = DefaultHttpDataSource.Factory().apply {
                 setUserAgent(playerAgent)
-                if (playerCookies != null) setDefaultRequestProperties(mapOf("Cookie" to playerCookies))
+                setDefaultRequestProperties(mapOf("Cookie" to playerCookies))
                 playerCustomHeader.forEach {
                     setDefaultRequestProperties(mapOf(it.first to it.second))
                 }
@@ -286,14 +357,30 @@ class PlayerManagerImpl private constructor(
 
         val isDrive = playerSource.contains("drive.google.com", true)
 
+        val subMediaSource: MutableList<SingleSampleMediaSource> = mutableListOf()
+        playerSubtitle.filter { it.language != "close" }.forEach {
+            subMediaSource.add(
+                SingleSampleMediaSource.Factory(dataSourceFactory).createMediaSource(
+                    MediaItem.Subtitle(
+                        Uri.parse(it.languageURL),
+                        if (it.languageURL.endsWith("srt")) MimeTypes.APPLICATION_SUBRIP else MimeTypes.TEXT_VTT,
+                        it.language,
+                        C.SELECTION_FLAG_FORCED,
+                        C.ROLE_FLAG_CAPTION,
+                        it.displayLanguage
+                    ), C.TIME_UNSET
+                )
+            )
+        }
+
+        var mediaSource: MediaSource? = null
         when (Util.inferContentType(Uri.parse(playerSource))) {
             C.TYPE_HLS -> {
-                val mediaSource = HlsMediaSource.Factory(dataSourceFactory.takeIf { isDrive }
+                mediaSource = HlsMediaSource.Factory(dataSourceFactory.takeIf { isDrive }
                     ?: okHttpDataSource).createMediaSource(getURL(playerSource))
-                _simpleExoPlayer.setMediaSource(mediaSource)
             }
             C.TYPE_OTHER -> {
-                val mediaSource = if (playerSource.contains("rtmp", true)) {
+                mediaSource = if (playerSource.contains("rtmp", true)) {
                     ProgressiveMediaSource.Factory(RtmpDataSourceFactory())
                         .createMediaSource(getURL(playerSource))
                 } else {
@@ -301,17 +388,24 @@ class PlayerManagerImpl private constructor(
                         ?: okHttpDataSource)
                         .createMediaSource(getURL(playerSource))
                 }
-                _simpleExoPlayer.setMediaSource(mediaSource)
             }
             C.TYPE_DASH -> {
-                val mediaSource = DashMediaSource.Factory(dataSourceFactory.takeIf { isDrive }
+                mediaSource = DashMediaSource.Factory(dataSourceFactory.takeIf { isDrive }
                     ?: okHttpDataSource)
                     .createMediaSource(getURL(playerSource))
-                _simpleExoPlayer.setMediaSource(mediaSource)
             }
             else -> {
                 onPlayerError("Unknown video format.")
             }
+        }
+
+        mediaSource?.let {
+            _simpleExoPlayer.setMediaSource(
+                MergingMediaSource(
+                    mediaSource,
+                    *subMediaSource.toTypedArray()
+                )
+            )
         }
 
         _simpleExoPlayer.prepare()
@@ -404,6 +498,12 @@ class PlayerManagerImpl private constructor(
         return header
     }
 
+    private fun toggleAction(isVisible: Boolean) {
+        playerView.findViewById<ImageView>(R.id.btn_quality).isVisible = isVisible
+        playerView.findViewById<ImageView>(R.id.btn_subtitle).isVisible =
+            playerSubtitle.isNotEmpty() && isVisible
+    }
+
     private fun onPlayerError(error: String) {
         playerStateListener?.onPlayerError(
             error,
@@ -451,6 +551,10 @@ class PlayerManagerImpl private constructor(
                 state = "ExoPlayer.STATE_BUFFERING -"
             }
             Player.STATE_READY -> {
+                if (trackSelectorHelper == null) {
+                    trackSelectorHelper = TrackSelectionHelper(activity, trackSelector)
+                    toggleAction(true)
+                }
                 playerPositionCountDown.start()
                 hideAllUI()
                 state = "ExoPlayer.STATE_READY     -"
@@ -483,12 +587,14 @@ class PlayerManagerImpl private constructor(
         var playerPosterView: ImageView? = null
         var playerTitleView: RowHeaderView? = null
         var playerStateListener: PlayerManager? = null
+        var channelLogo: String = ""
 
         fun build(): PlayerManagerImpl {
             if (playerView == null)
                 throw RuntimeException("Views must not be null.")
             return PlayerManagerImpl(
                 activity,
+                channelLogo,
                 playerView!!,
                 playerLoadingView,
                 playerPlayPause,

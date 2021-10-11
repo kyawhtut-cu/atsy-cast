@@ -38,5 +38,5 @@ internal class VideoSourceViewModel @Inject constructor(
             ?: listOf()
     }
 
-    fun isHasResume(sourceID: Int): Boolean = repository.isHasResume(sourceID)
+    fun isHasResume(sourceID: String): Boolean = repository.isHasResume(sourceID)
 }

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="isFocus"
+            type="Boolean" />
+
+        <variable
+            name="playlistPoster"
+            type="String" />
+
+        <variable
+            name="playlistName"
+            type="String" />
+
+        <variable
+            name="playlistCompanyName"
+            type="String" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:background="@{isFocus ? @color/colorCardBackgroundFocus : @color/colorCardBackgroundUnFocus}"
+        tools:context=".ui.card.view.PlaylistCardView">
+
+        <ImageView
+            android:id="@+id/iv_episode"
+            isHorizontal="@{true}"
+            isNeedToCache="@{true}"
+            loadImage="@{playlistPoster}"
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/ic_thumbnail" />
+
+        <TextView
+            android:id="@+id/tv_episode_name"
+            isMMFont="@{true}"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:minLines="2"
+            android:padding="2dp"
+            android:text="@{playlistName}"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/text_small"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_episode"
+            tools:text="Episode Name" />
+
+        <TextView
+            android:id="@+id/tv_episode_description"
+            isMMFont="@{true}"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="2dp"
+            android:paddingBottom="2dp"
+            android:text="@{playlistCompanyName}"
+            android:textColor="#979797"
+            android:textSize="@dimen/text_smaller"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_episode_name"
+            tools:text="Episode Description" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

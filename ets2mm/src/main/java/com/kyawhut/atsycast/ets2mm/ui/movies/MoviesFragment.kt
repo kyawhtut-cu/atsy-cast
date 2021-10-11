@@ -23,10 +23,11 @@ import dagger.hilt.android.AndroidEntryPoint
 internal class MoviesFragment : BaseGridSupportFragment<MoviesViewModel>() {
 
     companion object {
-        fun newInstance(genresID: String, appName: String): MoviesFragment {
+        fun newInstance(genresID: String, appName: String, channelLogo: String): MoviesFragment {
             return MoviesFragment().putArg(
                 Constants.EXTRA_PAGE_KEY to genresID,
                 Constants.EXTRA_APP_NAME to appName,
+                Constants.EXTRA_CHANNEL_LOGO to channelLogo,
             )
         }
     }
@@ -62,6 +63,7 @@ internal class MoviesFragment : BaseGridSupportFragment<MoviesViewModel>() {
         if (it is VideoResponse) {
             startActivity<DetailActivity>(
                 Constants.EXTRA_APP_NAME to vm.appName,
+                Constants.EXTRA_CHANNEL_LOGO to vm.channelLogo,
                 Constants.EXTRA_VIDEO_DATA to it
             )
         }

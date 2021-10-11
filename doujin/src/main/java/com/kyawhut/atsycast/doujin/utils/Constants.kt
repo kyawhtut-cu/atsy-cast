@@ -12,4 +12,5 @@ internal object Constants {
     const val EXTRA_VIDEO_DATA = "EXTRA_VIDEO_DATA"
     const val EXTRA_VIDEO_SOURCE = "EXTRA_VIDEO_SOURCE"
     const val EXTRA_APP_NAME = "EXTRA_APP_NAME"
+    const val EXTRA_CHANNEL_LOGO = "EXTRA_CHANNEL_LOGO"
 }

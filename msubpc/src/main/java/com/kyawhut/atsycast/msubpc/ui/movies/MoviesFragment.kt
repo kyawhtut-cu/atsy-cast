@@ -23,10 +23,11 @@ internal class MoviesFragment : BaseGridSupportFragment<MoviesViewModel>() {
 
     companion object {
 
-        fun newInstance(key: String, appName: String): MoviesFragment {
+        fun newInstance(key: String, appName: String, channelLogo: String): MoviesFragment {
             return MoviesFragment().putArg(
                 Constants.EXTRA_PAGE_KEY to key,
-                Constants.EXTRA_APP_NAME to appName
+                Constants.EXTRA_APP_NAME to appName,
+                Constants.EXTRA_CHANNEL_LOGO to channelLogo,
             )
         }
     }
@@ -65,6 +66,7 @@ internal class MoviesFragment : BaseGridSupportFragment<MoviesViewModel>() {
             startActivity<DetailActivity>(
                 Constants.EXTRA_VIDEO_DATA to it,
                 Constants.EXTRA_APP_NAME to vm.appName,
+                Constants.EXTRA_CHANNEL_LOGO to vm.channelLogo,
             )
         }
     }

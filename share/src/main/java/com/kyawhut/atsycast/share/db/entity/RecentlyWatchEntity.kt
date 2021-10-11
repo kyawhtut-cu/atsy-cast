@@ -4,6 +4,7 @@ import androidx.leanback.widget.DiffCallback
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.kyawhut.atsycast.share.model.SubTitleModel
 import com.kyawhut.atsycast.share.utils.SourceType
 import java.util.*
 
@@ -39,6 +40,8 @@ data class RecentlyWatchEntity(
     val videoSourceType: SourceType,
     @ColumnInfo(name = "is_adult")
     val isAdult: Boolean,
+    @ColumnInfo(name = "video_subtitle")
+    val videoSubtitle: List<SubTitleModel>,
     @ColumnInfo(name = "created_at")
     val createdAt: Date,
     @ColumnInfo(name = "updated_at")
@@ -83,6 +86,7 @@ data class RecentlyWatchEntity(
         var videoSourceType: SourceType = SourceType.UNKNOWN
         var updateAt: Date = Date()
         var isAdult: Boolean = false
+        var videoSubtitle: List<SubTitleModel> = mutableListOf()
 
         fun build(): RecentlyWatchEntity = RecentlyWatchEntity(
             id,
@@ -98,6 +102,7 @@ data class RecentlyWatchEntity(
             videoRelatedVideo,
             videoSourceType,
             isAdult,
+            videoSubtitle,
             Date(),
             updateAt
         )

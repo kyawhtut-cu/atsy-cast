@@ -39,6 +39,9 @@ internal class HomeActivity : BaseTvActivity<ActivityGsHomeBinding>() {
     private val apiKey: String by lazy {
         intent?.getStringExtra(Constants.EXTRA_API_KEY) ?: ""
     }
+    private val channelLogo: String by lazy {
+        intent?.getStringExtra(Constants.EXTRA_CHANNEL_LOGO) ?: ""
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,6 +49,7 @@ internal class HomeActivity : BaseTvActivity<ActivityGsHomeBinding>() {
             R.id.content_frame, HomeFragment().putArg(
                 Constants.EXTRA_APP_NAME to appName,
                 Constants.EXTRA_API_KEY to apiKey,
+                Constants.EXTRA_CHANNEL_LOGO to channelLogo,
             )
         )
     }
@@ -103,6 +107,7 @@ internal class HomeActivity : BaseTvActivity<ActivityGsHomeBinding>() {
             startActivity<SearchActivity>(
                 Constants.EXTRA_API_KEY to vm.route,
                 Constants.EXTRA_APP_NAME to vm.appName,
+                Constants.EXTRA_CHANNEL_LOGO to vm.channelLogo,
             )
         }
 
@@ -129,10 +134,12 @@ internal class HomeActivity : BaseTvActivity<ActivityGsHomeBinding>() {
                 vm.route,
                 header.description.toString(),
                 vm.appName,
+                vm.channelLogo,
             ) else VideoFragment.newInstance(
                 vm.route,
                 header.description.toString().toInt(),
-                vm.appName
+                vm.appName,
+                vm.channelLogo,
             )
         }
 

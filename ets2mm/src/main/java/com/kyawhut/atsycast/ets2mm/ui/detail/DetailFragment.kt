@@ -133,6 +133,7 @@ internal class DetailFragment : BaseDetailTvFragment<DetailViewModel>() {
                         if (vm.videoDetailResponse == null) return
                         startActivity<VideoSourceActivity>(
                             Constants.EXTRA_APP_NAME to vm.appName,
+                            Constants.EXTRA_CHANNEL_LOGO to vm.channelLogo,
                             Constants.EXTRA_VIDEO_DATA to vm.videoDetailResponse,
                             Constants.EXTRA_VIDEO_TITLE to "%s (%s)".format(
                                 vm.videoDetailResponse!!.videoTitle,
@@ -140,7 +141,7 @@ internal class DetailFragment : BaseDetailTvFragment<DetailViewModel>() {
                             ),
                             Constants.EXTRA_VIDEO_SOURCE to checkSource(vm.videoDetailResponse?.videoSource).map {
                                 VideoSourceModel(
-                                    vm.videoDetailResponse!!.videoID,
+                                    vm.videoDetailResponse!!.videoID.toString(),
                                     it.videoLabel,
                                     url = it.videoURL
                                 )
@@ -171,12 +172,14 @@ internal class DetailFragment : BaseDetailTvFragment<DetailViewModel>() {
                 startActivity<DetailActivity>(
                     Constants.EXTRA_VIDEO_DATA to item,
                     Constants.EXTRA_APP_NAME to vm.appName,
+                    Constants.EXTRA_CHANNEL_LOGO to vm.channelLogo,
                 )
             }
             is EpisodeResponse -> {
                 if (vm.videoDetailResponse == null || item.episodeURL.isEmpty() || !item.episodeFileType.isDirectPlayExtension) return
                 startActivity<VideoSourceActivity>(
                     Constants.EXTRA_APP_NAME to vm.appName,
+                    Constants.EXTRA_CHANNEL_LOGO to vm.channelLogo,
                     Constants.EXTRA_VIDEO_DATA to vm.videoDetailResponse,
                     Constants.EXTRA_VIDEO_TITLE to "%s - %s".format(
                         vm.videoDetailResponse!!.videoTitle,
@@ -184,7 +187,7 @@ internal class DetailFragment : BaseDetailTvFragment<DetailViewModel>() {
                     ),
                     Constants.EXTRA_VIDEO_SOURCE to listOf(
                         VideoSourceModel(
-                            item.episodeID,
+                            item.episodeID.toString(),
                             item.episodeName,
                             url = item.episodeURL
                         )

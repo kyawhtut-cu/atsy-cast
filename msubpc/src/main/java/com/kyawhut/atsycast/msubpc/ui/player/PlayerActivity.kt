@@ -24,6 +24,8 @@ class PlayerActivity : BasePlayerActivity() {
     private val vm: PlayerViewModel by viewModels()
     override val appName: String
         get() = vm.appName
+    override val channelLogo: String
+        get() = vm.channelLogo
 
     override fun isRelatedView(view: View): Boolean {
         return view is EpisodeCardView
@@ -61,7 +63,7 @@ class PlayerActivity : BasePlayerActivity() {
                 originTitle, item.episodeName
             )
             vm.videoSource = VideoSourceModel(
-                item.id.toInt(),
+                item.id,
                 item.episodeName,
                 item.fileSize,
                 if (item.episodeName.contains("Free Stream", true)) item.stream!!

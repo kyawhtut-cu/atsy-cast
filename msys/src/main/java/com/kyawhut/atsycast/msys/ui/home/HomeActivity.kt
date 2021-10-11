@@ -46,6 +46,7 @@ internal class HomeActivity : BaseTvActivity<ActivityMsysHomeBinding>() {
             R.id.content_frame, HomeFragment().putArg(
                 Constants.EXTRA_APP_NAME to appName,
                 Constants.EXTRA_API_KEY to apiKey,
+                Constants.EXTRA_CHANNEL_LOGO to intent?.getStringExtra(Constants.EXTRA_CHANNEL_LOGO)
             )
         )
     }
@@ -130,10 +131,12 @@ internal class HomeActivity : BaseTvActivity<ActivityMsysHomeBinding>() {
                 vm.apiKey,
                 header.description.toString(),
                 vm.appName,
+                vm.channelLogo,
             ) else MoviesFragment.newInstance(
                 vm.apiKey,
                 header.description.toString().toInt(),
                 vm.appName,
+                vm.channelLogo,
             )
         }
 

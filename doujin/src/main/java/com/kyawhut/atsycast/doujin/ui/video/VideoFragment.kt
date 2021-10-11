@@ -28,10 +28,12 @@ internal class VideoFragment : BaseGridSupportFragment<VideoViewModel>() {
     companion object {
         fun newInstance(
             appName: String,
+            channelLogo: String,
             pageKey: String
         ): VideoFragment {
             return VideoFragment().putArg(
                 Constants.EXTRA_APP_NAME to appName,
+                Constants.EXTRA_CHANNEL_LOGO to channelLogo,
                 Constants.EXTRA_PAGE_KEY to pageKey,
             )
         }
@@ -75,8 +77,9 @@ internal class VideoFragment : BaseGridSupportFragment<VideoViewModel>() {
                 startActivity<PlayerActivity>(
                     Constants.EXTRA_VIDEO_DATA to result.data,
                     Constants.EXTRA_APP_NAME to vm.appName,
+                    Constants.EXTRA_CHANNEL_LOGO to vm.channelLogo,
                     Constants.EXTRA_VIDEO_SOURCE to VideoSourceModel(
-                        0,
+                        "0",
                         result.data?.doujinTitle ?: "",
                         url = BuildConfig.MEDIA_BASE_URL + result.data?.doujinURL
                     )

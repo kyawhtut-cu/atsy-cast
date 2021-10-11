@@ -25,10 +25,12 @@ internal class VideoFragment : BaseGridSupportFragment<VideoViewModel>() {
     companion object {
         fun newInstance(
             appName: String,
+            channelLogo: String,
             pageKey: String
         ): VideoFragment {
             return VideoFragment().putArg(
                 Constants.EXTRA_APP_NAME to appName,
+                Constants.EXTRA_CHANNEL_LOGO to channelLogo,
                 Constants.EXTRA_PAGE_KEY to pageKey,
             )
         }

@@ -6,7 +6,7 @@ package com.kyawhut.atsycast.msys.ui.source
  */
 internal interface VideoSourceRepository {
 
-    fun isHasResume(videoID: Int): Boolean
+    fun isHasResume(videoID: String): Boolean
 
     suspend fun getRedirectURL(url: String, callback: (Boolean, String) -> Unit)
 }

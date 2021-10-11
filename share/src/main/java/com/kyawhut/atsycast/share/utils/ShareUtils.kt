@@ -17,8 +17,11 @@ import com.google.zxing.qrcode.QRCodeWriter
  */
 object ShareUtils {
 
+    internal const val EXTRA_TRACK_TYPE = "EXTRA_TRACK_TYPE"
+    internal const val EXTRA_TRACK_LIST = "EXTRA_TRACK_LIST"
+
     const val PLAYER_MP4_EXTENSION = "mp4"
-    private const val PLAYER_M3U8_EXTENSION = "m3u8"
+    const val PLAYER_M3U8_EXTENSION = "m3u8"
     private const val PLAYER_MKV_EXTENSION = "mkv"
     private const val PLAYER_MOV_EXTENSION = "mov"
     private const val PLAYER_WEBM_EXTENSION = "webm"

@@ -184,6 +184,7 @@ dependencies {
     implementation(project(":eporner"))
     implementation(project(":gsmovies"))
     implementation(project(":tiktok"))
+    implementation(project(":gs-mm"))
 
     testImplementation(Libs.junit)
     androidTestImplementation(Libs.testJunit)

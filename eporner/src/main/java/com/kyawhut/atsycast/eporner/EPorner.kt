@@ -17,15 +17,17 @@ object EPorner {
         startActivity<HomeActivity>(*data)
     }
 
-    fun FragmentActivity.goToEPorner(appName: String) {
+    fun FragmentActivity.goToEPorner(appName: String, channelLogo: String,) {
         goToEPorner(
-            Constants.EXTRA_APP_NAME to appName
+            Constants.EXTRA_APP_NAME to appName,
+            Constants.EXTRA_CHANNEL_LOGO to channelLogo
         )
     }
 
-    fun Fragment.goToEPorner(appName: String) {
+    fun Fragment.goToEPorner(appName: String, channelLogo: String) {
         requireContext().goToEPorner(
-            Constants.EXTRA_APP_NAME to appName
+            Constants.EXTRA_APP_NAME to appName,
+            Constants.EXTRA_CHANNEL_LOGO to channelLogo
         )
     }
 }

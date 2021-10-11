@@ -31,10 +31,11 @@ internal class FootballFragment : BaseGridSupportFragment<FootballViewModel>() {
 
         private const val DEFAULT_POSTER = "https://i.imgur.com/n46dDce.jpg"
 
-        fun newInstance(key: String, appName: String): FootballFragment {
+        fun newInstance(key: String, appName: String, channelLogo: String): FootballFragment {
             return FootballFragment().putArg(
                 Constants.EXTRA_PAGE_KEY to key,
-                Constants.EXTRA_APP_NAME to appName
+                Constants.EXTRA_APP_NAME to appName,
+                Constants.EXTRA_CHANNEL_LOGO to channelLogo,
             )
         }
     }
@@ -78,6 +79,7 @@ internal class FootballFragment : BaseGridSupportFragment<FootballViewModel>() {
                 hideLoading()
                 startActivity<VideoSourceActivity>(
                     Constants.EXTRA_APP_NAME to vm.appName,
+                    Constants.EXTRA_CHANNEL_LOGO to vm.channelLogo,
                     Constants.EXTRA_IS_LIVE to true,
                     Constants.EXTRA_VIDEO_DATA to VideoResponse(
                         vm.football?.id ?: 0,
@@ -97,7 +99,7 @@ internal class FootballFragment : BaseGridSupportFragment<FootballViewModel>() {
                             if (it.streamFHD != null) {
                                 add(
                                     VideoSourceModel(
-                                        vm.football?.id ?: 0,
+                                        (vm.football?.id ?: 0).toString(),
                                         "Full HD - 1",
                                         url = AesEncryptDecrypt.getDecryptedString(it.streamFHD),
                                     )
@@ -106,7 +108,7 @@ internal class FootballFragment : BaseGridSupportFragment<FootballViewModel>() {
                             if (it.streamFHD2 != null) {
                                 add(
                                     VideoSourceModel(
-                                        vm.football?.id ?: 0,
+                                        (vm.football?.id ?: 0).toString(),
                                         "Full HD - 2",
                                         url = AesEncryptDecrypt.getDecryptedString(it.streamFHD2),
                                     )
@@ -115,7 +117,7 @@ internal class FootballFragment : BaseGridSupportFragment<FootballViewModel>() {
                             if (it.streamHD != null) {
                                 add(
                                     VideoSourceModel(
-                                        vm.football?.id ?: 0,
+                                        (vm.football?.id ?: 0).toString(),
                                         "HD - 1",
                                         url = AesEncryptDecrypt.getDecryptedString(it.streamHD),
                                     )
@@ -124,7 +126,7 @@ internal class FootballFragment : BaseGridSupportFragment<FootballViewModel>() {
                             if (it.streamHD2 != null) {
                                 add(
                                     VideoSourceModel(
-                                        vm.football?.id ?: 0,
+                                        (vm.football?.id ?: 0).toString(),
                                         "HD - 2",
                                         url = AesEncryptDecrypt.getDecryptedString(it.streamHD2),
                                     )
@@ -133,7 +135,7 @@ internal class FootballFragment : BaseGridSupportFragment<FootballViewModel>() {
                             if (it.streamSD != null) {
                                 add(
                                     VideoSourceModel(
-                                        vm.football?.id ?: 0,
+                                        (vm.football?.id ?: 0).toString(),
                                         "SD - 1",
                                         url = AesEncryptDecrypt.getDecryptedString(it.streamSD),
                                     )
@@ -142,7 +144,7 @@ internal class FootballFragment : BaseGridSupportFragment<FootballViewModel>() {
                             if (it.streamSD2 != null) {
                                 add(
                                     VideoSourceModel(
-                                        vm.football?.id ?: 0,
+                                        (vm.football?.id ?: 0).toString(),
                                         "SD - 2",
                                         url = AesEncryptDecrypt.getDecryptedString(it.streamSD2),
                                     )

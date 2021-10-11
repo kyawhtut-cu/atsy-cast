@@ -6,5 +6,5 @@ package com.kyawhut.astycast.gsmovie.ui.source
  */
 internal interface VideoSourceRepository {
 
-    fun isHasResume(route: String, videoID: Int): Boolean
+    fun isHasResume(route: String, videoID: String): Boolean
 }

@@ -267,6 +267,7 @@ internal class DetailFragment : BaseDetailTvFragment<DetailViewModel>() {
                     Constants.EXTRA_APP_NAME to vm.appName,
                     Constants.EXTRA_CHANNEL_LOGO to vm.channelLogo,
                     Constants.EXTRA_VIDEO_DATA to vm.videoData,
+                    Constants.EXTRA_API_KEY to vm.route,
                     Constants.EXTRA_VIDEO_TITLE to "%s - %s".format(
                         vm.videoData!!.videoTitle,
                         item.episodeTitle

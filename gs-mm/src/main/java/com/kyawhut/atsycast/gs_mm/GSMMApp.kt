@@ -64,6 +64,7 @@ object GSMMApp {
             Constants.EXTRA_VIDEO_TITLE to data.videoTitle,
             Constants.EXTRA_VIDEO_COVER to data.videoCover,
             Constants.EXTRA_APP_NAME to appName,
+            Constants.EXTRA_API_KEY to route,
             Constants.EXTRA_CHANNEL_LOGO to channelLogo,
             Constants.EXTRA_IS_ADULT to data.isAdult,
             Constants.EXTRA_VIDEO_SOURCE to VideoSourceModel(

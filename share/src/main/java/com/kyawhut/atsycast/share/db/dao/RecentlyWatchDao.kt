@@ -21,7 +21,7 @@ abstract class RecentlyWatchDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract fun insert(vararg data: RecentlyWatchEntity): List<Long>
 
-    @Query("select * from table_recently_watch order by created_at")
+    @Query("select * from table_recently_watch order by created_at desc")
     abstract fun getAll(): Flowable<List<RecentlyWatchEntity>>
 
     @Query("select * from table_recently_watch where video_id = :videoID and video_source_type = :sourceType")

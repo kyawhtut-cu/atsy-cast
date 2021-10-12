@@ -1,6 +1,6 @@
-Whats is included in 1.3.0 version?
-    . Install error fixed.
-    . Home watch later and recently watch sorted by created date.
-    . Added GSMM Movies.
-    . Some bug fixed.
-    . Add some bug.
+Whats is included in the 1.3.1 version?
+  . Install error fixed.
+  . Home watch later and recently watches sorted by created date.
+  . Added GSMM Movies.
+  . Some bug fixed.
+  . Add some bugs.

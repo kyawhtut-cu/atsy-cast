@@ -27,12 +27,6 @@ class TwoDView @JvmOverloads constructor(
         SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
     }
 
-    private val isTwelveHour: Boolean
-        get() = getCurrentHours() >= 12
-
-    private val isFourHour: Boolean
-        get() = getCurrentHours() >= 16
-
     private val vb: View2dBinding by lazy {
         View2dBinding.inflate(LayoutInflater.from(context), this, true)
     }
@@ -66,11 +60,11 @@ class TwoDView @JvmOverloads constructor(
                     originalDateFormat.parse(twoD.date) ?: Date()
                 )
 
-                pmTwoD = if (isFourHour) twoD.pm.twoD ?: "--" else "--"
+                pmTwoD = twoD.pm.twoD ?: "--"
                 pmSet = twoD.pm.set ?: "----.--"
                 pmValue = twoD.pm.value ?: "----.--"
 
-                amTwoD = if (isTwelveHour) twoD.am.twoD ?: "--" else "--"
+                amTwoD = twoD.am.twoD ?: "--"
                 amSet = twoD.am.set ?: "----.--"
                 amValue = twoD.am.value ?: "----.--"
 
@@ -96,9 +90,5 @@ class TwoDView @JvmOverloads constructor(
         }
 
         vb.executePendingBindings()
-    }
-
-    private fun getCurrentHours(): Int {
-        return Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
     }
 }

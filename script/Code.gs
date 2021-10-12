@@ -52,7 +52,7 @@ function doPost(e) {
 
   route.on("tiktok", tiktokController)
 
-  route.on(`myCinema`, myCinemaControllerV2)
+  route.on(`myCinema`, myCinemaController)
 
   route.on(`viu`, viuController)
 

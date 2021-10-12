@@ -30,8 +30,31 @@ let viuController = (request) => {
   }
 }
 
+
+
+let fetchDrawerMenuList = () => {
+  let response = UrlFetchApp.fetch(`https://****/program/****/****/****/mm/default/my/home.json`).getContentText()
+
+  response = convertDecNCR2Char(response)
+  response = JSON.parse(response).container.map((item) => {
+    let data = {
+      drawer_key: item.id,
+      drawer_title: forceConvert(item.title),
+      drawer_type: `grid`
+    }
+    return data
+  })
+  return response
+}
+
 let viuDrawerMenu = (request) => {
+  const drawerList = fetchDrawerMenuList()
+
   request.response = VIU_DRAWER_MENU_LIST
+  drawerList.forEach((drawer) => {
+    request.response.push(drawer)
+  })
+
   return request.responseWithJson()
 }
 

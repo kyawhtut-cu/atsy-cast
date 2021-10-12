@@ -29,6 +29,7 @@ import com.kyawhut.atsycast.msys.MsysApp.goToMSYSDetail
 import com.kyawhut.atsycast.share.db.entity.RecentlyWatchEntity
 import com.kyawhut.atsycast.share.db.entity.WatchLaterEntity
 import com.kyawhut.atsycast.share.network.utils.NetworkResponse
+import com.kyawhut.atsycast.share.utils.ShareUtils
 import com.kyawhut.atsycast.share.utils.SourceType
 import com.kyawhut.atsycast.share.utils.extension.Extension.isAdultOpen
 import com.kyawhut.atsycast.tiktok.TiktokApp.goToTiktok
@@ -235,13 +236,13 @@ class HomeFeaturesFragment : RowsSupportFragment() {
                         }
                         else -> {
                             when (source?.type ?: "") {
-                                "myCinema" -> goToGSDetail(
+                                ShareUtils.MYCINEMA -> goToGSDetail(
                                     feature.featureName,
                                     feature.featureCover,
                                     feature.featureAPIKey,
                                     state.data?.first!!
                                 )
-                                "viu" -> goToGSMMDetail(
+                                ShareUtils.VIU -> goToGSMMDetail(
                                     feature.featureName,
                                     feature.featureCover,
                                     feature.featureAPIKey,
@@ -300,13 +301,13 @@ class HomeFeaturesFragment : RowsSupportFragment() {
                         }
                         else -> {
                             when (source?.type ?: "") {
-                                "myCinema" -> goToGSPlayer(
+                                ShareUtils.MYCINEMA -> goToGSPlayer(
                                     feature.featureName,
                                     feature.featureCover,
                                     feature.featureAPIKey,
                                     state.data?.first!!
                                 )
-                                "viu" -> goToGSMMPlayer(
+                                ShareUtils.VIU -> goToGSMMPlayer(
                                     feature.featureName,
                                     feature.featureCover,
                                     feature.featureAPIKey,

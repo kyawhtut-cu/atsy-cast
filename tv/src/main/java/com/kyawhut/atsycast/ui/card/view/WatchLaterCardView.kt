@@ -8,10 +8,12 @@ import com.kyawhut.atsycast.R
 import com.kyawhut.atsycast.databinding.CardHomeWatchLaterBinding
 import com.kyawhut.atsycast.share.base.BaseCardView
 import com.kyawhut.atsycast.share.db.entity.WatchLaterEntity
+import com.kyawhut.atsycast.share.utils.ShareUtils
 import com.kyawhut.atsycast.share.utils.SourceType
 import com.kyawhut.atsycast.share.utils.extension.Extension.getDrawableValue
 import com.kyawhut.astycast.gsmovie.data.network.response.VideoResponse as GSMovies
 import com.kyawhut.atsycast.ets2mm.data.network.response.VideoResponse as ETS2M
+import com.kyawhut.atsycast.gs_mm.data.network.response.VideoResponse as GSMM
 import com.kyawhut.atsycast.msubpc.data.network.response.VideoResponse as MSubPc
 import com.kyawhut.atsycast.msys.data.network.response.MoviesResponse as MSYS
 import com.kyawhut.atsycast.zcm.data.network.response.MoviesResponse as ZCM
@@ -79,13 +81,25 @@ class WatchLaterCardView(context: Context) : BaseCardView<CardHomeWatchLaterBind
                         _moviesYear = moviesYear
                     }
                 }
-                is SourceType.GS_API_SOURCE -> {
-                    vb.ivStar.isVisible = false
-                    with(Gson().fromJson(videoData, GSMovies.Data::class.java)) {
-                        _moviesName = videoTitle
-                        _moviesPoster = videoPoster
-                        _moviesYear = videoViewCount
-                        _moviesIMDB = videoEpisode
+                else -> {
+                    when (videoSourceType.type) {
+                        ShareUtils.MYCINEMA -> {
+                            vb.ivStar.isVisible = false
+                            with(Gson().fromJson(videoData, GSMovies.Data::class.java)) {
+                                _moviesName = videoTitle
+                                _moviesPoster = videoPoster
+                                _moviesYear = videoViewCount
+                                _moviesIMDB = videoEpisode
+                            }
+                        }
+                        ShareUtils.VIU -> {
+                            vb.ivStar.isVisible = false
+                            with(Gson().fromJson(videoData, GSMM::class.java)) {
+                                _moviesName = videoTitle
+                                _moviesPoster = videoPoster
+                                _moviesYear = videoCompanyName
+                            }
+                        }
                     }
                 }
             }

@@ -30,6 +30,9 @@ object ShareUtils {
 
     internal const val DEVICE_PASSWORD = "DEVICE_PASSWORD"
 
+    const val MYCINEMA = "myCinema"
+    const val VIU = "viu"
+
     private val adultKey = listOf("18+", "adult")
     val String.isAdult: Boolean
         get() = adultKey.any { this.contains(it, true) }

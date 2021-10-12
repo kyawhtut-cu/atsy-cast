@@ -198,7 +198,7 @@ internal class HomeActivity : BaseTvActivityWithVM<ActivityF2aHomeBinding, HomeV
             message = error
         }
         Timber.d(playerData)
-        TelegramHelper.sendLog(playerData)
+        TelegramHelper.sendLog(this, playerData)
     }
 
     override fun onResume() {

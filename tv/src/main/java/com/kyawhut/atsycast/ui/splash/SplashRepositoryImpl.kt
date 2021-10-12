@@ -108,6 +108,10 @@ class SplashRepositoryImpl @Inject constructor(
         val versionResponse = execute(crashlytics) {
             api.checkUpdate(scriptRequest {
                 route = "checkUpdate"
+                payload = mutableMapOf(
+                    "package_id" to BuildConfig.APPLICATION_ID,
+                    "version_name" to BuildConfig.VERSION_NAME,
+                )
             }).data
         }
         if (versionResponse.isSuccess) {
@@ -118,6 +122,7 @@ class SplashRepositoryImpl @Inject constructor(
                     callback
                 )
                 error(
+                    context,
                     context.getString(R.string.lbl_check_update_error),
                     "checkUpdate"
                 )
@@ -139,6 +144,7 @@ class SplashRepositoryImpl @Inject constructor(
                 callback
             )
             error(
+                context,
                 if (versionResponse.error != null) {
                     if (versionResponse.error!!.resId != 0) context.getString(versionResponse.error!!.resId) else versionResponse.error!!.message
                 } else {
@@ -149,7 +155,7 @@ class SplashRepositoryImpl @Inject constructor(
         }
     }
 
-    private fun error(errorMessage: String, place: String = "checkDeviceStatus") {
+    private fun error(context: Context, errorMessage: String, place: String = "checkDeviceStatus") {
         crashlytics.sendCrashlytics(
             RuntimeException(
                 """
@@ -160,6 +166,7 @@ class SplashRepositoryImpl @Inject constructor(
             )
         )
         TelegramHelper.sendLog(
+            context,
             """
                 Error occur in <strong>$place</strong>
                 

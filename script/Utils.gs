@@ -56,6 +56,151 @@ const TIKTOK_REQUEST_DATA = {
   "sessionId": ""
 }
 
+const VIU_LANGUAGE = {
+  en: {
+    title: `English`,
+    key: `en`
+  },
+  id: {
+    title: `Indonesia`,
+    key: `id`
+  },
+  mya: {
+    title: `Myanmar`,
+    key: `mya`
+  },
+  my: {
+    title: `Myanmar - Zawgyi`,
+    key: `my`
+  },
+  ms: {
+    title: `Malaysia`,
+    key: `ms`
+  },
+  "zh-CN": {
+    title: `China`,
+    key: `zh-cn`
+  },
+  ar: {
+    title: `عربى`,
+    key: `ar`
+  }
+}
+
+const VIU_DRAWER_MENU_LIST = [
+  {
+    drawer_key: `burmese`,
+    drawer_title: `Burmese`,
+    drawer_type: `list`
+  },
+  {
+    drawer_key: `indian`,
+    drawer_title: `Indian`,
+    drawer_type: `list`
+  },
+  {
+    drawer_key: `korean`,
+    drawer_title: `Korean`,
+    drawer_type: `list`
+  },
+  {
+    drawer_key: `thai`,
+    drawer_title: `Thai`,
+    drawer_type: `list`
+  },
+  {
+    drawer_key: `227_0_30_2.mm`,
+    drawer_title: `Just Added`,
+    drawer_type: `grid`
+  },
+  {
+    drawer_key: `playlist-25974477`,
+    drawer_title: `Exclusive Movies`,
+    drawer_type: `grid`
+  },
+  {
+    drawer_key: `playlist-26256994`,
+    drawer_title: `Only On Viu`,
+    drawer_type: `grid`
+  },
+  {
+    drawer_key: `228_0_30_2.mm`,
+    drawer_title: `Battle Of Two flowers`,
+    drawer_type: `grid`
+  },
+  {
+    drawer_key: `232_0_30_2.mm`,
+    drawer_title: `Kya Mor Non`,
+    drawer_type: `grid`
+  },
+  {
+    drawer_key: `226_0_30_2.mm`,
+    drawer_title: `Binge-watch Yadanarbon`,
+    drawer_type: `grid`
+  },
+  {
+    drawer_key: `242_0_30_2.mm`,
+    drawer_title: `Latest Korean Series`,
+    drawer_type: `grid`
+  },
+  {
+    drawer_key: `247_0_30_2.mm`,
+    drawer_title: `Jeet Gayi Toh Piya More`,
+    drawer_type: `grid`
+  },
+  {
+    drawer_key: `241_0_30_2.mm`,
+    drawer_title: `Hot on Viu`,
+    drawer_type: `grid`
+  },
+  {
+    drawer_key: `239_0_30_2.mm`,
+    drawer_title: `Just Added Indian and Thai`,
+    drawer_type: `grid`
+  },
+  {
+    drawer_key: `244_0_30_2.mm`,
+    drawer_title: `Jodha Akbar S4`,
+    drawer_type: `grid`
+  },
+  {
+    drawer_key: `playlist-25719041`,
+    drawer_title: `Handpicked Comedy`,
+    drawer_type: `grid`
+  },
+  {
+    drawer_key: `playlist-26270439`,
+    drawer_title: `Superhit Indian Movies`,
+    drawer_type: `grid`
+  },
+  {
+    drawer_key: `248_0_30_2.mm`,
+    drawer_title: `Ashoka - Season 1`,
+    drawer_type: `grid`
+  },
+  {
+    drawer_key: `240_0_30_2.mm`,
+    drawer_title: `Most Popular K- Drama`,
+    drawer_type: `grid`
+  },
+  {
+    drawer_key: `201_0_30_2.mm`,
+    drawer_title: `Mingalar Shi Tae A Yat`,
+    drawer_type: `grid`
+  },
+]
+
+const VIU_DEVICE_ID = `****-****-****-****`
+
+const VIU_REQUEST_HEADER = {
+  "x-client": `****`,
+  "x-session-id": 1
+}
+
+const VIU_BASE_URL = `https://****/****/****/api/`
+const VIU_IMAGE_BASE_URL = `https://****/p/****/****/`
+const VIU_DRAWER_BASE_URL = `https://****/program/prod/****/****/mm/default/****/`
+
 const DEVICE_SHEET = `Device`
 const HOME_FEATURE_SHEET = `Home Feature`
 const FREE_2_AIR_SHEET = `Free 2 Air`

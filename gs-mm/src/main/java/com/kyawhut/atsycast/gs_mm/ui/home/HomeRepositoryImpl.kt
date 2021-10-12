@@ -56,7 +56,10 @@ internal class HomeRepositoryImpl @Inject constructor(
                     NetworkError(context.getString(R.string.lbl_notify_to_developer)),
                     callback
                 )
-                TelegramHelper.sendLog("<strong>Category List</strong> is null. Please check in server script.")
+                TelegramHelper.sendLog(
+                    context,
+                    "<strong>Category List</strong> is null. Please check in server script."
+                )
             }
         } else response.post(callback)
     }

@@ -1,13 +1,5 @@
 function doGet(e) {
 
-  let sheet_no = e.parameter.sheet_no
-
-  if (sheet_no == 2) {
-    return homeFeatureControllerOld()
-  } else if (sheet_no == `msysFootball,4`) {
-    return msysFootballControllerOld()
-  }
-
   // Instantiate Request
   var request = new Request(e.parameter)
 
@@ -61,6 +53,8 @@ function doPost(e) {
   route.on("tiktok", tiktokController)
 
   route.on(`myCinema`, myCinemaControllerV2)
+
+  route.on(`viu`, viuController)
 
   // Register the route with request
   request.register(route)

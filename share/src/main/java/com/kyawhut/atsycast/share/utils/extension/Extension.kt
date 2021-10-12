@@ -22,6 +22,7 @@ import com.kyawhut.atsycast.share.R
 import com.kyawhut.atsycast.share.glide.BlurTransformation
 import com.kyawhut.atsycast.share.glide.GlideApp
 import com.kyawhut.atsycast.share.utils.ShareUtils
+import com.kyawhut.atsycast.share.utils.ShareUtils.deviceName
 import kotlin.math.roundToInt
 
 /**
@@ -53,6 +54,11 @@ object Extension {
             .get(ShareUtils.DEVICE_PASSWORD, "")
         set(value) = PreferenceManager.getDefaultSharedPreferences(this)
             .put(ShareUtils.DEVICE_PASSWORD, value)
+
+    val Context.deviceDisplayName: String
+        get() = PreferenceManager.getDefaultSharedPreferences(this).get(
+            "pref_display_name", this.deviceName
+        )
 
     var Fragment.isAdultOpen: Boolean
         get() = requireContext().isAdultOpen

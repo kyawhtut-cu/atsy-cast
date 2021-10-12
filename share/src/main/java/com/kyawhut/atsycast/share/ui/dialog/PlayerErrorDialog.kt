@@ -97,7 +97,11 @@ class PlayerErrorDialog(private val callback: () -> Unit) : DialogFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NORMAL, R.style.FullScreenDialog)
-        if (errorFullMessage.isNotEmpty()) TelegramHelper.sendLog(errorFullMessage, parseMode)
+        if (errorFullMessage.isNotEmpty()) TelegramHelper.sendLog(
+            requireContext(),
+            errorFullMessage,
+            parseMode
+        )
     }
 
     override fun onCreateView(

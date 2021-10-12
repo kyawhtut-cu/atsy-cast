@@ -45,7 +45,10 @@ internal class VideoRepositoryImpl @Inject constructor(
                     NetworkError(context.getString(R.string.lbl_notify_to_developer)),
                     callback
                 )
-                TelegramHelper.sendLog("<strong>Video List</strong> is null. Please check in server script.")
+                TelegramHelper.sendLog(
+                    context,
+                    "<strong>Video List</strong> is null. Please check in server script."
+                )
             } else {
                 NetworkResponse.success(
                     response.data ?: listOf(),

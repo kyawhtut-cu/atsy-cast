@@ -8,9 +8,9 @@ import com.kyawhut.atsycast.share.db.entity.RecentlyWatchEntity
  */
 interface PlayerRepository {
 
-    fun getLastPosition(videoID: Int, isResume: Boolean): Long
+    fun getLastPosition(videoID: String, isResume: Boolean): Long
 
     fun insertLastPosition(block: RecentlyWatchEntity.Builder.() -> Unit)
 
-    fun deleteRecentlyWatch(videoID: Int)
+    fun deleteRecentlyWatch(videoID: String)
 }

@@ -24,10 +24,10 @@ abstract class WatchLaterDao {
     @Query("select * from table_watch_later order by created_at desc")
     abstract fun getAll(): Flowable<List<WatchLaterEntity>>
 
-    @Query("select * from table_watch_later where video_source_type = :sourceType order by created_at")
+    @Query("select * from table_watch_later where video_source_type = :sourceType order by created_at desc")
     abstract fun get(sourceType: SourceType): List<WatchLaterEntity>
 
-    @Query("select * from table_watch_later where video_source_type = :sourceType order by created_at")
+    @Query("select * from table_watch_later where video_source_type = :sourceType order by created_at desc")
     abstract fun getLive(sourceType: SourceType): Flowable<List<WatchLaterEntity>>
 
     @Query("select count(*) from table_watch_later where video_source_type = :sourceType")

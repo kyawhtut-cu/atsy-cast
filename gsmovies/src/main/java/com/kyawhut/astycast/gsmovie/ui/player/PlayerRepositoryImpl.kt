@@ -13,9 +13,9 @@ class PlayerRepositoryImpl @Inject constructor(
     private val recentlyWatch: RecentlyWatchSource
 ) : PlayerRepository {
 
-    override fun getLastPosition(route: String, videoID: Int, isResume: Boolean): Long {
+    override fun getLastPosition(route: String, videoID: String, isResume: Boolean): Long {
         if (!isResume) return 0L
-        return recentlyWatch.get("$videoID", SourceType.getSourceType(route))?.videoLastPosition
+        return recentlyWatch.get(videoID, SourceType.getSourceType(route))?.videoLastPosition
             ?: 0L
     }
 
@@ -23,7 +23,7 @@ class PlayerRepositoryImpl @Inject constructor(
         recentlyWatch.insert(block)
     }
 
-    override fun deleteRecentlyWatch(route: String, videoID: Int) {
-        recentlyWatch.delete("$videoID", SourceType.getSourceType(route))
+    override fun deleteRecentlyWatch(route: String, videoID: String) {
+        recentlyWatch.delete(videoID, SourceType.getSourceType(route))
     }
 }

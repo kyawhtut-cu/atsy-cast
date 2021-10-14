@@ -59,7 +59,7 @@ object GSApplication {
         data: RecentlyWatchEntity
     ) {
         context.startActivity<PlayerActivity>(
-            Constants.EXTRA_VIDEO_ID to data.videoID.toInt(),
+            Constants.EXTRA_VIDEO_ID to data.videoID,
             Constants.EXTRA_IS_RESUME to true,
             Constants.EXTRA_VIDEO_TITLE to data.videoTitle,
             Constants.EXTRA_VIDEO_COVER to data.videoCover,

@@ -29,7 +29,7 @@ internal class PlayerViewModel @Inject constructor(
     private val isAdult: Boolean by lazy {
         savedStateHandle.get(Constants.EXTRA_IS_ADULT) ?: false
     }
-    var videoID: Int = savedStateHandle.get(Constants.EXTRA_VIDEO_ID) ?: 0
+    var videoID: String = savedStateHandle.get(Constants.EXTRA_VIDEO_ID) ?: "0"
     var isResume: Boolean = savedStateHandle.get(Constants.EXTRA_IS_RESUME) ?: false
     var videoTitle: String = savedStateHandle.get(Constants.EXTRA_VIDEO_TITLE) ?: ""
     var videoCover: String = savedStateHandle.get(Constants.EXTRA_VIDEO_COVER) ?: ""

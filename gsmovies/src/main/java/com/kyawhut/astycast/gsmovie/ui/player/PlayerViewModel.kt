@@ -29,7 +29,7 @@ internal class PlayerViewModel @Inject constructor(
     val route: String by lazy {
         savedStateHandle.get(Constants.EXTRA_API_KEY) ?: ""
     }
-    var videoID: Int = savedStateHandle.get(Constants.EXTRA_VIDEO_ID) ?: 0
+    var videoID: String = savedStateHandle.get(Constants.EXTRA_VIDEO_ID) ?: "0"
     var isResume: Boolean = savedStateHandle.get(Constants.EXTRA_IS_RESUME) ?: false
     var videoTitle: String = savedStateHandle.get(Constants.EXTRA_VIDEO_TITLE) ?: ""
     var videoCover: String = savedStateHandle.get(Constants.EXTRA_VIDEO_COVER) ?: ""
@@ -48,7 +48,7 @@ internal class PlayerViewModel @Inject constructor(
         repository.deleteRecentlyWatch(route, videoID)
         if (lastPosition >= duration) return
         repository.insertLastPosition {
-            videoID = "${this@PlayerViewModel.videoID}"
+            videoID = this@PlayerViewModel.videoID
             videoTitle = this@PlayerViewModel.videoTitle
             videoCover = this@PlayerViewModel.videoCover
             videoDuration = duration

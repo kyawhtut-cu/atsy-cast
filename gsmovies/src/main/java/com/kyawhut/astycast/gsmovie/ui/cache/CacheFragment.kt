@@ -77,7 +77,7 @@ internal class CacheFragment : BaseGridSupportFragment<CacheViewModel>() {
             )
         } else if (it is RecentlyWatchEntity) {
             startActivity<PlayerActivity>(
-                Constants.EXTRA_VIDEO_ID to it.videoID.toInt(),
+                Constants.EXTRA_VIDEO_ID to it.videoID,
                 Constants.EXTRA_IS_RESUME to true,
                 Constants.EXTRA_VIDEO_TITLE to it.videoTitle,
                 Constants.EXTRA_VIDEO_COVER to it.videoCover,

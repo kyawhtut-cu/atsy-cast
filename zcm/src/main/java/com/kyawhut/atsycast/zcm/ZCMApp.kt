@@ -30,7 +30,7 @@ object ZCMApp {
     }
 
     fun Fragment.goToZCM(appName: String, channelLogo: String, apiKey: String) {
-        requireContext().goToZCM(appName, apiKey, channelLogo)
+        requireContext().goToZCM(appName, channelLogo, apiKey)
     }
 
     fun Fragment.goToZCMDetail(
@@ -54,7 +54,7 @@ object ZCMApp {
         data: RecentlyWatchEntity
     ) {
         context.startActivity<PlayerActivity>(
-            Constants.EXTRA_VIDEO_ID to data.videoID.toInt(),
+            Constants.EXTRA_VIDEO_ID to data.videoID,
             Constants.EXTRA_IS_RESUME to true,
             Constants.EXTRA_VIDEO_TITLE to data.videoTitle,
             Constants.EXTRA_VIDEO_COVER to data.videoCover,

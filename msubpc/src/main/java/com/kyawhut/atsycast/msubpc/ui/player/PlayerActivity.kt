@@ -58,7 +58,7 @@ class PlayerActivity : BasePlayerActivity() {
         vm.updatePlayerPositionCache(lastPosition, duration)
         if (item is EpisodeResponse) {
             val originTitle = vm.videoTitle.split(" - ")[0]
-            vm.videoID = item.id.toInt()
+            vm.videoID = item.id
             vm.videoTitle = "%s - %s".format(
                 originTitle, item.episodeName
             )

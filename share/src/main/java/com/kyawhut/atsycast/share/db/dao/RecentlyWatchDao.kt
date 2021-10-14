@@ -21,16 +21,16 @@ abstract class RecentlyWatchDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract fun insert(vararg data: RecentlyWatchEntity): List<Long>
 
-    @Query("select * from table_recently_watch order by created_at desc")
+    @Query("select * from table_recently_watch order by updated_at desc")
     abstract fun getAll(): Flowable<List<RecentlyWatchEntity>>
 
     @Query("select * from table_recently_watch where video_id = :videoID and video_source_type = :sourceType")
     abstract fun get(videoID: String, sourceType: SourceType): RecentlyWatchEntity?
 
-    @Query("select * from table_recently_watch where video_source_type = :sourceType order by created_at")
+    @Query("select * from table_recently_watch where video_source_type = :sourceType order by updated_at desc")
     abstract fun get(sourceType: SourceType): List<RecentlyWatchEntity>
 
-    @Query("select * from table_recently_watch where video_source_type = :sourceType order by created_at")
+    @Query("select * from table_recently_watch where video_source_type = :sourceType order by updated_at desc")
     abstract fun getLive(sourceType: SourceType): Flowable<List<RecentlyWatchEntity>>
 
     @Query("select count(*) from table_recently_watch where video_source_type = :sourceType")

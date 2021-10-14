@@ -41,7 +41,7 @@ object ET2SMMApp {
         )
     }
 
-    fun Fragment.goToETS2MM(appName: String, apiKey: String, channelLogo: String) {
+    fun Fragment.goToETS2MM(appName: String, channelLogo: String, apiKey: String) {
         requireContext().goToETS2MM(appName, apiKey, channelLogo)
     }
 
@@ -66,7 +66,7 @@ object ET2SMMApp {
         data: RecentlyWatchEntity
     ) {
         context.startActivity<PlayerActivity>(
-            Constants.EXTRA_VIDEO_ID to data.videoID.toInt(),
+            Constants.EXTRA_VIDEO_ID to data.videoID,
             Constants.EXTRA_IS_RESUME to true,
             Constants.EXTRA_IS_ADULT to data.isAdult,
             Constants.EXTRA_VIDEO_TITLE to data.videoTitle,

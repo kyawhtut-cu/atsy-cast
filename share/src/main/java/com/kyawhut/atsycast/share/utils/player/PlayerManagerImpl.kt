@@ -153,7 +153,7 @@ class PlayerManagerImpl private constructor(
 
         playerView.setControllerVisibilityListener {
             if (it == View.VISIBLE) playerView.findViewById<DefaultTimeBar>(R.id.exo_progress)
-                .requestFocus()
+                ?.requestFocus()
             playerStateListener?.onPlayerControlState(it == View.VISIBLE)
         }
 
@@ -499,8 +499,8 @@ class PlayerManagerImpl private constructor(
     }
 
     private fun toggleAction(isVisible: Boolean) {
-        playerView.findViewById<ImageView>(R.id.btn_quality).isVisible = isVisible
-        playerView.findViewById<ImageView>(R.id.btn_subtitle).isVisible =
+        playerView.findViewById<ImageView>(R.id.btn_quality)?.isVisible = isVisible
+        playerView.findViewById<ImageView>(R.id.btn_subtitle)?.isVisible =
             playerSubtitle.isNotEmpty() && isVisible
     }
 

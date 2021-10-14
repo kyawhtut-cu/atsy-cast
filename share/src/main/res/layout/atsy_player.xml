@@ -180,6 +180,7 @@
             android:layout_height="wrap_content"
             android:paddingHorizontal="@dimen/margin_medium"
             android:paddingVertical="@dimen/margin_small"
+            android:visibility="gone"
             app:cornerLeftBottom="@dimen/margin_small"
             app:cornerRightTop="@dimen/margin_small"
             app:layout_constraintEnd_toStartOf="@+id/right_one"

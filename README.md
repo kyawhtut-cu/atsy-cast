@@ -25,7 +25,13 @@ Screenshot
     
   <img alt="Resume" src="screenshot/page-resume.png"/>
     
-  <img alt="Player Movies" src="screenshot/player-movies.png"/>
+  <img alt="Player Movies" src="screenshot/player-1.png"/>
+
+  <img alt="Player Subtitles" src="screenshot/player-2.png"/>
+
+  <img alt="Player MM Subtitles" src="screenshot/player-3.png"/>
+
+  <img alt="Player Quality" src="screenshot/player-4.png"/>
     
   <img alt="Page Detail Series" src="screenshot/page-detail-series.png"/>
     

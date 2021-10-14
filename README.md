@@ -15,33 +15,33 @@ Demo App
 
 Screenshot
 ----------
-  <img alt="Splash Screen" src="screenshot/splash.png"/>
+  ![Splash Screen](screenshot/splash.png)
 
-  <img alt="Home Screen" src="screenshot/home.png"/>
-   
-  <img alt="Page Movies" src="screenshot/page-movies.png"/>
-    
-  <img alt="Page Detail Movies" src="screenshot/page-detail-movies.png"/>
-    
-  <img alt="Resume" src="screenshot/page-resume.png"/>
-    
-  <img alt="Player Movies" src="screenshot/player-1.png"/>
+  ![Home Screen](screenshot/home.png)
 
-  <img alt="Player Subtitles" src="screenshot/player-2.png"/>
+  ![Page Movies](screenshot/page-movies.png)
 
-  <img alt="Player MM Subtitles" src="screenshot/player-3.png"/>
+  ![Page Detail Movies](screenshot/page-detail-movies.png)
 
-  <img alt="Player Quality" src="screenshot/player-4.png"/>
-    
-  <img alt="Page Detail Series" src="screenshot/page-detail-series.png"/>
-    
-  <img alt="Player Series" src="screenshot/player-series.png"/>
-    
-  <img alt="Player Series Episode" src="screenshot/player-series-episode.png"/>
-    
-  <img alt="Setting" src="screenshot/setting.png"/>
-    
-  <img alt="Language Setting" src="screenshot/setting-language.png"/>
+  ![Resume](screenshot/page-resume.png)
+
+  ![Player Movies](screenshot/player-1.png)
+
+  ![Player Subtitles](screenshot/player-2.png)
+
+  ![Player MM Subtitles](screenshot/player-3.png)
+
+  ![Player Quality](screenshot/player-4.png)
+
+  ![Page Detail Series](screenshot/page-detail-series.png)
+
+  ![Player Series](screenshot/player-series.png)
+
+  ![Player Series Episode](screenshot/player-series-episode.png)
+
+  ![Setting](screenshot/setting.png)
+
+  ![Language Setting](screenshot/setting-language.png)
 
 License
 --------

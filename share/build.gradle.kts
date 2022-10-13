@@ -200,4 +200,7 @@ dependencies {
     implementation(Libs.lottie)
 
     implementation(Libs.googleZxing)
+
+    // realTimeBlur - https://github.com/mmin18/RealtimeBlurView
+    implementation(Libs.realTimeBlur)
 }

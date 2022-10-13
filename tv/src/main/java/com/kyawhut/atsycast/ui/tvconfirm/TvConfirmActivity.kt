@@ -35,7 +35,7 @@ class TvConfirmActivity : BaseTvActivity<ActivityTvConfirmBinding>() {
                     KeyEvent.KEYCODE_DPAD_RIGHT -> RIGHT
                     KeyEvent.KEYCODE_DPAD_DOWN -> BOTTOM
                     KeyEvent.KEYCODE_DPAD_LEFT -> LEFT
-                    KeyEvent.KEYCODE_ENTER -> CENTER
+                    KeyEvent.KEYCODE_ENTER, KeyEvent.KEYCODE_DPAD_CENTER -> CENTER
                     else -> DEFAULT
                 }
             }

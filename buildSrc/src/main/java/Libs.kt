@@ -108,4 +108,6 @@ object Libs {
 
     const val leakCanary = "com.squareup.leakcanary:leakcanary-android:${Versions.leakCanaryVersion}"
     const val leakCanaryNoOP = "com.squareup.leakcanary:leakcanary-android-no-op:${Versions.leakCanaryVersion}"
+
+    const val realTimeBlur = "com.github.mmin18:realtimeblurview:${Versions.realTimeBlurVersion}"
 }

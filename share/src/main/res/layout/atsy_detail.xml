@@ -92,7 +92,7 @@
         <View
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:alpha="@{showFullDetail ? 0.7F : 0.35F}"
+            android:alpha="0.35"
             android:background="@color/colorBlack"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -103,7 +103,6 @@
             android:id="@+id/view_detail"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:visibility="@{showFullDetail ? View.GONE : View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -300,6 +299,18 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <com.github.mmin18.widget.RealtimeBlurView
+            android:id="@+id/view_blur"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="@{showFullDetail ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:realtimeBlurRadius="@dimen/margin_medium"
+            app:realtimeOverlayColor="#cc000000" />
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/view_full_description"
             android:layout_width="0dp"
@@ -331,6 +342,7 @@
                 android:id="@+id/scroll"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:layout_marginTop="@dimen/margin_small"
                 android:clipToPadding="false"
                 android:overScrollMode="never"
                 android:paddingBottom="@dimen/margin_xlarge"

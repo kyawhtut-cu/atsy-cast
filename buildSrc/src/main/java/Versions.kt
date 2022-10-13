@@ -74,4 +74,6 @@ object Versions {
     const val easyPermissionVersion = "3.0.0"
     const val googleZxingVersion = "3.3.3"
     const val leakCanaryVersion = "1.5.4"
+
+    const val realTimeBlurVersion = "1.2.1"
 }

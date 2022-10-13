@@ -28,7 +28,7 @@
         tools:targetApi="m">
 
         <activity
-            android:name=".ui.splash.SplashActivity"
+            android:name=".ui.drivetest.DriveTestActivity"
             android:screenOrientation="sensorLandscape"
             android:theme="@style/BaseTvTheme">
             <intent-filter>

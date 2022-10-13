@@ -1,3 +1,4 @@
+rootProject.name = "ATSY Cast"
 include(":gs-mm")
 include(":tiktok")
 include(":gsmovies")
@@ -11,4 +12,4 @@ include(":msubpc")
 include(":free2air")
 include(":share")
 include(":tv")
-rootProject.name = "ATSY Cast"
+include(":tdlib")

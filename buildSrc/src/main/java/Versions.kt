@@ -8,7 +8,7 @@ object Versions {
 
     const val compileSdkVersion = 30
     const val buildToolsVersion = "30.0.2"
-    const val minSdkVersion = 19
+    const val minSdkVersion = 21
     const val targetSdkVersion = 30
     const val tvMinSdkVersion = 21
     const val tvTargetSdkVersion = 30

@@ -1,12 +1,14 @@
 object Versions {
 
     const val gradleAndroidVersion = "4.1.1"
-    const val kotlinVersion = "1.4.32"
-    const val googleServiceVersion = "4.3.10"
-    const val firebaseCrashlyticsVersion = "2.7.1"
-    const val daggerVersion = "2.38.1"
+    const val kotlinVersion = "1.7.0"
+    const val googleServiceVersion = "4.3.13"
+    const val firebaseCrashlyticsVersion = "2.9.1"
+    const val daggerVersion = "2.42"
+    const val navigationSafeArgsVersion = "2.5.1"
+    const val xdimenVersion = "0.0.6"
 
-    const val compileSdkVersion = 30
+    const val compileSdkVersion = 32
     const val buildToolsVersion = "30.0.2"
     const val minSdkVersion = 21
     const val targetSdkVersion = 30
@@ -32,7 +34,7 @@ object Versions {
     const val zxingVersion = "1.9.13"
     const val florentVersion = "1.1.2"
 
-    const val hiltVersion = "2.38.1"
+    const val hiltVersion = "2.42"
     const val hiltAndroidXVersion = "1.0.0-alpha02"
 
     const val roomVersion = "2.2.6"
@@ -47,7 +49,7 @@ object Versions {
     const val retrofitRxJavaVersion = "2.7.1"
     const val okhttpVersion = "4.6.0"
     const val loggingInterceptorVersion = "4.6.0"
-    const val coroutineKotlin = "1.4.2"
+    const val coroutineKotlin = "1.6.4"
 
     const val rxJavaVersion = "2.2.17"
     const val rxAndroidVersion = "2.1.1"
@@ -62,6 +64,7 @@ object Versions {
     const val leanbackVersion = "1.1.0-alpha04"
     const val leanbackPreferenceVersion = "1.1.0-alpha04"
 
+    const val coilVersion = "2.2.2"
     const val glideVersion = "4.9.0"
     const val glideOkHttpVersion = "4.4.0"
 

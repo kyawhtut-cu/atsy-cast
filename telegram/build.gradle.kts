@@ -10,12 +10,14 @@ plugins {
 
 val releaseProperties = Properties()
 releaseProperties.load(file("${rootDir}/local.properties").inputStream())
-val ZCM_BASE_URL: String = releaseProperties.getProperty("ZCM_BASE_URL", "")
+val TELEGRAM_APP_ID: Int = releaseProperties.getProperty("TELEGRAM_APP_ID", "0").toInt()
+val TELEGRAM_APP_HASH: String = releaseProperties.getProperty("TELEGRAM_APP_HASH", "")
 
 android {
     compileSdk = Versions.compileSdkVersion
 
     defaultConfig {
+
         minSdk = Versions.tvMinSdkVersion
         targetSdk = Versions.tvTargetSdkVersion
 
@@ -28,7 +30,8 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
 
-        buildConfigString("BASE_URL", ZCM_BASE_URL)
+        buildConfigInt("TELEGRAM_APP_ID", TELEGRAM_APP_ID)
+        buildConfigString("TELEGRAM_APP_HASH", TELEGRAM_APP_HASH)
     }
 
     flavorDimensions += listOf("env")
@@ -111,7 +114,6 @@ android {
 }
 
 dependencies {
-
     implementation(project(":share"))
 
     testImplementation(Libs.junit)
@@ -129,15 +131,10 @@ dependencies {
     implementation(Libs.hiltAndroid)
     kapt(Libs.hiltAndroidCompiler)
 
-    // retrofit
-    implementation(Libs.retrofit)
-
     implementation(Libs.gson)
 
-    // Room
-    implementation(Libs.roomKtx)
-    implementation(Libs.roomRuntime)
-    kapt(Libs.roomCompiler)
-    // RxJava support for Room
-    implementation(Libs.roomRxJava)
+    implementation(Libs.coroutineKotlin)
+    implementation(Libs.googleZxing)
+
+    implementation(project(":tdlib"))
 }

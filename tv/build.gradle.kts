@@ -1,12 +1,11 @@
 import java.util.*
 
 plugins {
-    androidGitVersion()
     androidApp()
-    dagger()
     kotlinAndroid()
     kotlinKapt()
-    kotlinExtension()
+    androidGitVersion()
+    dagger()
     googleService()
     firebaseCrashlytics()
 }
@@ -36,15 +35,14 @@ val HOME_UPDATE_URL: String = releaseProperties.getProperty("HOME_UPDATE_URL", "
 val RELEASE_UPDATE_URL: String = releaseProperties.getProperty("RELEASE_UPDATE_URL", "")
 
 android {
-    compileSdkVersion(Versions.compileSdkVersion)
-    buildToolsVersion(Versions.buildToolsVersion)
+    compileSdk = Versions.compileSdkVersion
 
     defaultConfig {
 
         applicationId = "com.kyawhut.atsycast"
 
-        minSdkVersion(Versions.tvMinSdkVersion)
-        targetSdkVersion(Versions.tvTargetSdkVersion)
+        minSdk = Versions.tvMinSdkVersion
+        targetSdk = Versions.tvTargetSdkVersion
 
         versionCode = androidGitVersion.code()
         versionName = androidGitVersion.name()
@@ -57,7 +55,7 @@ android {
 
     }
 
-    flavorDimensions("env")
+    flavorDimensions += listOf("env")
     productFlavors {
         create("local") {
             dimension = "env"
@@ -88,11 +86,11 @@ android {
     buildTypes {
 
         getByName("debug") {
-            debuggable(true)
-            jniDebuggable(true)
-            renderscriptDebuggable(true)
+            isDebuggable = true
+            isJniDebuggable = true
+            isRenderscriptDebuggable = true
 
-            minifyEnabled(false)
+            isMinifyEnabled = false
             isShrinkResources = false
 
             applicationIdSuffix = ".debug"
@@ -108,11 +106,11 @@ android {
         }
 
         getByName("release") {
-            debuggable(false)
-            jniDebuggable(false)
-            renderscriptDebuggable(false)
+            isDebuggable = false
+            isJniDebuggable = false
+            isRenderscriptDebuggable = false
 
-            minifyEnabled(true)
+            isMinifyEnabled = true
             isShrinkResources = true
 
             applicationIdSuffix = ""

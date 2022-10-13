@@ -6,6 +6,10 @@ object Libs {
     const val firebaseCrashlyticsService =
         "com.google.firebase:firebase-crashlytics-gradle:${Versions.firebaseCrashlyticsVersion}"
     const val dagger = "com.google.dagger:hilt-android-gradle-plugin:${Versions.daggerVersion}"
+    const val navigationSafeArgs =
+        "androidx.navigation:navigation-safe-args-gradle-plugin:${Versions.navigationSafeArgsVersion}"
+    const val xdimen =
+        "io.github.islamkhsh.xdimen:io.github.islamkhsh.xdimen.gradle.plugin:${Versions.xdimenVersion}"
 
     const val junit = "junit:junit:${Versions.junitVersion}"
     const val testJunit = "androidx.test.ext:junit:${Versions.testJunitVersion}"
@@ -77,6 +81,7 @@ object Libs {
     const val leanback = "androidx.leanback:leanback:${Versions.leanbackVersion}"
     const val leanbackPreference = "androidx.leanback:leanback-preference:${Versions.leanbackPreferenceVersion}"
 
+    const val coil = "io.coil-kt:coil:${Versions.coilVersion}"
     const val glide = "com.github.bumptech.glide:glide:${Versions.glideVersion}"
     const val glideOkHttp =
         "com.github.bumptech.glide:okhttp3-integration:${Versions.glideOkHttpVersion}"

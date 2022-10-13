@@ -1,16 +1,14 @@
 package com.kyawhut.atsycast.msys.utils.cloudmd
 
-import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
+import java.io.Serializable
 
-@Parcelize
 data class Media(
     val quality: String,
     val resolution: String,
     val fileSize: String,
     val url: String,
     internal val downloadRoute: String
-) : Parcelable {
+) : Serializable {
     override fun toString(): String {
         return quality
     }

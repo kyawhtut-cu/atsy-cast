@@ -2,14 +2,15 @@ plugins {
     `kotlin-dsl`
 }
 
-val kotlinVersion = "1.4.32"
+val kotlinVersion = "1.7.0"
 
 repositories {
     google()
-    jcenter()
+    mavenCentral()
 }
 
 dependencies {
-    implementation("com.android.tools.build:gradle:4.1.1")
+    implementation("com.android.tools.build:gradle:7.2.1")
     implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
+    implementation("com.squareup:javapoet:1.13.0")
 }

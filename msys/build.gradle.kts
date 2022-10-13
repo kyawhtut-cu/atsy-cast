@@ -1,11 +1,10 @@
 import java.util.*
 
 plugins {
-    androidGitVersion()
     library()
     kotlinAndroid()
     kotlinKapt()
-    kotlinExtension()
+    androidGitVersion()
     dagger()
 }
 
@@ -14,13 +13,11 @@ releaseProperties.load(file("${rootDir}/local.properties").inputStream())
 val BASE_URL: String = releaseProperties.getProperty("MSYS_BASE_URL", "")
 
 android {
-    compileSdkVersion(Versions.compileSdkVersion)
-    buildToolsVersion(Versions.buildToolsVersion)
+    compileSdk = Versions.compileSdkVersion
 
     defaultConfig {
-
-        minSdkVersion(Versions.tvMinSdkVersion)
-        targetSdkVersion(Versions.tvTargetSdkVersion)
+        minSdk = Versions.tvMinSdkVersion
+        targetSdk = Versions.tvTargetSdkVersion
 
         multiDexEnabled = true
 
@@ -28,13 +25,13 @@ android {
             useSupportLibrary = true
         }
 
-        testInstrumentationRunner("androidx.test.runner.AndroidJUnitRunner")
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
 
         buildConfigString("BASE_URL", BASE_URL)
     }
 
-    flavorDimensions("env")
+    flavorDimensions += listOf("env")
     productFlavors {
         create("local") {
             dimension = "env"
@@ -48,11 +45,11 @@ android {
     buildTypes {
 
         getByName("debug") {
-            debuggable(true)
-            jniDebuggable(true)
-            renderscriptDebuggable(true)
+            isDebuggable = true
+            isJniDebuggable = true
+            isRenderscriptDebuggable = true
 
-            minifyEnabled(false)
+            isMinifyEnabled = false
             isShrinkResources = false
 
             proguardFiles(
@@ -62,11 +59,11 @@ android {
         }
 
         getByName("release") {
-            debuggable(false)
-            jniDebuggable(false)
-            renderscriptDebuggable(false)
+            isDebuggable = false
+            isJniDebuggable = false
+            isRenderscriptDebuggable = false
 
-            minifyEnabled(false)
+            isMinifyEnabled = false
             isShrinkResources = false
 
             proguardFiles(
@@ -103,7 +100,7 @@ android {
         val variant = this
         variant.outputs.map { it as com.android.build.gradle.internal.api.BaseVariantOutputImpl }
             .forEach { output ->
-                val buildOutputPath = "../../release/${androidGitVersion.name()}/"
+                val buildOutputPath = "../../../../../modules/${androidGitVersion.name()}/"
                 output.outputFileName = String.format(
                     "%s%s",
                     buildOutputPath,

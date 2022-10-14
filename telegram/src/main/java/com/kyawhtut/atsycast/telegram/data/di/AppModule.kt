@@ -5,6 +5,8 @@ import android.os.Build
 import com.kyawhtut.atsycast.telegram.BuildConfig
 import com.kyawhtut.atsycast.telegram.data.telegram.Telegram
 import com.kyawhtut.atsycast.telegram.data.telegram.TelegramImpl
+import com.kyawhtut.atsycast.telegram.utils.NetworkState
+import com.kyawhtut.atsycast.telegram.utils.NetworkStateImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -47,5 +49,11 @@ internal object AppModule {
     @Singleton
     fun provideTelegram(telegram: TelegramImpl): Telegram {
         return telegram
+    }
+
+    @Provides
+    @Singleton
+    fun provideNetworkState(networkState: NetworkStateImpl): NetworkState {
+        return networkState
     }
 }

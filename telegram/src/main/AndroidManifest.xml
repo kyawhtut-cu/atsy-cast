@@ -2,4 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.kyawhtut.atsycast.telegram">
 
+    <application>
+        <activity
+            android:name=".ui.home.TelegramScreen"
+            android:theme="@style/BaseTvTheme" />
+    </application>
+
 </manifest>

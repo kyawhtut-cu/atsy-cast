@@ -25,6 +25,7 @@
         android:supportsRtl="true"
         android:theme="@style/BaseTvTheme"
         android:usesCleartextTraffic="true"
+        tools:replace="android:allowBackup"
         tools:targetApi="m">
 
         <activity

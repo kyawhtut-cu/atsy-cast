@@ -194,6 +194,7 @@ dependencies {
     implementation(project(":gsmovies"))
     implementation(project(":tiktok"))
     implementation(project(":gs-mm"))
+    implementation(project(":telegram"))
 
     testImplementation(Libs.junit)
     androidTestImplementation(Libs.testJunit)

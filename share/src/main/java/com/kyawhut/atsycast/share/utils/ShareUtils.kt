@@ -61,7 +61,7 @@ object ShareUtils {
     fun String.toQRCode(qrColor: Int = Color.BLACK, bgColor: Int = Color.WHITE): Bitmap? {
         return try {
             val bitMatrix = QRCodeWriter().encode(
-                Uri.encode(this, "utf-8"),
+                this,
                 BarcodeFormat.QR_CODE,
                 500,
                 500

@@ -3,6 +3,7 @@ package com.kyawhut.atsycast.ui.splash
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.constraintlayout.motion.widget.MotionLayout
+import com.kyawhtut.atsycast.telegram.ui.home.TelegramScreen
 import com.kyawhut.atsycast.BuildConfig
 import com.kyawhut.atsycast.R
 import com.kyawhut.atsycast.data.network.response.UserResponse
@@ -114,7 +115,7 @@ class SplashActivity : BaseTvActivityWithVM<ActivitySplashBinding, SplashViewMod
     override fun onTransitionCompleted(p0: MotionLayout?, p1: Int) {
         isAnimationComplete = true
         if (!BuildConfig.DEBUG) processIntent()
-        else startActivity<HomeActivity>()
+        else startActivity<TelegramScreen>()
     }
 
     override fun onTransitionChange(p0: MotionLayout?, p1: Int, p2: Int, p3: Float) {

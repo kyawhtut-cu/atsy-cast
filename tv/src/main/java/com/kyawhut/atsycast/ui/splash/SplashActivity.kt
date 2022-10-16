@@ -50,7 +50,7 @@ class SplashActivity : BaseTvActivityWithVM<ActivitySplashBinding, SplashViewMod
             viewSplash.setTransitionListener(this@SplashActivity)
         }
 
-        if (!isTv) {
+        if (!isTv && !BuildConfig.DEBUG) {
             finishAndRemoveTask()
             startActivity<TvConfirmActivity>()
             return

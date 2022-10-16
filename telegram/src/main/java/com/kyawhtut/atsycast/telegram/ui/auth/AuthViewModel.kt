@@ -19,12 +19,5 @@ internal class AuthViewModel @Inject constructor(
         const val EXTRA_AUTH_STATE = "EXTRA_AUTH_STATE"
     }
 
-    private val autState: AuthState by lazy {
-        savedStateHandle[EXTRA_AUTH_STATE] ?: AuthState.EnterPhone
-    }
-
-    init {
-        onAuthState?.invoke(autState)
-    }
-
+    var authState: AuthState = savedStateHandle[EXTRA_AUTH_STATE] ?: AuthState.EnterPhone
 }

@@ -103,7 +103,10 @@ internal class TelegramImpl @Inject constructor(
                 null
             }
 
-            TdApi.AuthorizationStateWaitCode.CONSTRUCTOR -> AuthState.EnterCode
+            TdApi.AuthorizationStateWaitCode.CONSTRUCTOR -> {
+                AuthState.EnterCode((authorizationState as TdApi.AuthorizationStateWaitCode).codeInfo.phoneNumber)
+            }
+
             TdApi.AuthorizationStateWaitPassword.CONSTRUCTOR -> {
                 AuthState.EnterPassword((authorizationState as TdApi.AuthorizationStateWaitPassword).passwordHint)
             }

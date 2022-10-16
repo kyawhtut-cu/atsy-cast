@@ -1,0 +1,4 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/ic_telegram_phone_edit_unfocus" android:state_focused="false" />
+    <item android:drawable="@drawable/ic_telegram_phone_edit_focus" android:state_focused="true" />
+</selector>

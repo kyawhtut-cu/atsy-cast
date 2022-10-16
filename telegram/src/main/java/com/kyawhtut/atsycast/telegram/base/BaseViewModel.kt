@@ -42,6 +42,7 @@ internal abstract class BaseViewModel(
         get() = networkState?.isLoading == true
         set(value) {
             networkState?.isLoading = value
+            notifyPropertyChanged(BR.loading)
         }
 
     @get:Bindable
@@ -49,6 +50,7 @@ internal abstract class BaseViewModel(
         get() = networkState?.error
         set(value) {
             networkState?.error = value
+            notifyPropertyChanged(BR.error)
         }
 
     init {

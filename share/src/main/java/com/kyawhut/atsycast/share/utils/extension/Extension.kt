@@ -9,6 +9,8 @@ import android.graphics.Point
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.util.DisplayMetrics
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -164,5 +166,12 @@ object Extension {
 
     fun Fragment.convertDpToPixel(dp: Float): Float {
         return requireContext().convertDpToPixel(dp)
+    }
+
+    infix fun Context.hideKeyboard(view: View) {
+        val inputMethodManager = getSystemService(
+            Activity.INPUT_METHOD_SERVICE
+        ) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
     }
 }

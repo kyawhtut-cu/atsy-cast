@@ -21,15 +21,9 @@ internal class QRViewModel @Inject constructor(
         const val EXTRA_LOGIN_URL = "EXTRA_LOGIN_URL"
     }
 
-    private val loginURL: String by lazy {
-        savedStateHandle[EXTRA_LOGIN_URL] ?: ""
-    }
+    var loginURL: String = savedStateHandle[EXTRA_LOGIN_URL] ?: ""
 
-    fun setQRCodeImage(view: ImageView) {
-        view.setImageBitmap(loginURL.toQRCode())
-    }
-
-    fun loginWithPhone(view: View) {
+    fun onClickLoginWithPhone(view: View) {
         viewModelScope {
             isLoading = true
 

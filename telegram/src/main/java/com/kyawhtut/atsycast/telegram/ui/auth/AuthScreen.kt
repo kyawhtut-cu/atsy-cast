@@ -28,29 +28,42 @@ internal class AuthScreen : BaseFragment<AuthScreenBinding>(R.layout.auth_screen
 
     private val vm: AuthViewModel by viewModels()
 
+    private val isAddedQRCode: Boolean
+        get() {
+            val currentPage =
+                childFragmentManager.findFragmentById(R.id.frameLayout) ?: return false
+            return currentPage is QRPage
+        }
+
     override fun onViewCreated(vb: AuthScreenBinding) {
 
-        vm.setOnAuthStateListener {
-            Timber.d("Auth State AuthScreen => $it")
-            when (it) {
-                is AuthState.EnterPhone -> {
-                    changePage(PhonePage.pagePhone())
-                }
+        vm.setOnAuthStateListener(::processAuthState)
 
-                is AuthState.EnterCode -> {
-                    changePage(OTPPage.pageOTP())
-                }
+        processAuthState(vm.authState)
+    }
 
-                is AuthState.EnterPassword -> {
-                    changePage(PasswordPage.pagePassword(it.passwordHint))
-                }
-
-                is AuthState.LoginWithQRCode -> {
-                    changePage(QRPage.pageQR(it.loginURL))
-                }
-
-                else -> {}
+    private fun processAuthState(it: AuthState) {
+        vm.authState = it
+        Timber.d("Auth State AuthScreen => $it")
+        when (it) {
+            is AuthState.EnterPhone -> {
+                changePage(PhonePage.pagePhone())
             }
+
+            is AuthState.EnterCode -> {
+                changePage(OTPPage.pageOTP(it.phone))
+            }
+
+            is AuthState.EnterPassword -> {
+                changePage(PasswordPage.pagePassword(it.passwordHint))
+            }
+
+            is AuthState.LoginWithQRCode -> {
+                if (isAddedQRCode) return
+                changePage(QRPage.pageQR(it.loginURL))
+            }
+
+            else -> {}
         }
     }
 

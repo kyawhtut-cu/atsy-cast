@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="lblTelegramPhonePageTitle">Sign in to Telegram</string>
+    <string name="lblTelegramPhonePageMessage">Please confirm your country and\nenter your phone number.</string>
+    <string name="lblTelegramQRCodePageTitle">Log in to Telegram by QR Code</string>
+    <string name="lblTelegramQRCodePageMessage">1. Open Telegram on your phone\n2. Go to Settings > Devices > Link Desktop Device\n3. Point your phone at this screen to confirm login</string>
+    <string name="lblTelegramOTPPageTitle">+65 9452 9109</string>
+    <string name="lblTelegramOTPPageMessage">We have sent you a message in Telegram\nwith the code.</string>
+    <string name="lblTelegramPasswordPageTitle">Enter Your Password</string>
+    <string name="lblTelegramPasswordPageMessage">Your account is protected with\nan additional password</string>
+
+    <string name="btnTelegramNext">Next</string>
+    <string name="btnTelegramLoginByPhoneNumber">Log in by phone number</string>
+    <string name="btnTelegramLoginByQRCode">Log in by QR Code</string>
+
+    <string name="hintTelegramCode">Code</string>
+    <string name="hintTelegramCountry">Country</string>
+    <string name="hintTelegramPhoneNumber">Phone number</string>
+</resources>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorTelegramPrimary">#3390ec</color>
+    <color name="coloTelegramEdtFocus">@color/colorTelegramPrimary</color>
+    <color name="coloTelegramEdtUnFocus">#dfe1e5</color>
+
+    <color name="coloTelegramEdtHintFocus">@color/colorTelegramPrimary</color>
+    <color name="coloTelegramEdtHintUnFocus">@color/colorWhite</color>
+</resources>

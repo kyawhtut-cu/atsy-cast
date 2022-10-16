@@ -8,7 +8,7 @@ import java.io.Serializable
 internal sealed interface AuthState : Serializable {
     object LoggedIn : AuthState
     object EnterPhone : AuthState
-    object EnterCode : AuthState
+    data class EnterCode(val phone: String) : AuthState
     data class LoginWithQRCode(val loginURL: String) : AuthState
     data class EnterPassword(val passwordHint: String) : AuthState
 }

@@ -1,6 +1,8 @@
 package com.kyawhtut.atsycast.telegram.ui.auth.phone
 
 import android.view.View
+import androidx.databinding.Bindable
+import com.kyawhtut.atsycast.telegram.BR
 import com.kyawhtut.atsycast.telegram.base.BaseViewModel
 import com.kyawhtut.atsycast.telegram.data.common.AuthRepository
 import com.kyawhtut.atsycast.telegram.utils.NetworkState
@@ -15,9 +17,34 @@ internal class PhoneViewModel @Inject constructor(
     networkState: NetworkState,
 ) : BaseViewModel(networkState, authRepository) {
 
-    var phone: String = ""
+    @get:Bindable
+    var isFocusCountry: Boolean = false
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.focusCountry)
+        }
 
-    fun loginWithPhone(view: View) {
+    @get:Bindable
+    var isFocusPhone: Boolean = false
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.focusPhone)
+        }
+
+    @get:Bindable
+    val isEmptyPhone: Boolean
+        get() = phone.isEmpty()
+
+    var country: String = "+65"
+
+    var phone: String = ""
+        set(value) {
+            field = value
+            if (value.isEmpty()) field = country
+            notifyPropertyChanged(BR.emptyPhone)
+        }
+
+    fun onClickNext(view: View) {
         viewModelScope {
             isLoading = true
 
@@ -29,7 +56,7 @@ internal class PhoneViewModel @Inject constructor(
         }
     }
 
-    fun loginWithQR(view: View) {
+    fun onClickLoginWithQRCode(view: View) {
         viewModelScope {
             isLoading = true
 

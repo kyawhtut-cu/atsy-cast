@@ -9,8 +9,8 @@ import com.kyawhtut.atsycast.telegram.data.common.AuthRepository
 import com.kyawhtut.atsycast.telegram.utils.NetworkState
 import com.kyawhtut.atsycast.telegram.utils.done
 import com.kyawhtut.atsycast.telegram.utils.error
-import com.kyawhtut.atsycast.telegram.utils.success
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import javax.inject.Inject
 
 @HiltViewModel
@@ -23,6 +23,8 @@ internal class OTPViewModel @Inject constructor(
     companion object {
         const val EXTRA_PHONE_NUMBER = "EXTRA_PHONE_NUMBER"
     }
+
+    private var onVerifyOTP: (() -> Unit)? = null
 
     @get:Bindable
     var isFocus: Boolean = false
@@ -59,8 +61,15 @@ internal class OTPViewModel @Inject constructor(
         }
     }
 
+    fun setOnVerifyOTPListener(listener: (() -> Unit)? = null) {
+        onVerifyOTP = listener
+    }
+
     private fun onVerifyOTP() {
+        onVerifyOTP?.invoke()
+
         viewModelScope {
+            delay(500)
             isLoading = true
 
             authRepository?.verifyOTP(code)?.done {

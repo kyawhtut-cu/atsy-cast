@@ -4,6 +4,7 @@ import androidx.fragment.app.viewModels
 import com.kyawhtut.atsycast.telegram.R
 import com.kyawhtut.atsycast.telegram.base.BaseFragment
 import com.kyawhtut.atsycast.telegram.databinding.AuthPageOtpBinding
+import com.kyawhut.atsycast.share.utils.extension.Extension.hideKeyboard
 import com.kyawhut.atsycast.share.utils.extension.putArg
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -22,5 +23,9 @@ internal class OTPPage : BaseFragment<AuthPageOtpBinding>(R.layout.auth_page_otp
 
     override fun onViewCreated(vb: AuthPageOtpBinding) {
         vb.vm = vm
+
+        vm.setOnVerifyOTPListener {
+            requireContext() hideKeyboard vb.edtCode
+        }
     }
 }

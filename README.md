@@ -5,6 +5,18 @@
 
 Application ထဲတွင် အသုံးပြုထားသည့် [API](https://en.wikipedia.org/wiki/API) များသည် သက်ဆိုင်ရာ မူရင်း APP များမှ လာခြင်းဖြစ်ပါသည်။ သို့သော် ယခု Repo တွင် ထို API များတွေ့ရမည်မဟုတ်ပါ။ Application အတွက် Update စစ်ဆေးသည့် [API](https://en.wikipedia.org/wiki/API) သည် [Google Script](https://www.google.com/script/start/) ကို အသုံးပြုထားပါသည်။
 
+**How to Run?**
+1. Before run first run the following cmd.
+   ```
+   ./gradlew :share:generateXdimen
+   ```
+   if some error occur please run first this line in mac
+   ```
+   export JAVA_HOME=/Applications/Android\ Studio.app/Contents/jre/Contents/Home/
+   ```
+   and then runt the first cmd.
+
+
 Demo Video
 ----------
   [![Demo Video](https://img.youtube.com/vi/qYcI3iJGmFs/0.jpg)](https://www.youtube.com/watch?v=qYcI3iJGmFs)

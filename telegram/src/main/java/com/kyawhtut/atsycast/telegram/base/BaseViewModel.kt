@@ -69,7 +69,7 @@ internal abstract class BaseViewModel(
         processOnIO {
             authRepository?.authFlow?.collect {
                 it?.let {
-                    onAuthState?.invoke(it)
+                    processOnMain { onAuthState?.invoke(it) }
                 }
             }
         }

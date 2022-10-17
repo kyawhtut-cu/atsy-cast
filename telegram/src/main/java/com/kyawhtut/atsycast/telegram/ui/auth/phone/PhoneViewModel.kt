@@ -40,7 +40,6 @@ internal class PhoneViewModel @Inject constructor(
     var phone: String = ""
         set(value) {
             field = value
-            if (value.isEmpty()) field = country
             notifyPropertyChanged(BR.emptyPhone)
         }
 
@@ -48,7 +47,7 @@ internal class PhoneViewModel @Inject constructor(
         viewModelScope {
             isLoading = true
 
-            authRepository?.sendPhone(phone)?.done {
+            authRepository?.sendPhone(country + phone.trim())?.done {
                 isLoading = false
             }?.error {
                 error = it

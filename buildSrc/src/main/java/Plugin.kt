@@ -24,3 +24,5 @@ fun PluginDependenciesSpec.firebaseCrashlytics(): PluginDependencySpec =
 fun PluginDependenciesSpec.androidGitVersion(): PluginDependencySpec {
     return id("com.gladed.androidgitversion") version "0.4.14"
 }
+
+fun PluginDependenciesSpec.xdimen(): PluginDependencySpec = id("io.github.islamkhsh.xdimen")

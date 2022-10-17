@@ -6,6 +6,7 @@ plugins {
     kotlinKapt()
     androidGitVersion()
     dagger()
+    xdimen()
 }
 
 val releaseProperties = Properties()
@@ -75,7 +76,6 @@ android {
     buildTypes {
 
         getByName("debug") {
-            isDebuggable = true
             isJniDebuggable = true
             isRenderscriptDebuggable = true
 
@@ -95,7 +95,6 @@ android {
                 RELEASE_SCRIPT_ID
             )
 
-            isDebuggable = false
             isJniDebuggable = false
             isRenderscriptDebuggable = false
 
@@ -143,6 +142,23 @@ android {
                     output.outputFileName
                 )
             }
+    }
+}
+
+xdimen {
+    deleteOldXdimen.set(true)
+    designWidth.set(1024)
+    designDpi.set(mdpi())
+    targetDevicesWidth.set(devicesInLandscape)
+    dimensRange {
+        minDimen.set(-56)
+        maxDimen.set(500)
+        step.set(0.5)
+    }
+    fontsRange {
+        minDimen.set(4)
+        maxDimen.set(240)
+        step.set(1.0)
     }
 }
 

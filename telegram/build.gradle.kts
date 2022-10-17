@@ -1,4 +1,4 @@
-import java.util.*
+import java.util.Properties
 
 plugins {
     library()
@@ -48,7 +48,6 @@ android {
     buildTypes {
 
         getByName("debug") {
-            isDebuggable = true
             isJniDebuggable = true
             isRenderscriptDebuggable = true
 
@@ -62,7 +61,6 @@ android {
         }
 
         getByName("release") {
-            isDebuggable = false
             isJniDebuggable = false
             isRenderscriptDebuggable = false
 
@@ -137,4 +135,6 @@ dependencies {
     implementation(Libs.googleZxing)
 
     implementation(project(":tdlib"))
+    // Сustom QR generator for Android - https://github.com/alexzhirkevich/custom-qr-generator
+    implementation("com.github.alexzhirkevich:custom-qr-generator:1.5.0")
 }

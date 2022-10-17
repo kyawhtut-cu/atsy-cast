@@ -37,7 +37,6 @@ android {
     buildTypes {
 
         getByName("debug") {
-            isDebuggable = true
             isJniDebuggable = true
             isRenderscriptDebuggable = true
 
@@ -51,7 +50,6 @@ android {
         }
 
         getByName("release") {
-            isDebuggable = false
             isJniDebuggable = false
             isRenderscriptDebuggable = false
 

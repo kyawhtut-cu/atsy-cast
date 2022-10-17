@@ -18,7 +18,7 @@ android {
         targetSdkVersion(Versions.targetSdkVersion)
     }
 
-    flavorDimensions("env")
+    flavorDimensions += listOf("env")
     productFlavors {
         create("local") {
             dimension = "env"
@@ -31,12 +31,24 @@ android {
 
     buildTypes {
 
-        getByName("release") {
-            debuggable(false)
-            jniDebuggable(false)
-            renderscriptDebuggable(false)
+        getByName("debug") {
+            isJniDebuggable = true
+            isRenderscriptDebuggable = true
 
-            minifyEnabled(false)
+            isMinifyEnabled = false
+            isShrinkResources = false
+
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+        }
+
+        getByName("release") {
+            isJniDebuggable = false
+            isRenderscriptDebuggable = false
+
+            isMinifyEnabled = false
             isShrinkResources = false
 
             proguardFiles(

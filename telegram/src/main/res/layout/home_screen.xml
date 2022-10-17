@@ -28,8 +28,8 @@
 
         <com.kyawhut.atsycast.share.components.IOSLoading
             toggleLoading="@{vm.loading}"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
+            android:layout_width="@dimen/x120dp"
+            android:layout_height="@dimen/x120dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

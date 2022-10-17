@@ -30,9 +30,18 @@ internal class AuthScreen : BaseFragment<AuthScreenBinding>(R.layout.auth_screen
 
     private val isAddedQRCode: Boolean
         get() {
-            val currentPage =
-                childFragmentManager.findFragmentById(R.id.frameLayout) ?: return false
+            val currentPage = childFragmentManager.findFragmentById(
+                R.id.frameLayout
+            ) ?: return false
             return currentPage is QRPage
+        }
+
+    private val isAddPhone: Boolean
+        get() {
+            val currentPage = childFragmentManager.findFragmentById(
+                R.id.frameLayout
+            ) ?: return false
+            return currentPage is PhonePage
         }
 
     override fun onViewCreated(vb: AuthScreenBinding) {
@@ -47,6 +56,7 @@ internal class AuthScreen : BaseFragment<AuthScreenBinding>(R.layout.auth_screen
         Timber.d("Auth State AuthScreen => $it")
         when (it) {
             is AuthState.EnterPhone -> {
+                if (isAddPhone) return
                 changePage(PhonePage.pagePhone())
             }
 

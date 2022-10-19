@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.card.view.ChatCardView">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="isFocus"
+            type="Boolean" />
+
+        <variable
+            name="chatName"
+            type="String" />
+
+        <variable
+            name="chatPhoto"
+            type="String" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="@dimen/x150dp"
+        android:layout_height="wrap_content"
+        android:background="@{isFocus ? @color/colorCardBackgroundFocus : @color/colorCardBackgroundUnFocus}"
+        tools:background="@color/colorCardBackgroundFocus">
+
+        <ImageView
+            android:id="@+id/ivChatPhoto"
+            isHorizontal="@{true}"
+            isInvisible="@{chatPhoto.isEmpty()}"
+            isNeedToCache="@{true}"
+            loadImage="@{chatPhoto}"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/x90dp"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_thumbnail"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            isVisible="@{chatPhoto.isEmpty()}"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/x90dp"
+            android:background="@color/colorTelegramPrimary"
+            android:gravity="center"
+            android:maxLength="1"
+            android:maxLines="1"
+            android:text="@{chatName}"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/x62sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="M" />
+
+        <TextView
+            android:id="@+id/tvChatName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:lineSpacingMultiplier="1.3"
+            android:maxLines="2"
+            android:minLines="2"
+            android:padding="@dimen/x4dp"
+            android:text="@{chatName}"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/x14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ivChatPhoto"
+            tools:text="Chat Name" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

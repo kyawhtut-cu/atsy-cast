@@ -46,6 +46,7 @@ internal inline infix fun <T, R> Response<T>.map(listener: (data: T) -> R): Resp
         is Response.Success -> try {
             Response.Success(listener(this.data))
         } catch (e: Exception) {
+            Timber.d(e, "Response<T>.map")
             Response.Error(
                 TelegramException(
                     code = -1,
@@ -53,6 +54,7 @@ internal inline infix fun <T, R> Response<T>.map(listener: (data: T) -> R): Resp
                 )
             )
         }
+
         is Response.Error -> this
     }
 }
@@ -62,6 +64,7 @@ internal suspend infix fun <T, R> Response<T>.flatMap(listener: suspend (data: T
         is Response.Success -> try {
             listener(this.data)
         } catch (e: Exception) {
+            Timber.d(e, "Response<T>.flatMap")
             Response.Error(
                 TelegramException(
                     code = -1,
@@ -69,6 +72,7 @@ internal suspend infix fun <T, R> Response<T>.flatMap(listener: suspend (data: T
                 )
             )
         }
+
         is Response.Error -> this
     }
 }

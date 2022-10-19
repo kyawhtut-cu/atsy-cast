@@ -3,6 +3,7 @@ package com.kyawhut.atsycast.share.base
 import android.content.Context
 import androidx.leanback.widget.Presenter
 import androidx.leanback.widget.PresenterSelector
+import com.google.gson.Gson
 
 abstract class BaseCardPresenterSelector<T : BaseCardType>(
     private val context: Context
@@ -10,7 +11,9 @@ abstract class BaseCardPresenterSelector<T : BaseCardType>(
 
     private val presenters: MutableMap<T, Presenter> = mutableMapOf()
 
-    abstract fun getCardType(item: Any?): T
+    open fun getCardType(item: Any?): T {
+        return throw RuntimeException("Unknown item => ${Gson().toJson(item)}")
+    }
 
     abstract fun getPresenter(type: T, context: Context): BaseCardPresenter<*>
 

@@ -24,6 +24,11 @@ class TelegramScreen : BaseTvActivity<HomeScreenBinding>() {
             val current = supportFragmentManager.findFragmentById(R.id.homeFrame) ?: return false
             return current is AuthScreen
         }
+    private val isAddedMain: Boolean
+        get() {
+            val current = supportFragmentManager.findFragmentById(R.id.homeFrame) ?: return false
+            return current is MainScreen
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +37,7 @@ class TelegramScreen : BaseTvActivity<HomeScreenBinding>() {
         vm.setOnAuthStateListener {
             Timber.d("Auth State TelegramScreen => $it")
             if (it is AuthState.LoggedIn) {
+                if (isAddedMain) return@setOnAuthStateListener
                 supportFragmentManager.commit {
                     replace(R.id.homeFrame, MainScreen.screenMain())
                 }

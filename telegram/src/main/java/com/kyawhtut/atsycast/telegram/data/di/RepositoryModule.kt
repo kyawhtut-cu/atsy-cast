@@ -2,6 +2,10 @@ package com.kyawhtut.atsycast.telegram.data.di
 
 import com.kyawhtut.atsycast.telegram.data.common.AuthRepository
 import com.kyawhtut.atsycast.telegram.data.common.AuthRepositoryImpl
+import com.kyawhtut.atsycast.telegram.ui.chat.ChatRepository
+import com.kyawhtut.atsycast.telegram.ui.chat.ChatRepositoryImpl
+import com.kyawhtut.atsycast.telegram.ui.chatdetail.ChatDetailRepo
+import com.kyawhtut.atsycast.telegram.ui.chatdetail.ChatDetailRepoImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,5 +23,17 @@ internal object RepositoryModule {
     @ViewModelScoped
     fun provideAuthRepository(authRepository: AuthRepositoryImpl): AuthRepository {
         return authRepository
+    }
+
+    @Provides
+    @ViewModelScoped
+    fun provideChatRepository(chatRepository: ChatRepositoryImpl): ChatRepository {
+        return chatRepository
+    }
+
+    @Provides
+    @ViewModelScoped
+    fun provideChatDetailRepository(chatDetailRepo: ChatDetailRepoImpl): ChatDetailRepo {
+        return chatDetailRepo
     }
 }

@@ -4,15 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ui.main.MainScreen">
 
-    <data>
-
-        <import type="com.kyawhtut.atsycast.telegram.ui.main.MainViewModel" />
-
-        <variable
-            name="vm"
-            type="MainViewModel" />
-    </data>
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">

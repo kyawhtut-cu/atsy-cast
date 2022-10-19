@@ -10,6 +10,7 @@ import com.kyawhtut.atsycast.telegram.utils.TelegramExtension.getFile
 import com.kyawhtut.atsycast.telegram.utils.map
 import com.kyawhtut.atsycast.telegram.utils.success
 import org.drinkless.td.libcore.telegram.TdApi
+import timber.log.Timber
 import javax.inject.Inject
 
 /**
@@ -21,11 +22,14 @@ internal class ChatRepositoryImpl @Inject constructor(
 
     override suspend fun getChatList(): Response<List<ChatModel>> {
         return telegram.getChatList().map {
+            // get chat ids
             it.chatIds.map { id ->
                 telegram.getChatByID(id)
             }.mapNotNull { response ->
-                if (response is Response.Success) response.data
-                else null
+                if (response is Response.Success) {
+                    // get chat detail
+                    response.data
+                } else null
             }.filter { chat ->
                 when (chat.type.constructor) {
                     TdApi.ChatTypeSecret.CONSTRUCTOR -> true
@@ -36,42 +40,64 @@ internal class ChatRepositoryImpl @Inject constructor(
             }
         }.map {
             it.map { chat ->
+                // fetch chat photo
                 telegram.getFile(chat.photo?.big?.id) to chat
-            }.map { (photo, chat) ->
-                if (photo is Response.Success) {
-                    photo.data.local.path to chat
+            }.map { (response, chat) ->
+                // get chat photo
+                if (response is Response.Success) {
+                    response.data.local.path to chat
                 } else "" to chat
-            }.mapNotNull { (photo, chat) ->
+            }.map { (chatPhoto, chat) ->
                 val lastMessage = chat.lastMessage
                 ChatModel(
                     chat.id,
                     chat.title,
-                    photo,
-                    if (lastMessage != null) {
-                        when (lastMessage.constructor) {
-                            TdApi.MessageText.CONSTRUCTOR -> with(lastMessage as TdApi.MessageText) {
-                                MessageType.MessageTextModel(
-                                    lastMessage.id,
-                                    text.text
-                                )
-                            }
-                            TdApi.MessagePhoto.CONSTRUCTOR -> with(lastMessage as TdApi.MessagePhoto) {
-                                var photoPath = ""
-                                telegram.getFile(
-                                    this.photo.sizes.first().photo.id
-                                ).success { file ->
-                                    photoPath = file.local.path
-                                }
-                                MessageType.MessagePhotoModel(
-                                    lastMessage.id,
-                                    photoPath,
-                                    caption.text
-                                )
-                            }
-                            else -> null
+                    chatPhoto,
+                    when (lastMessage?.content?.constructor) {
+                        TdApi.MessageText.CONSTRUCTOR -> with(lastMessage.content as TdApi.MessageText) {
+                            MessageType.MessageTextModel(
+                                lastMessage.id,
+                                text.text
+                            )
                         }
-                    } else null
-                )
+
+                        TdApi.MessagePhoto.CONSTRUCTOR -> with(lastMessage.content as TdApi.MessagePhoto) {
+                            var photoPath = ""
+                            telegram.getFile(
+                                photo.sizes.first().photo.id
+                            ).success { file ->
+                                photoPath = file.local.path
+                            }
+                            MessageType.MessagePhotoModel(
+                                lastMessage.id,
+                                photoPath,
+                                caption.text
+                            )
+                        }
+
+                        TdApi.MessageVideo.CONSTRUCTOR -> with(lastMessage.content as TdApi.MessageVideo) {
+                            var thumbnailPath = ""
+                            telegram.getFile(
+                                video.thumbnail?.file?.id
+                            ).success {
+                                thumbnailPath = it.local.path
+                            }
+                            MessageType.MessageVideoModel(
+                                lastMessage.id,
+                                thumbnailPath,
+                                caption.text,
+                                video.video.id,
+                                video.video.size,
+                                video.fileName,
+                                video.duration,
+                            )
+                        }
+
+                        else -> null
+                    }
+                ).also {
+                    Timber.d("Message Chat Data => ${it.chatTitle} $it")
+                }
             }
         }
     }

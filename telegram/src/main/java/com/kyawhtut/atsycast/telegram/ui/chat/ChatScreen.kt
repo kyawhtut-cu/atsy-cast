@@ -1,8 +1,15 @@
 package com.kyawhtut.atsycast.telegram.ui.chat
 
+import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.leanback.widget.ArrayObjectAdapter
+import com.kyawhtut.atsycast.telegram.R
+import com.kyawhtut.atsycast.telegram.data.model.ChatModel
+import com.kyawhtut.atsycast.telegram.ui.card.CardPresenter
+import com.kyawhtut.atsycast.telegram.ui.chatdetail.ChatDetailScreen.Companion.openDetail
 import com.kyawhut.atsycast.share.base.BaseGridSupportFragment
+import com.kyawhut.atsycast.share.components.iosloading.ToolBox
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -21,19 +28,30 @@ internal class ChatScreen : BaseGridSupportFragment<ChatViewModel>() {
         get() = false
     override val vm: ChatViewModel by viewModels()
     override val numberOfColumns: Int
-        get() = 4
-    override val rowsAdapter: ArrayObjectAdapter
-        get() = TODO("Not yet implemented")
+        get() = (ToolBox.screenWidth / resources.getDimensionPixelSize(R.dimen.x150dp)) - 1
+    override val rowsAdapter: ArrayObjectAdapter by lazy {
+        ArrayObjectAdapter(CardPresenter(requireContext()))
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        vm.setOnChatListListener {
+            rowsAdapter.setItems(it, ChatModel.diffUtil)
+        }
+
+        vm.getChatList()
+    }
 
     override fun onItemClicked(it: Any) {
-        TODO("Not yet implemented")
+        if (it is ChatModel) {
+            openDetail(it)
+        }
     }
 
     override fun onItemFocus(it: Any) {
-        TODO("Not yet implemented")
     }
 
     override fun onClickRetry() {
-        TODO("Not yet implemented")
     }
 }

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.card.view.MessageCardView">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="isFocus"
+            type="Boolean" />
+
+        <variable
+            name="photoPath"
+            type="String" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="@dimen/x215dp"
+        android:layout_height="wrap_content"
+        android:background="@{isFocus ? @color/colorCardBackgroundFocus : @color/colorCardBackgroundUnFocus}"
+        tools:background="@color/colorCardBackgroundFocus">
+
+        <ImageView
+            android:id="@+id/ivPhoto"
+            isHorizontal="@{true}"
+            isNeedToCache="@{true}"
+            loadImage="@{photoPath}"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/x140dp"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_thumbnail"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

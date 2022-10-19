@@ -6,6 +6,10 @@
         <activity
             android:name=".ui.home.TelegramScreen"
             android:theme="@style/BaseTvTheme" />
+
+        <activity
+            android:name=".ui.chatdetail.ChatDetailScreen"
+            android:theme="@style/BaseTvTheme" />
     </application>
 
 </manifest>

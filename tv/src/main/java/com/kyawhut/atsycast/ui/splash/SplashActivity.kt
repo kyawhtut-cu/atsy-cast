@@ -116,6 +116,7 @@ class SplashActivity : BaseTvActivityWithVM<ActivitySplashBinding, SplashViewMod
         isAnimationComplete = true
         if (!BuildConfig.DEBUG) processIntent()
         else startActivity<TelegramScreen>()
+        finishAffinity()
     }
 
     override fun onTransitionChange(p0: MotionLayout?, p1: Int, p2: Int, p3: Float) {

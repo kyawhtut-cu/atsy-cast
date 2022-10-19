@@ -1,14 +1,16 @@
 package com.kyawhtut.atsycast.telegram.ui.main
 
 import android.os.Bundle
-import androidx.fragment.app.viewModels
+import android.view.View
+import androidx.fragment.app.Fragment
+import androidx.leanback.widget.HeaderItem
+import androidx.leanback.widget.PageRow
+import androidx.leanback.widget.SectionRow
 import com.kyawhtut.atsycast.telegram.R
-import com.kyawhtut.atsycast.telegram.base.BaseFragment
-import com.kyawhtut.atsycast.telegram.databinding.MainScreenBinding
-import dagger.hilt.android.AndroidEntryPoint
+import com.kyawhtut.atsycast.telegram.ui.chat.ChatScreen
+import com.kyawhut.atsycast.share.base.BaseBrowseSupportFragment
 
-@AndroidEntryPoint
-internal class MainScreen : BaseFragment<MainScreenBinding>(R.layout.main_screen) {
+internal class MainScreen : BaseBrowseSupportFragment() {
 
     companion object {
         fun screenMain(): MainScreen {
@@ -16,9 +18,25 @@ internal class MainScreen : BaseFragment<MainScreenBinding>(R.layout.main_screen
         }
     }
 
-    private val vm: MainViewModel by viewModels()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-    override fun onCreateView(vb: MainScreenBinding, savedInstanceState: Bundle?) {
-        vb.vm = vm
+        addRowItem(SectionRow("Telegram"))
+        resources.getStringArray(R.array.telegramDrawer).forEachIndexed { index, s ->
+            addRowItem(
+                PageRow(
+                    HeaderItem(
+                        index.toLong(), s
+                    )
+                )
+            )
+        }
+    }
+
+    override fun onClickRetry() {
+    }
+
+    override fun onCreateRowFragment(header: HeaderItem): Fragment {
+        return ChatScreen.screenChat()
     }
 }

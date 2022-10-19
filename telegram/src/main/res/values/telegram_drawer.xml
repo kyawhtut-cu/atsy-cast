@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="telegramDrawer">
+        <item>Home</item>
+        <item>Setting</item>
+    </string-array>
+</resources>

@@ -10,16 +10,12 @@ import com.kyawhtut.atsycast.telegram.data.common.AuthRepository
 import com.kyawhtut.atsycast.telegram.utils.AuthState
 import com.kyawhtut.atsycast.telegram.utils.NetworkState
 import com.kyawhtut.atsycast.telegram.utils.TelegramException
-import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.plus
+import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
 internal abstract class BaseViewModel(
-    private val networkState: NetworkState?, protected val authRepository: AuthRepository?
+    private val networkState: NetworkState? = null,
+    protected val authRepository: AuthRepository? = null
 ) : ViewModel(), Observable {
 
     private val callbacks: PropertyChangeRegistry = PropertyChangeRegistry()

@@ -40,3 +40,35 @@ internal inline infix fun <T> Response<T>.done(listener: () -> Unit): Response<T
     listener.invoke()
     return this
 }
+
+internal inline infix fun <T, R> Response<T>.map(listener: (data: T) -> R): Response<R> {
+    return when (this) {
+        is Response.Success -> try {
+            Response.Success(listener(this.data))
+        } catch (e: Exception) {
+            Response.Error(
+                TelegramException(
+                    code = -1,
+                    message = e.message ?: "Code error"
+                )
+            )
+        }
+        is Response.Error -> this
+    }
+}
+
+internal suspend infix fun <T, R> Response<T>.flatMap(listener: suspend (data: T) -> Response<R>): Response<R> {
+    return when (this) {
+        is Response.Success -> try {
+            listener(this.data)
+        } catch (e: Exception) {
+            Response.Error(
+                TelegramException(
+                    code = -1,
+                    message = e.message ?: "Code error"
+                )
+            )
+        }
+        is Response.Error -> this
+    }
+}

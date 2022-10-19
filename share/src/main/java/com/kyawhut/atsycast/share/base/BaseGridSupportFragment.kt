@@ -3,8 +3,9 @@ package com.kyawhut.atsycast.share.base
 import android.os.Bundle
 import android.view.View
 import androidx.leanback.app.BrowseSupportFragment
+import androidx.lifecycle.ViewModel
 
-abstract class BaseGridSupportFragment<VM : BaseViewModel> : BaseGridFragment<VM>(),
+abstract class BaseGridSupportFragment<VM : ViewModel> : BaseGridFragment<VM>(),
     BrowseSupportFragment.MainFragmentAdapterProvider {
 
     private val fragmentAdapter by lazy { BrowseSupportFragment.MainFragmentAdapter(this) }

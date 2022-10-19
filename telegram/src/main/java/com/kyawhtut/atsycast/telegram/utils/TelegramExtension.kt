@@ -40,6 +40,14 @@ internal object TelegramExtension {
         )
     )
 
+    suspend fun Telegram.getChatList(limit: Int = Int.MAX_VALUE) = send<TdApi.Chats>(
+        TdApi.GetChats(TdApi.ChatListMain(), limit)
+    )
+
+    suspend fun Telegram.getChatByID(chatID: Long) = send<TdApi.Chat>(
+        TdApi.GetChat(chatID)
+    )
+
     suspend fun Telegram.getChatHistory(id: Long, lastMessage: Long) = send<TdApi.Messages>(
         TdApi.GetChatHistory(id, lastMessage, 0, 30, false)
     )

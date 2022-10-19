@@ -12,6 +12,7 @@ import androidx.leanback.app.VerticalGridSupportFragment
 import androidx.leanback.widget.ArrayObjectAdapter
 import androidx.leanback.widget.FocusHighlight
 import androidx.leanback.widget.VerticalGridPresenter
+import androidx.lifecycle.ViewModel
 import com.kyawhut.atsycast.share.R
 import com.kyawhut.atsycast.share.databinding.ViewLoadingBinding
 import com.kyawhut.atsycast.share.network.utils.NetworkError
@@ -19,7 +20,7 @@ import com.kyawhut.atsycast.share.network.utils.NetworkError.Companion.printStac
 import com.kyawhut.atsycast.share.ui.error.ErrorFragment
 import com.kyawhut.atsycast.share.utils.extension.FragmentExtension.addFragment
 
-abstract class BaseGridFragment<VM : BaseViewModel> : VerticalGridSupportFragment() {
+abstract class BaseGridFragment<VM : ViewModel> : VerticalGridSupportFragment() {
 
     protected abstract val vm: VM
     protected open val isPagingEnable: Boolean = true

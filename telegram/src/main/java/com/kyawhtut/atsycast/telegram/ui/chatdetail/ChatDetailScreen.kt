@@ -17,6 +17,7 @@ import com.kyawhut.atsycast.share.components.iosloading.ToolBox
 import com.kyawhut.atsycast.share.utils.extension.putArg
 import com.kyawhut.atsycast.share.utils.extension.startActivity
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 /**
  * @author kyawhtut
@@ -74,6 +75,7 @@ internal class ChatDetailScreen : BaseTvActivity<MainScreenBinding>() {
                 if (it !is AuthState.LoggedIn) requireActivity().finishAffinity()
             }
             vm.setOnLoadingStateListener {
+                Timber.d("LoadingState => $it")
                 if (it) showLoading()
                 else hideLoading()
             }

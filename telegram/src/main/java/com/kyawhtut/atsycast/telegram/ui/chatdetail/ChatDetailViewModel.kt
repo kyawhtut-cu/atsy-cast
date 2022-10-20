@@ -63,12 +63,16 @@ internal class ChatDetailViewModel @Inject constructor(
                 chatID,
                 chatLastMessage!!.messageID,
                 30
-            ).success {
+            ).done {
+                isLoading = false
+            }.success {
+                val data = if (isNextMessage) it
+                else listOf(chatLastMessage!!) + it
+
                 processOnMain {
-                    if (isNextMessage) onMessageList?.invoke(it, true)
-                    else onMessageList?.invoke(
-                        listOf(chatLastMessage!!) + it,
-                        false
+                    onMessageList?.invoke(
+                        data.filter { it !is MessageType.MessageTextModel },
+                        isNextMessage
                     )
                 }
 
@@ -78,8 +82,6 @@ internal class ChatDetailViewModel @Inject constructor(
                     isHasMoreData = true
                     chatLastMessage = it.last()
                 }
-            }.done {
-                isLoading = false
             }.error {
                 error = it
             }

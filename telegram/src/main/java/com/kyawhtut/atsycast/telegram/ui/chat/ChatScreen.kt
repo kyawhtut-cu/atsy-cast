@@ -45,7 +45,7 @@ internal class ChatScreen : BaseGridSupportFragment<ChatViewModel>() {
 
     override fun onItemClicked(it: Any) {
         if (it is ChatModel) {
-            openDetail(it)
+            openDetail(it.chatID)
         }
     }
 

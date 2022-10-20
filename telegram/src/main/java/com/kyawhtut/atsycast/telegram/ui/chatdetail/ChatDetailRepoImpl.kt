@@ -115,6 +115,13 @@ internal class ChatDetailRepoImpl @Inject constructor(
                 )
             }
 
+            TdApi.MessageText.CONSTRUCTOR -> with(content as TdApi.MessageText) {
+                MessageType.MessageTextModel(
+                    id,
+                    text.text,
+                )
+            }
+
             else -> null
         }
     }

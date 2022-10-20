@@ -4,7 +4,8 @@ import android.content.Context
 import com.kyawhtut.atsycast.telegram.data.model.ChatModel
 import com.kyawhtut.atsycast.telegram.data.model.MessageType
 import com.kyawhtut.atsycast.telegram.ui.card.presenter.ChatCardPresenter
-import com.kyawhtut.atsycast.telegram.ui.card.presenter.MessageCardPresenter
+import com.kyawhtut.atsycast.telegram.ui.card.presenter.PhotoCardPresenter
+import com.kyawhtut.atsycast.telegram.ui.card.presenter.VideoCardPresenter
 import com.kyawhut.atsycast.share.base.BaseCardPresenter
 import com.kyawhut.atsycast.share.base.BaseCardPresenterSelector
 
@@ -19,7 +20,8 @@ internal class CardPresenter(
     override fun getCardType(item: Any?): CardType {
         return when (item) {
             is ChatModel -> CardType.Chat
-            is MessageType -> CardType.Message
+            is MessageType.MessagePhotoModel -> CardType.Photo
+            is MessageType.MessageVideoModel -> CardType.Video
             else -> super.getCardType(item)
         }
     }
@@ -27,7 +29,8 @@ internal class CardPresenter(
     override fun getPresenter(type: CardType, context: Context): BaseCardPresenter<*> {
         return when (type) {
             is CardType.Chat -> ChatCardPresenter(context)
-            is CardType.Message -> MessageCardPresenter(context)
+            is CardType.Photo -> PhotoCardPresenter(context)
+            is CardType.Video -> VideoCardPresenter(context)
         }
     }
 }

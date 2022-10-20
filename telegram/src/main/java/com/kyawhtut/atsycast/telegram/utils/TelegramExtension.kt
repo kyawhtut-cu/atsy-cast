@@ -2,7 +2,6 @@ package com.kyawhtut.atsycast.telegram.utils
 
 import com.kyawhtut.atsycast.telegram.data.telegram.Telegram
 import org.drinkless.td.libcore.telegram.TdApi
-import org.drinkless.td.libcore.telegram.TdApi.FileType
 
 internal object TelegramExtension {
 
@@ -33,17 +32,6 @@ internal object TelegramExtension {
     suspend fun Telegram.getFile(fileID: Int?) = fileID?.let {
         send<TdApi.File>(
             TdApi.DownloadFile(fileID, 1, 0, 0, true)
-        )
-    } ?: Response.Error(
-        TelegramException(
-            code = -1,
-            message = "Null id."
-        )
-    )
-
-    suspend fun Telegram.getRemoteFile(fileID: String?, fileType: FileType?) = fileID?.let {
-        send<TdApi.File>(
-            TdApi.GetRemoteFile(fileID, fileType)
         )
     } ?: Response.Error(
         TelegramException(

@@ -10,7 +10,12 @@ import com.kyawhtut.atsycast.telegram.data.common.AuthRepository
 import com.kyawhtut.atsycast.telegram.utils.AuthState
 import com.kyawhtut.atsycast.telegram.utils.NetworkState
 import com.kyawhtut.atsycast.telegram.utils.TelegramException
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.plus
 import kotlin.coroutines.CoroutineContext
 
 internal abstract class BaseViewModel(
@@ -53,12 +58,14 @@ internal abstract class BaseViewModel(
         processOnIO {
             networkState?.errorState?.collect {
                 notifyPropertyChanged(BR.error)
+                it?.let { onErrorState?.invoke(it) }
             }
         }
 
         processOnIO {
             networkState?.loadingState?.collect {
                 notifyPropertyChanged(BR.loading)
+                onLoadingState?.invoke(it)
             }
         }
 

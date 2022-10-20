@@ -8,5 +8,6 @@ import com.kyawhut.atsycast.share.base.BaseCardType
  */
 internal sealed class CardType : BaseCardType() {
     object Chat : CardType()
-    object Message : CardType()
+    object Photo : CardType()
+    object Video : CardType()
 }

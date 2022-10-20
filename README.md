@@ -14,7 +14,7 @@ Application ထဲတွင် အသုံးပြုထားသည့် [AP
    ```
    export JAVA_HOME=/Applications/Android\ Studio.app/Contents/jre/Contents/Home/
    ```
-   and then runt the first cmd.
+   and then run the first cmd.
 
 
 Demo Video

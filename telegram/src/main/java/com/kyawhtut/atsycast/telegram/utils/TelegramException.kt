@@ -1,5 +1,6 @@
 package com.kyawhtut.atsycast.telegram.utils
 
+import com.kyawhut.atsycast.share.network.utils.NetworkError
 import javax.annotation.concurrent.Immutable
 
 /**
@@ -9,4 +10,9 @@ import javax.annotation.concurrent.Immutable
 internal data class TelegramException(
     val code: Int = 0,
     override val message: String = ""
-) : RuntimeException()
+) : RuntimeException() {
+
+    fun toNetworkError(): NetworkError {
+        return NetworkError(message, statusCode = code)
+    }
+}

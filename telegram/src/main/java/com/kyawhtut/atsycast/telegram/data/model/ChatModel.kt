@@ -1,7 +1,6 @@
 package com.kyawhtut.atsycast.telegram.data.model
 
 import androidx.leanback.widget.DiffCallback
-import java.io.Serializable
 
 /**
  * Created by ios_dev - 19/10/22
@@ -10,8 +9,8 @@ internal data class ChatModel(
     val chatID: Long,
     val chatTitle: String,
     val chatPhoto: String,
-    val chatLastMessage: MessageType?
-): Serializable {
+    val chatLastMessage: Long?
+) {
 
     companion object {
         val diffUtil = object : DiffCallback<ChatModel>() {

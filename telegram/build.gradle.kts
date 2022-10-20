@@ -1,4 +1,4 @@
-import java.util.Properties
+import java.util.*
 
 plugins {
     library()
@@ -113,6 +113,8 @@ android {
 
 dependencies {
     implementation(project(":share"))
+    implementation(project(":previewimagcol"))
+    implementation(project(":tdlib"))
 
     testImplementation(Libs.junit)
     androidTestImplementation(Libs.testJunit)
@@ -134,7 +136,6 @@ dependencies {
     implementation(Libs.coroutineKotlin)
     implementation(Libs.googleZxing)
 
-    implementation(project(":tdlib"))
     // Сustom QR generator for Android - https://github.com/alexzhirkevich/custom-qr-generator
     implementation("com.github.alexzhirkevich:custom-qr-generator:1.5.0")
 }

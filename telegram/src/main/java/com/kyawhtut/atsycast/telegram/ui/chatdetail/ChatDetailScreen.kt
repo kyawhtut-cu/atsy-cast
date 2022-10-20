@@ -7,7 +7,6 @@ import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
 import androidx.leanback.widget.ArrayObjectAdapter
 import com.kyawhtut.atsycast.telegram.R
-import com.kyawhtut.atsycast.telegram.data.model.ChatModel
 import com.kyawhtut.atsycast.telegram.data.model.MessageType
 import com.kyawhtut.atsycast.telegram.databinding.MainScreenBinding
 import com.kyawhtut.atsycast.telegram.ui.card.CardPresenter
@@ -27,9 +26,9 @@ import dagger.hilt.android.AndroidEntryPoint
 internal class ChatDetailScreen : BaseTvActivity<MainScreenBinding>() {
 
     companion object {
-        fun Fragment.openDetail(chatData: ChatModel) {
+        fun Fragment.openDetail(chatID: Long) {
             requireActivity().startActivity<ChatDetailScreen>(
-                ChatDetailViewModel.EXTRA_CHAT_DATA to chatData
+                ChatDetailViewModel.EXTRA_CHAT_ID to chatID
             )
         }
     }
@@ -44,7 +43,7 @@ internal class ChatDetailScreen : BaseTvActivity<MainScreenBinding>() {
             replace(
                 R.id.content_frame,
                 DetailScreen.screenDetail(
-                    intent.getSerializableExtra(ChatDetailViewModel.EXTRA_CHAT_DATA) as ChatModel
+                    intent.getLongExtra(ChatDetailViewModel.EXTRA_CHAT_ID, 0L)
                 )
             )
         }
@@ -54,9 +53,9 @@ internal class ChatDetailScreen : BaseTvActivity<MainScreenBinding>() {
     class DetailScreen : BaseGridFragment<ChatDetailViewModel>() {
 
         companion object {
-            fun screenDetail(chatData: ChatModel): DetailScreen {
+            fun screenDetail(chatID: Long): DetailScreen {
                 return DetailScreen().putArg(
-                    ChatDetailViewModel.EXTRA_CHAT_DATA to chatData
+                    ChatDetailViewModel.EXTRA_CHAT_ID to chatID
                 )
             }
         }
@@ -74,12 +73,21 @@ internal class ChatDetailScreen : BaseTvActivity<MainScreenBinding>() {
             vm.setOnAuthStateListener {
                 if (it !is AuthState.LoggedIn) requireActivity().finishAffinity()
             }
-            vm.setOnMessageListListener {
-                if (vm.isFirstPage) rowsAdapter.setItems(it, MessageType.diffUtil)
-                else rowsAdapter.addAll(rowsAdapter.size(), it)
+            vm.setOnLoadingStateListener {
+                if (it) showLoading()
+                else hideLoading()
+            }
+            vm.setOnErrorStateListener {
+                showError(it.toNetworkError(), true)
+            }
+            vm.setOnMessageListListener { data, isNextPage ->
+                if (isNextPage) rowsAdapter.addAll(rowsAdapter.size(), data)
+                else rowsAdapter.setItems(data, MessageType.diffUtil)
             }
 
-            vm.getMessage()
+            vm.getChatMessage {
+                title = it
+            }
         }
 
         override fun onItemClicked(it: Any) {
@@ -92,8 +100,7 @@ internal class ChatDetailScreen : BaseTvActivity<MainScreenBinding>() {
         }
 
         override fun onLoadMore() {
-            vm.isFirstPage = false
-            vm.getMessage()
+            vm.getMessage(true)
         }
     }
 }

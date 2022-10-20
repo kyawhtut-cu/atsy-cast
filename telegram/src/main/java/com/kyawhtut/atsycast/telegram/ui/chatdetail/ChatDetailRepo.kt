@@ -1,5 +1,6 @@
 package com.kyawhtut.atsycast.telegram.ui.chatdetail
 
+import com.kyawhtut.atsycast.telegram.data.model.ChatDetailModel
 import com.kyawhtut.atsycast.telegram.data.model.MessageType
 import com.kyawhtut.atsycast.telegram.utils.Response
 
@@ -9,5 +10,11 @@ import com.kyawhtut.atsycast.telegram.utils.Response
  */
 internal interface ChatDetailRepo {
 
-    suspend fun getChatHistory(chatID: Long, lastMessageID: Long, limit: Int): Response<List<MessageType>>
+    suspend fun getChatDetail(chatID: Long): Response<ChatDetailModel>
+
+    suspend fun getChatHistory(
+        chatID: Long,
+        lastMessageID: Long,
+        limit: Int
+    ): Response<List<MessageType>>
 }

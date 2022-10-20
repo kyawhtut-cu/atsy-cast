@@ -3,7 +3,6 @@ package com.kyawhtut.atsycast.telegram.ui.chatdetail
 import androidx.lifecycle.SavedStateHandle
 import com.kyawhtut.atsycast.telegram.base.BaseViewModel
 import com.kyawhtut.atsycast.telegram.data.common.AuthRepository
-import com.kyawhtut.atsycast.telegram.data.model.ChatModel
 import com.kyawhtut.atsycast.telegram.data.model.MessageType
 import com.kyawhtut.atsycast.telegram.utils.NetworkState
 import com.kyawhtut.atsycast.telegram.utils.done
@@ -25,39 +24,59 @@ internal class ChatDetailViewModel @Inject constructor(
 ) : BaseViewModel(networkState, authRepository) {
 
     companion object {
-        const val EXTRA_CHAT_DATA = "EXTRA_CHAT_DATA"
+        const val EXTRA_CHAT_ID = "EXTRA_CHAT_ID"
     }
 
-    private val chatData: ChatModel by lazy {
-        savedStateHandle[EXTRA_CHAT_DATA]!!
+    private val chatID: Long by lazy {
+        savedStateHandle[EXTRA_CHAT_ID] ?: 0L
     }
-    private var lastMessageID: Long? = null
+    private var chatLastMessage: MessageType? = null
     private var isHasMoreData: Boolean = true
 
-    private var onMessageList: ((List<MessageType>) -> Unit)? = null
+    private var onMessageList: ((List<MessageType>, Boolean) -> Unit)? = null
 
-    var isFirstPage: Boolean = true
-
-    fun getMessage() {
-        if (chatData.chatLastMessage == null || !isHasMoreData || isLoading) return
+    fun getChatMessage(callback: ((String) -> Unit)? = null) {
+        if (chatID == 0L) return
         viewModelScope {
             isLoading = true
 
+            chatDetailRepo.getChatDetail(chatID).success {
+                processOnMain { callback?.invoke(it.chatModel.chatTitle) }
+
+                chatLastMessage = it.chatLastMessage
+                isHasMoreData = true
+
+                getMessage(false)
+            }.error {
+                error = it
+            }
+        }
+    }
+
+    fun getMessage(isNextMessage: Boolean) {
+        if (isNextMessage && isLoading) return
+        if (chatLastMessage == null || !isHasMoreData) return
+        viewModelScope {
+            if (isNextMessage) isLoading = true
+
             chatDetailRepo.getChatHistory(
-                chatData.chatID,
-                lastMessageID ?: chatData.chatLastMessage?.messageID!!,
+                chatID,
+                chatLastMessage!!.messageID,
                 30
             ).success {
                 processOnMain {
-                    if (isFirstPage) onMessageList?.invoke((listOf(chatData.chatLastMessage!!) + it))
-                    else onMessageList?.invoke(it)
+                    if (isNextMessage) onMessageList?.invoke(it, true)
+                    else onMessageList?.invoke(
+                        listOf(chatLastMessage!!) + it,
+                        false
+                    )
                 }
 
                 isHasMoreData = false
 
                 if (it.isNotEmpty()) {
                     isHasMoreData = true
-                    lastMessageID = it.last().messageID
+                    chatLastMessage = it.last()
                 }
             }.done {
                 isLoading = false
@@ -67,7 +86,7 @@ internal class ChatDetailViewModel @Inject constructor(
         }
     }
 
-    fun setOnMessageListListener(listener: ((List<MessageType>) -> Unit)? = null) {
+    fun setOnMessageListListener(listener: ((List<MessageType>, Boolean) -> Unit)? = null) {
         onMessageList = listener
     }
 }

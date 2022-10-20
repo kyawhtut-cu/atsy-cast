@@ -31,14 +31,15 @@ internal abstract class BaseViewModel(
     private val io: CoroutineContext = job + Dispatchers.IO
     private val main: CoroutineContext = job + Dispatchers.Main
 
-    protected var onAuthState: ((AuthState) -> Unit)? = null
+    private var onAuthState: ((AuthState) -> Unit)? = null
+    private var onErrorState: ((TelegramException) -> Unit)? = null
+    private var onLoadingState: ((Boolean) -> Unit)? = null
 
     @get:Bindable
     var isLoading: Boolean
         get() = networkState?.isLoading == true
         set(value) {
             networkState?.isLoading = value
-            notifyPropertyChanged(BR.loading)
         }
 
     @get:Bindable
@@ -46,7 +47,6 @@ internal abstract class BaseViewModel(
         get() = networkState?.error
         set(value) {
             networkState?.error = value
-            notifyPropertyChanged(BR.error)
         }
 
     init {
@@ -73,6 +73,14 @@ internal abstract class BaseViewModel(
 
     fun setOnAuthStateListener(listener: ((AuthState) -> Unit)? = null) {
         onAuthState = listener
+    }
+
+    fun setOnErrorStateListener(listener: ((TelegramException) -> Unit)? = null) {
+        onErrorState = listener
+    }
+
+    fun setOnLoadingStateListener(listener: ((Boolean) -> Unit)? = null) {
+        onLoadingState = listener
     }
 
     protected fun processOnIO(callback: suspend CoroutineScope.() -> Unit) {

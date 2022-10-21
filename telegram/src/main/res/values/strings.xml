@@ -8,10 +8,16 @@
     <string name="lblTelegramOTPPageMessage">We have sent you a message in Telegram\nwith the code.</string>
     <string name="lblTelegramPasswordPageTitle">Enter Your Password</string>
     <string name="lblTelegramPasswordPageMessage">Your account is protected with\nan additional password</string>
+    <string name="lblExitTelegramPlayerTitle">Exit Player</string>
+    <string name="lblExitTelegramPlayerMessage">Storage ပြည့်လျှံမှုဖြစ်မှာ ဆိုးသဖြင့် \nယခု Player မှ ထွက်လျှင် \nဇာတ်ကားကို အလိုအလျှောက်ဖျတ်ပါမည်။</string>
 
     <string name="btnTelegramNext">Next</string>
     <string name="btnTelegramLoginByPhoneNumber">Log in by phone number</string>
     <string name="btnTelegramLoginByQRCode">Log in by QR Code</string>
+    <string name="btnTelegramReadCaption">Read More</string>
+    <string name="btnTelegramPlay">Play</string>
+    <string name="btnExitCancel">မထွက်သေးပါ</string>
+    <string name="btnExitConfirm">ထွက်ပါမည်</string>
 
     <string name="hintTelegramCode">Code</string>
     <string name="hintTelegramCountry">Country</string>

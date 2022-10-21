@@ -10,7 +10,10 @@ import com.kyawhtut.atsycast.telegram.R
 import com.kyawhtut.atsycast.telegram.data.model.MessageType
 import com.kyawhtut.atsycast.telegram.databinding.MainScreenBinding
 import com.kyawhtut.atsycast.telegram.ui.card.CardPresenter
+import com.kyawhtut.atsycast.telegram.ui.photoviewer.PhotoViewScreen.Companion.showPhoto
+import com.kyawhtut.atsycast.telegram.ui.photoviewer.PhotoViewScreen.Companion.showVideo
 import com.kyawhtut.atsycast.telegram.utils.AuthState
+import com.kyawhtut.atsycast.telegram.utils.TelegramUtils
 import com.kyawhut.atsycast.share.base.BaseGridFragment
 import com.kyawhut.atsycast.share.base.BaseTvActivity
 import com.kyawhut.atsycast.share.components.iosloading.ToolBox
@@ -18,6 +21,7 @@ import com.kyawhut.atsycast.share.utils.extension.putArg
 import com.kyawhut.atsycast.share.utils.extension.startActivity
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
+import java.util.concurrent.TimeUnit
 
 /**
  * @author kyawhtut
@@ -93,6 +97,27 @@ internal class ChatDetailScreen : BaseTvActivity<MainScreenBinding>() {
         }
 
         override fun onItemClicked(it: Any) {
+            if (it is MessageType.MessagePhotoModel) {
+                childFragmentManager.showPhoto(it.path, it.caption ?: "")
+            } else if (it is MessageType.MessageVideoModel) {
+                childFragmentManager.showVideo(
+                    vm.chatID,
+                    it.messageID,
+                    it.thumbnailPath,
+                    "%s\n%s".format(
+                        "%s%s%s".format(
+                            it.videoFileName + "\n",
+                            "File Size - " + TelegramUtils.formatAsFileSize(it.videoSize.toLong()) + "\n",
+                            "Duration - " + TelegramUtils.timeUnitToFullTime(
+                                it.videoDuration.toLong(),
+                                TimeUnit.SECONDS
+                            ) + "\n"
+                        ),
+                        it.caption ?: ""
+                    ),
+                    it.videoID
+                )
+            }
         }
 
         override fun onItemFocus(it: Any) {

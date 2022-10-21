@@ -6,6 +6,8 @@ import com.kyawhtut.atsycast.telegram.ui.chat.ChatRepository
 import com.kyawhtut.atsycast.telegram.ui.chat.ChatRepositoryImpl
 import com.kyawhtut.atsycast.telegram.ui.chatdetail.ChatDetailRepo
 import com.kyawhtut.atsycast.telegram.ui.chatdetail.ChatDetailRepoImpl
+import com.kyawhtut.atsycast.telegram.ui.player.PlayerRepo
+import com.kyawhtut.atsycast.telegram.ui.player.PlayerRepoImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -35,5 +37,11 @@ internal object RepositoryModule {
     @ViewModelScoped
     fun provideChatDetailRepository(chatDetailRepo: ChatDetailRepoImpl): ChatDetailRepo {
         return chatDetailRepo
+    }
+
+    @Provides
+    @ViewModelScoped
+    fun providePlayerRepo(playerRepo: PlayerRepoImpl): PlayerRepo {
+        return playerRepo
     }
 }

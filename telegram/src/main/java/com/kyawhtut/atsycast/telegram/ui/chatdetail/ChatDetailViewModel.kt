@@ -27,7 +27,7 @@ internal class ChatDetailViewModel @Inject constructor(
         const val EXTRA_CHAT_ID = "EXTRA_CHAT_ID"
     }
 
-    private val chatID: Long by lazy {
+    val chatID: Long by lazy {
         savedStateHandle[EXTRA_CHAT_ID] ?: 0L
     }
     private var chatLastMessage: MessageType? = null

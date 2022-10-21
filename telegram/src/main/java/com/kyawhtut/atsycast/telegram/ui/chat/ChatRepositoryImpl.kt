@@ -9,6 +9,7 @@ import com.kyawhtut.atsycast.telegram.utils.TelegramExtension.getFile
 import com.kyawhtut.atsycast.telegram.utils.map
 import com.kyawhtut.atsycast.telegram.utils.success
 import org.drinkless.td.libcore.telegram.TdApi
+import timber.log.Timber
 import javax.inject.Inject
 
 /**
@@ -42,6 +43,7 @@ internal class ChatRepositoryImpl @Inject constructor(
                         chatPhoto = it.local.path
                     }
                 }
+                Timber.d("Chat => ${chat.id}, ${chat.title}")
                 ChatModel(
                     chat.id,
                     chat.title,

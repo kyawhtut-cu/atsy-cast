@@ -12,7 +12,13 @@ import android.widget.ImageView
 import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentActivity
 import androidx.leanback.widget.RowHeaderView
-import com.google.android.exoplayer2.*
+import com.google.android.exoplayer2.C
+import com.google.android.exoplayer2.DefaultLoadControl
+import com.google.android.exoplayer2.DefaultRenderersFactory
+import com.google.android.exoplayer2.ExoPlaybackException
+import com.google.android.exoplayer2.MediaItem
+import com.google.android.exoplayer2.Player
+import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.ext.mediasession.MediaSessionConnector
 import com.google.android.exoplayer2.ext.okhttp.OkHttpDataSource
 import com.google.android.exoplayer2.ext.rtmp.RtmpDataSourceFactory
@@ -137,6 +143,9 @@ class PlayerManagerImpl private constructor(
 
     val isEnd: Boolean
         get() = _simpleExoPlayer.playbackState == Player.STATE_ENDED
+
+    val isPlaying: Boolean
+        get() = _simpleExoPlayer.isPlaying
 
     init {
         _simpleExoPlayer.apply {
@@ -288,6 +297,7 @@ class PlayerManagerImpl private constructor(
                 playPauseAnimation.start()
                 playerPositionCountDown.start()
             }
+
             _simpleExoPlayer.playbackState == Player.STATE_BUFFERING -> playerPlayPause?.alpha = 0f
             else -> playerPlayPause?.alpha = 1f
         }
@@ -356,6 +366,7 @@ class PlayerManagerImpl private constructor(
         }
 
         val isDrive = playerSource.contains("drive.google.com", true)
+        val isLocal = !playerSource.startsWith("http")
 
         val subMediaSource: MutableList<SingleSampleMediaSource> = mutableListOf()
         playerSubtitle.filter { it.language != "close" }.forEach {
@@ -374,26 +385,38 @@ class PlayerManagerImpl private constructor(
         }
 
         var mediaSource: MediaSource? = null
-        when (Util.inferContentType(Uri.parse(playerSource))) {
+        if (isLocal) {
+            mediaSource = ProgressiveMediaSource.Factory(
+                dataSourceFactory
+            ).createMediaSource(getURL(playerSource))
+        } else when (Util.inferContentType(Uri.parse(playerSource))) {
             C.TYPE_HLS -> {
-                mediaSource = HlsMediaSource.Factory(dataSourceFactory.takeIf { isDrive }
-                    ?: okHttpDataSource).createMediaSource(getURL(playerSource))
+                mediaSource = HlsMediaSource.Factory(
+                    dataSourceFactory.takeIf {
+                        isDrive
+                    } ?: okHttpDataSource).createMediaSource(getURL(playerSource))
             }
+
             C.TYPE_OTHER -> {
                 mediaSource = if (playerSource.contains("rtmp", true)) {
-                    ProgressiveMediaSource.Factory(RtmpDataSourceFactory())
-                        .createMediaSource(getURL(playerSource))
+                    ProgressiveMediaSource.Factory(
+                        RtmpDataSourceFactory()
+                    ).createMediaSource(getURL(playerSource))
                 } else {
-                    ProgressiveMediaSource.Factory(dataSourceFactory.takeIf { isDrive }
-                        ?: okHttpDataSource)
-                        .createMediaSource(getURL(playerSource))
+                    ProgressiveMediaSource.Factory(
+                        dataSourceFactory.takeIf {
+                            isDrive
+                        } ?: okHttpDataSource).createMediaSource(getURL(playerSource))
                 }
             }
+
             C.TYPE_DASH -> {
-                mediaSource = DashMediaSource.Factory(dataSourceFactory.takeIf { isDrive }
-                    ?: okHttpDataSource)
-                    .createMediaSource(getURL(playerSource))
+                mediaSource = DashMediaSource.Factory(
+                    dataSourceFactory.takeIf {
+                        isDrive
+                    } ?: okHttpDataSource).createMediaSource(getURL(playerSource))
             }
+
             else -> {
                 onPlayerError("Unknown video format.")
             }
@@ -544,12 +567,14 @@ class PlayerManagerImpl private constructor(
             Player.STATE_IDLE -> {
                 state = "ExoPlayer.STATE_IDLE      -"
             }
+
             Player.STATE_BUFFERING -> {
                 playerPositionCountDown.cancel()
                 hideAllUI()
                 toggleLoading(true)
                 state = "ExoPlayer.STATE_BUFFERING -"
             }
+
             Player.STATE_READY -> {
                 if (trackSelectorHelper == null) {
                     trackSelectorHelper = TrackSelectionHelper(activity, trackSelector)
@@ -560,12 +585,14 @@ class PlayerManagerImpl private constructor(
                 state = "ExoPlayer.STATE_READY     -"
                 playerPlayPause?.alpha = if (_simpleExoPlayer.playWhenReady) 0f else 1f
             }
+
             Player.STATE_ENDED -> {
                 state = "ExoPlayer.STATE_ENDED     -"
                 hideAllUI()
                 onPlayerEnd()
                 playerPositionCountDown.cancel()
             }
+
             else -> {
                 state = "UNKNOWN_STATE             -"
             }

@@ -58,14 +58,14 @@ internal abstract class BaseViewModel(
         processOnIO {
             networkState?.errorState?.collect {
                 notifyPropertyChanged(BR.error)
-                it?.let { onErrorState?.invoke(it) }
+                processOnMain { it?.let { onErrorState?.invoke(it) } }
             }
         }
 
         processOnIO {
             networkState?.loadingState?.collect {
                 notifyPropertyChanged(BR.loading)
-                onLoadingState?.invoke(it)
+                processOnMain { onLoadingState?.invoke(it) }
             }
         }
 
@@ -124,5 +124,10 @@ internal abstract class BaseViewModel(
 
     override fun removeOnPropertyChangedCallback(p0: Observable.OnPropertyChangedCallback?) {
         callbacks.remove(p0)
+    }
+
+    override fun onCleared() {
+        isLoading = false
+        super.onCleared()
     }
 }

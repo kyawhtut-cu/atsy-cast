@@ -1,4 +1,4 @@
-import java.util.*
+import java.util.Properties
 
 plugins {
     library()
@@ -135,6 +135,10 @@ dependencies {
 
     implementation(Libs.coroutineKotlin)
     implementation(Libs.googleZxing)
+
+    // exo player
+    implementation(Libs.exoPlayer)
+    implementation(Libs.exoPlayerUI)
 
     // Сustom QR generator for Android - https://github.com/alexzhirkevich/custom-qr-generator
     implementation("com.github.alexzhirkevich:custom-qr-generator:1.5.0")

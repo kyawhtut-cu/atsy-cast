@@ -73,6 +73,7 @@ internal class ChatDetailRepoImpl @Inject constructor(
             }
 
             TdApi.MessagePhoto.CONSTRUCTOR -> with(content as TdApi.MessagePhoto) {
+                photo?.sizes?.sortByDescending { it.width }
                 if (photo?.sizes?.isEmpty() == true) null
                 else photo?.sizes?.first()?.let {
                     if (it.photo.local.path.isEmpty()) {

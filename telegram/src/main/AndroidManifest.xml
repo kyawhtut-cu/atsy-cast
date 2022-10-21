@@ -10,6 +10,10 @@
         <activity
             android:name=".ui.chatdetail.ChatDetailScreen"
             android:theme="@style/BaseTvTheme" />
+
+        <activity
+            android:name=".ui.player.PlayerScreen"
+            android:theme="@style/BaseTvTheme" />
     </application>
 
 </manifest>

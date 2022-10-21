@@ -51,4 +51,8 @@ internal object TelegramExtension {
     suspend fun Telegram.getChatHistory(id: Long, lastMessage: Long) = send<TdApi.Messages>(
         TdApi.GetChatHistory(id, lastMessage, 0, 30, false)
     )
+
+    suspend fun Telegram.getMessage(chatID: Long, messageID: Long) = send<TdApi.Message>(
+        TdApi.GetMessage(chatID, messageID)
+    )
 }

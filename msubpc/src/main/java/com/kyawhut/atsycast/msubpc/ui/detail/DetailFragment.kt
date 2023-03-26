@@ -99,21 +99,39 @@ internal class DetailFragment : BaseDetailTvFragment<DetailViewModel>() {
                     ),
                     Constants.EXTRA_VIDEO_SOURCE to mutableListOf<VideoSourceModel>().apply {
                         result.data?.let {
-                            if (it.stream != null) {
+                            if (it.movieVStream != null) {
                                 add(
                                     VideoSourceModel(
                                         vm.detailData!!.videoId.toString(),
-                                        "Free Stream",
-                                        url = it.stream!!
+                                        "V Stream",
+                                        url = it.movieVStream!!
                                     )
                                 )
                             }
-                            if (it.vStream != null) {
+                            if (it.movieVBackup != null) {
                                 add(
                                     VideoSourceModel(
                                         vm.detailData!!.videoId.toString(),
-                                        "VIP Stream",
-                                        url = it.vStream!!
+                                        "VBackup Stream",
+                                        url = it.movieVBackup!!
+                                    )
+                                )
+                            }
+                            if (it.movieStream != null) {
+                                add(
+                                    VideoSourceModel(
+                                        vm.detailData!!.videoId.toString(),
+                                        "Stream",
+                                        url = it.movieStream!!
+                                    )
+                                )
+                            }
+                            if (it.movieFreeMium != null) {
+                                add(
+                                    VideoSourceModel(
+                                        vm.detailData!!.videoId.toString(),
+                                        "Freemium",
+                                        url = it.movieFreeMium!!
                                     )
                                 )
                             }
@@ -121,6 +139,7 @@ internal class DetailFragment : BaseDetailTvFragment<DetailViewModel>() {
                     }
                 )
             }
+
             is NetworkStatus.ERROR -> {
                 toggleLoading(false)
             }
@@ -143,6 +162,7 @@ internal class DetailFragment : BaseDetailTvFragment<DetailViewModel>() {
                 )
                 toggleLoading(false)
             }
+
             is NetworkStatus.ERROR -> {
                 toggleLoading(false)
             }
@@ -160,7 +180,11 @@ internal class DetailFragment : BaseDetailTvFragment<DetailViewModel>() {
                             ListRow(
                                 HeaderItem(
                                     1L, "%sEpisodes".format(
-                                        if (vm.detailData!!.videoSeasonNumber != 0) "Season ${vm.detailData!!.videoSeasonNumber} - " else ""
+                                        when (val seasonNumber =
+                                            vm.detailData!!.videoSeasonNumber) {
+                                            0, 99 -> ""
+                                            else -> "Season $seasonNumber - "
+                                        }
                                     )
                                 ),
                                 ArrayObjectAdapter(
@@ -192,6 +216,7 @@ internal class DetailFragment : BaseDetailTvFragment<DetailViewModel>() {
                 }
                 toggleLoading(false)
             }
+
             is NetworkStatus.ERROR -> {
                 toggleLoading(false)
             }
@@ -205,6 +230,7 @@ internal class DetailFragment : BaseDetailTvFragment<DetailViewModel>() {
                     1L -> {
                         vm.getMovieStream(::onMovieStreamResult)
                     }
+
                     2L -> {
                         vm.toggleWatchLater()
                         replaceAction(
@@ -217,6 +243,7 @@ internal class DetailFragment : BaseDetailTvFragment<DetailViewModel>() {
                             else R.drawable.ic_add_to_watch_later
                         }
                     }
+
                     3L -> showFullScreenDescription()
                 }
             }
@@ -233,6 +260,7 @@ internal class DetailFragment : BaseDetailTvFragment<DetailViewModel>() {
                     Constants.EXTRA_CHANNEL_LOGO to vm.channelLogo,
                 )
             }
+
             is EpisodeResponse -> {
                 startActivity<VideoSourceActivity>(
                     Constants.EXTRA_APP_NAME to vm.appName,
@@ -247,23 +275,53 @@ internal class DetailFragment : BaseDetailTvFragment<DetailViewModel>() {
                             (0 until adapter.size()).forEach { index ->
                                 with(adapter[index] as EpisodeResponse) {
 
-                                    if (this.stream != null) {
-                                        add(
-                                            this.copy().apply {
-                                                this.episodeName = "%s (%s)".format(
-                                                    this@with.episodeName, "Free Stream"
-                                                )
-                                                this.vStream = null
-                                            }
-                                        )
-                                    }
-
                                     if (this.vStream != null) {
                                         add(
                                             this.copy().apply {
                                                 this.episodeName = "%s (%s)".format(
-                                                    this@with.episodeName, "VIP Stream"
+                                                    this@with.episodeName, "V Stream"
                                                 )
+                                                this.vbackup = null
+                                                this.stream = null
+                                                this.freemium = null
+                                            }
+                                        )
+                                    }
+
+                                    if (this.vbackup != null) {
+                                        add(
+                                            this.copy().apply {
+                                                this.episodeName = "%s (%s)".format(
+                                                    this@with.episodeName, "VBackup Stream"
+                                                )
+                                                this.vStream = null
+                                                this.stream = null
+                                                this.freemium = null
+                                            }
+                                        )
+                                    }
+
+                                    if (this.stream != null) {
+                                        add(
+                                            this.copy().apply {
+                                                this.episodeName = "%s (%s)".format(
+                                                    this@with.episodeName, "Stream"
+                                                )
+                                                this.vStream = null
+                                                this.vbackup = null
+                                                this.freemium = null
+                                            }
+                                        )
+                                    }
+
+                                    if (this.freemium != null) {
+                                        add(
+                                            this.copy().apply {
+                                                this.episodeName = "%s (%s)".format(
+                                                    this@with.episodeName, "Freemium"
+                                                )
+                                                this.vStream = null
+                                                this.vbackup = null
                                                 this.stream = null
                                             }
                                         )
@@ -273,21 +331,39 @@ internal class DetailFragment : BaseDetailTvFragment<DetailViewModel>() {
                         }
                     },
                     Constants.EXTRA_VIDEO_SOURCE to mutableListOf<VideoSourceModel>().apply {
-                        if (item.stream != null) {
-                            add(
-                                VideoSourceModel(
-                                    item.id,
-                                    "Free Stream",
-                                    url = item.stream!!
-                                )
-                            )
-                        }
                         if (item.vStream != null) {
                             add(
                                 VideoSourceModel(
                                     item.id,
-                                    "VIP Stream",
+                                    "V Stream",
                                     url = item.vStream!!
+                                )
+                            )
+                        }
+                        if (item.vbackup != null) {
+                            add(
+                                VideoSourceModel(
+                                    item.id,
+                                    "VBackup Stream",
+                                    url = item.vbackup!!
+                                )
+                            )
+                        }
+                        if (item.stream != null) {
+                            add(
+                                VideoSourceModel(
+                                    item.id,
+                                    "Stream",
+                                    url = item.stream!!
+                                )
+                            )
+                        }
+                        if (item.freemium != null) {
+                            add(
+                                VideoSourceModel(
+                                    item.id,
+                                    "Freemium",
+                                    url = item.freemium!!
                                 )
                             )
                         }

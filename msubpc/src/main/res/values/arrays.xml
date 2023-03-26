@@ -3,6 +3,8 @@
 
     <array name="array_movies_filter_title">
         <item>@string/lbl_latest_movie_title</item>
+        <item>@string/lbl_2023_year_movies_title</item>
+        <item>@string/lbl_2022_year_movies_title</item>
         <item>@string/lbl_2021_year_movies_title</item>
         <item>@string/lbl_2020_year_movies_title</item>
         <item>@string/lbl_2019_year_movies_title</item>
@@ -20,6 +22,8 @@
 
     <array name="array_movies_filter_key">
         <item>@string/lbl_latest_movie_key</item>
+        <item>@string/lbl_2023_year_movies_key</item>
+        <item>@string/lbl_2022_year_movies_key</item>
         <item>@string/lbl_2021_year_movies_key</item>
         <item>@string/lbl_2020_year_movies_key</item>
         <item>@string/lbl_2019_year_movies_key</item>
@@ -36,16 +40,36 @@
     </array>
 
     <array name="array_series_filter_title">
-        <item>@string/lbl_latest_series_title</item>
+        <item>@string/lbl_recently_added_series_title</item>
+        <item>@string/lbl_new_episode_series_title</item>
+        <item>@string/lbl_ongoing_series_title</item>
+        <item>@string/lbl_complete_series_title</item>
+        <item>@string/lbl_new_seasons_title</item>
         <item>@string/lbl_korea_series_title</item>
         <item>@string/lbl_english_series_title</item>
+        <item>@string/lbl_thai_series_title</item>
+        <item>@string/lbl_romance_drama_series_title</item>
+        <item>@string/lbl_comedy_series_title</item>
+        <item>@string/lbl_action_crime_series_title</item>
+        <item>@string/lbl_horror_thriller_series_title</item>
+        <item>@string/lbl_scifi_fantasy_series_title</item>
         <item>@string/lbl_anime_series_title</item>
     </array>
 
     <array name="array_series_filter_key">
-        <item>@string/lbl_latest_series_key</item>
+        <item>@string/lbl_recently_added_series_key</item>
+        <item>@string/lbl_new_episode_series_key</item>
+        <item>@string/lbl_ongoing_series_key</item>
+        <item>@string/lbl_complete_series_key</item>
+        <item>@string/lbl_new_seasons_key</item>
         <item>@string/lbl_korea_series_key</item>
         <item>@string/lbl_english_series_key</item>
+        <item>@string/lbl_thai_series_key</item>
+        <item>@string/lbl_romance_drama_series_key</item>
+        <item>@string/lbl_comedy_series_key</item>
+        <item>@string/lbl_action_crime_series_key</item>
+        <item>@string/lbl_horror_thriller_series_key</item>
+        <item>@string/lbl_scifi_fantasy_series_key</item>
         <item>@string/lbl_anime_series_key</item>
     </array>
 

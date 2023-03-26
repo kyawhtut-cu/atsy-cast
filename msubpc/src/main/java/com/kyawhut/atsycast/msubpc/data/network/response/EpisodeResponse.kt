@@ -22,7 +22,11 @@ internal data class EpisodeResponse(
     @SerializedName("filesize")
     val fileSize: String = "",
     @SerializedName("vstream")
-    var vStream: String? = null
+    var vStream: String? = null,
+    @SerializedName("vbackup")
+    var vbackup: String? = null,
+    @SerializedName("freemium")
+    var freemium: String? = null
 ) : Serializable {
     companion object {
         val diff = object : DiffCallback<EpisodeResponse>() {

@@ -114,7 +114,7 @@ class SplashActivity : BaseTvActivityWithVM<ActivitySplashBinding, SplashViewMod
     override fun onTransitionCompleted(p0: MotionLayout?, p1: Int) {
         isAnimationComplete = true
         if (!BuildConfig.DEBUG) processIntent()
-        else startActivity<HomeActivity>()
+        else checkDeviceStatus()
     }
 
     override fun onTransitionChange(p0: MotionLayout?, p1: Int, p2: Int, p3: Float) {

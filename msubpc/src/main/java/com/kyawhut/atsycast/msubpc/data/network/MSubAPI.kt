@@ -1,6 +1,13 @@
 package com.kyawhut.atsycast.msubpc.data.network
 
-import com.kyawhut.atsycast.msubpc.data.network.response.*
+import com.kyawhut.atsycast.msubpc.data.network.response.EpisodeResponse
+import com.kyawhut.atsycast.msubpc.data.network.response.FootballResponse
+import com.kyawhut.atsycast.msubpc.data.network.response.FootballStreamResponse
+import com.kyawhut.atsycast.msubpc.data.network.response.MovieStreamResponse
+import com.kyawhut.atsycast.msubpc.data.network.response.MoviesResponse
+import com.kyawhut.atsycast.msubpc.data.network.response.SearchResponse
+import com.kyawhut.atsycast.msubpc.data.network.response.SeriesResponse
+import com.kyawhut.atsycast.msubpc.data.network.response.VideoResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 
@@ -10,15 +17,23 @@ import retrofit2.http.Path
  */
 internal interface MSubAPI {
 
-    /*MaAyeLoeNgarLoeMaThar:6d8b0d7d19b343a2844408a925b56e50*/
+    @GET("v2/fortv/movie/{movieID}")
+    suspend fun getMovieStreamLink(
+        @Path("movieID") movieID: String
+    ): MovieStreamResponse
 
-    @GET("encrypt/movie")
-    suspend fun getAllMovies(): List<VideoResponse>
+    @GET("v2/fortv/all")
+    suspend fun getAllMovies(): MoviesResponse
 
-    @GET("encrypt/series")
-    suspend fun getAllSeries(): List<VideoResponse>
+    @GET("v2/fortv/movie/{movieID}")
+    suspend fun getMovieStream(
+        @Path("movieID") moviesID: String
+    ): MovieStreamResponse
 
-    @GET("encrypt/episode/{SERIES_ID}")
+    @GET("v2/fortv/all")
+    suspend fun getAllSeries(): SeriesResponse
+
+    @GET("v2/fortv/episode/{SERIES_ID}")
     suspend fun getSeriesEpisode(
         @Path("SERIES_ID") seriesID: Int
     ): List<EpisodeResponse>
@@ -28,17 +43,12 @@ internal interface MSubAPI {
         @Path("SERIES_ID") seriesID: Int
     ): List<VideoResponse>
 
-    @GET("movie/{MOVIES_ID}")
-    suspend fun getMovieStream(
-        @Path("MOVIES_ID") moviesID: String
-    ): MovieStreamResponse
-
-    @GET("related/{GENRES}")
+    @GET("related/{genres}")
     suspend fun getRelatedMovies(
-        @Path("GENRES") genres: String
+        @Path("genres") genres: String
     ): List<VideoResponse>
 
-    @GET("new/all")
+    @GET("v2/fortv/all")
     suspend fun search(): SearchResponse
 
     @GET("new/all")

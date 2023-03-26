@@ -4,7 +4,6 @@ import android.content.Context
 import com.kyawhut.atsycast.msubpc.data.network.MSubAPI
 import com.kyawhut.atsycast.msubpc.data.network.response.SearchResponse
 import com.kyawhut.atsycast.msubpc.data.network.response.VideoResponse
-import com.kyawhut.atsycast.msubpc.utils.AesEncryptDecrypt
 import com.kyawhut.atsycast.share.network.utils.NetworkResponse
 import com.kyawhut.atsycast.share.network.utils.execute
 import com.kyawhut.atsycast.share.utils.Crashlytics
@@ -32,7 +31,7 @@ internal class SearchRepositoryImpl @Inject constructor(
     ) {
         NetworkResponse.loading(callback)
         isFirstTime = searchResponse == null
-        if (searchResponse == null) {
+        if (isFirstTime) {
             val response = execute(crashlytics) { api.search() }
             if (response.isSuccess) {
                 searchResponse = response.data
@@ -44,8 +43,6 @@ internal class SearchRepositoryImpl @Inject constructor(
         searchResponse?.let {
             val movies = it.movies.map {
                 it.apply {
-                    if (isFirstTime)
-                        videoTitle = AesEncryptDecrypt.getDecryptedString(videoTitle)
                     isMovies = true
                 }
             }.filter {
@@ -55,8 +52,6 @@ internal class SearchRepositoryImpl @Inject constructor(
             }
             val series = it.series.map {
                 it.apply {
-                    if (isFirstTime)
-                        videoTitle = AesEncryptDecrypt.getDecryptedString(videoTitle)
                     isMovies = false
                 }
             }.filter {

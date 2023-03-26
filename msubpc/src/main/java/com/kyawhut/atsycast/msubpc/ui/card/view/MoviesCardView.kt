@@ -5,7 +5,6 @@ import com.kyawhut.atsycast.msubpc.R
 import com.kyawhut.atsycast.msubpc.data.network.response.VideoResponse
 import com.kyawhut.atsycast.msubpc.databinding.CardMoviesBinding
 import com.kyawhut.atsycast.share.base.BaseCardView
-import com.kyawhut.atsycast.share.utils.extension.Extension.getColorValue
 import com.kyawhut.atsycast.share.utils.extension.Extension.getDrawableValue
 
 /**

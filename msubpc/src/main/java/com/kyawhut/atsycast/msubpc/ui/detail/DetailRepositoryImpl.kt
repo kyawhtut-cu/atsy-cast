@@ -55,8 +55,18 @@ internal class DetailRepositoryImpl @Inject constructor(
         val response = execute(crashlytics) { api.getMovieStream("$videoID") }
         if (response.isSuccess) {
             response.data?.apply {
-                if (stream != null) stream = AesEncryptDecrypt.getDecryptedString(stream)
-                if (vStream != null) vStream = AesEncryptDecrypt.getDecryptedString(vStream)
+                if (movieStream != null) movieStream = AesEncryptDecrypt.getDecryptedString(
+                    movieStream
+                )
+                if (movieVStream != null) movieVStream = AesEncryptDecrypt.getDecryptedString(
+                    movieVStream
+                )
+                if (movieVBackup != null) movieVBackup = AesEncryptDecrypt.getDecryptedString(
+                    movieVBackup
+                )
+                if (movieFreeMium != null) movieFreeMium = AesEncryptDecrypt.getDecryptedString(
+                    movieFreeMium
+                )
             }
         }
         response.post(callback)
@@ -94,7 +104,6 @@ internal class DetailRepositoryImpl @Inject constructor(
             relatedSeason.data?.map {
                 it.apply {
                     isMovies = false
-                    videoTitle = AesEncryptDecrypt.getDecryptedString(videoTitle)
                 }
             }
             episodeResponse.data?.map {
@@ -104,6 +113,12 @@ internal class DetailRepositoryImpl @Inject constructor(
                     )
                     if (it.vStream != null) it.vStream = AesEncryptDecrypt.getDecryptedString(
                         it.vStream
+                    )
+                    if (it.vbackup != null) it.vbackup = AesEncryptDecrypt.getDecryptedString(
+                        it.vbackup
+                    )
+                    if (it.freemium != null) it.freemium = AesEncryptDecrypt.getDecryptedString(
+                        it.freemium
                     )
                 }
             }

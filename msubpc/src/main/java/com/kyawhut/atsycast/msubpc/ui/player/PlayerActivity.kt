@@ -66,8 +66,12 @@ class PlayerActivity : BasePlayerActivity() {
                 item.id,
                 item.episodeName,
                 item.fileSize,
-                if (item.episodeName.contains("Free Stream", true)) item.stream!!
-                else item.vStream!!
+                when {
+                    item.episodeName.contains("V Stream", true) -> item.vStream!!
+                    item.episodeName.contains("VBackup Stream", true) -> item.vbackup!!
+                    item.episodeName.contains("Freemium", true) -> item.freemium!!
+                    else -> item.stream!!
+                }
             )
             vm.isResume = true
             playVideo()

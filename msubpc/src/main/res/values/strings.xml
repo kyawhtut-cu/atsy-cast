@@ -3,6 +3,8 @@
 
     <string name="lbl_movies_header_title">Movies</string>
     <string name="lbl_latest_movie_title">Latest Movies</string>
+    <string name="lbl_2023_year_movies_title">2023 Movies</string>
+    <string name="lbl_2022_year_movies_title">2022 Movies</string>
     <string name="lbl_2021_year_movies_title">2021 Movies</string>
     <string name="lbl_2020_year_movies_title">2020 Movies</string>
     <string name="lbl_2019_year_movies_title">2019 Movies</string>
@@ -17,12 +19,24 @@
     <string name="lbl_adult_movies_title">18+</string>
     <string name="lbl_football_title">Football</string>
     <string name="lbl_series_header_title">Series</string>
-    <string name="lbl_latest_series_title">Latest Series</string>
+    <string name="lbl_recently_added_series_title">Recently Added Series</string>
+    <string name="lbl_new_episode_series_title">New Episodes Series</string>
+    <string name="lbl_ongoing_series_title">Ongoing Series</string>
+    <string name="lbl_complete_series_title">Complete Series</string>
+    <string name="lbl_new_seasons_title">New Seasons</string>
     <string name="lbl_korea_series_title">Korea Series</string>
     <string name="lbl_english_series_title">English Series</string>
-    <string name="lbl_anime_series_title">Anime Series</string>
+    <string name="lbl_thai_series_title">Thai Series</string>
+    <string name="lbl_romance_drama_series_title">Romance &amp; Drama Series</string>
+    <string name="lbl_comedy_series_title">Comedy Series</string>
+    <string name="lbl_action_crime_series_title">Action &amp; Crime Series</string>
+    <string name="lbl_horror_thriller_series_title">Horror &amp; Thriller Series</string>
+    <string name="lbl_scifi_fantasy_series_title">Sci-Fi &amp; Fantasy Series</string>
+    <string name="lbl_anime_series_title">Anime &amp; Animation Series</string>
 
     <string name="lbl_latest_movie_key">-</string>
+    <string name="lbl_2023_year_movies_key">2023</string>
+    <string name="lbl_2022_year_movies_key">2022</string>
     <string name="lbl_2021_year_movies_key">2021</string>
     <string name="lbl_2020_year_movies_key">2020</string>
     <string name="lbl_2019_year_movies_key">2019</string>
@@ -36,8 +50,18 @@
     <string name="lbl_super_hero_movies_key">super hero</string>
     <string name="lbl_adult_movies_key">18+</string>
     <string name="lbl_football_key">football</string>
-    <string name="lbl_latest_series_key">-</string>
+    <string name="lbl_recently_added_series_key">-</string>
+    <string name="lbl_new_episode_series_key">new-episode</string>
+    <string name="lbl_ongoing_series_key">ongoing</string>
+    <string name="lbl_complete_series_key">complete</string>
+    <string name="lbl_new_seasons_key">new-season</string>
     <string name="lbl_korea_series_key">korea</string>
     <string name="lbl_english_series_key">english</string>
-    <string name="lbl_anime_series_key">anime</string>
+    <string name="lbl_thai_series_key">thai</string>
+    <string name="lbl_romance_drama_series_key">romance,drama</string>
+    <string name="lbl_comedy_series_key">comedy</string>
+    <string name="lbl_action_crime_series_key">action,crime</string>
+    <string name="lbl_horror_thriller_series_key">horror,thriller</string>
+    <string name="lbl_scifi_fantasy_series_key">sci-fi,fantasy</string>
+    <string name="lbl_anime_series_key">anime,animation</string>
 </resources>

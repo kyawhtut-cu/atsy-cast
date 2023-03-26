@@ -3,7 +3,11 @@ package com.kyawhut.atsycast.msubpc.ui.home
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
-import androidx.leanback.widget.*
+import androidx.leanback.widget.DividerRow
+import androidx.leanback.widget.HeaderItem
+import androidx.leanback.widget.PageRow
+import androidx.leanback.widget.Row
+import androidx.leanback.widget.SectionRow
 import com.kyawhut.atsycast.msubpc.MsubPC.clearAPIKey
 import com.kyawhut.atsycast.msubpc.R
 import com.kyawhut.atsycast.msubpc.databinding.ActivityMsubHomeBinding
@@ -81,8 +85,9 @@ internal class HomeActivity : BaseTvActivity<ActivityMsubHomeBinding>() {
                 R.array.array_movies_filter_title
             ).mapIndexed { index, s ->
                 PageRow(HeaderItem(index.toLong(), s).apply {
-                    description =
-                        resources.getStringArray(R.array.array_movies_filter_key)[index]
+                    description = resources.getStringArray(
+                        R.array.array_movies_filter_key
+                    )[index]
                 })
             }.filter {
                 !it.headerItem.name.isAdult || isAdultOpen
@@ -94,8 +99,9 @@ internal class HomeActivity : BaseTvActivity<ActivityMsubHomeBinding>() {
                 R.array.array_series_filter_title
             ).mapIndexed { index, s ->
                 PageRow(HeaderItem(index.toLong(), s).apply {
-                    description =
-                        resources.getStringArray(R.array.array_series_filter_key)[index]
+                    description = resources.getStringArray(
+                        R.array.array_series_filter_key
+                    )[index]
                 })
             }.filter {
                 !it.headerItem.name.isAdult || isAdultOpen

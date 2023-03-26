@@ -26,7 +26,11 @@ internal class SeriesCardView(context: Context) : BaseCardView<CardSeriesBinding
                 seriesPoster = data.videoPosterImage
                 seriesYear = data.videoYear ?: ""
                 seriesStatus = "%s".format(
-                    if (data.videoSeasonNumber == 0) "Complete" else "Season %s".format(data.videoSeasonNumber)
+                    when (data.videoSeasonNumber) {
+                        0 -> "Complete"
+                        99 -> "Ongoing"
+                        else -> "Season %s".format(data.videoSeasonNumber)
+                    }
                 )
                 seriesEpisodeCount = data.videoEpisodeNumber ?: "0"
                 executePendingBindings()

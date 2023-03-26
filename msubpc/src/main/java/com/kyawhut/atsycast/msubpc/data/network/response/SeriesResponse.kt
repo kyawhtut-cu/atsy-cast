@@ -9,11 +9,6 @@ import com.google.gson.annotations.SerializedName
  */
 @Keep
 internal data class SeriesResponse(
-    val id: String,
-    @SerializedName("seriestitle")
-    val seriesTitle: String,
-    @SerializedName("seriesyear")
-    val seriesYear: String,
-    val image: String,
-    val cover: String
+    @SerializedName("series") val series: List<VideoResponse>,
+    @SerializedName("newepisodes") val newepisodes: List<VideoResponse>
 )

@@ -9,8 +9,8 @@ import com.google.gson.annotations.SerializedName
  */
 @Keep
 data class MovieStreamResponse(
-    @SerializedName("stream")
-    var stream: String?,
-    @SerializedName("vstream")
-    var vStream: String?,
+    @SerializedName("stream") var movieStream: String?,
+    @SerializedName("vstream") var movieVStream: String?,
+    @SerializedName("vbackup") var movieVBackup: String?,
+    @SerializedName("freemium") var movieFreeMium: String?,
 )

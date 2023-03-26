@@ -2,12 +2,13 @@ package com.kyawhut.atsycast.msubpc.ui.series
 
 import com.kyawhut.atsycast.msubpc.data.network.MSubAPI
 import com.kyawhut.atsycast.msubpc.data.network.response.VideoResponse
-import com.kyawhut.atsycast.msubpc.utils.AesEncryptDecrypt
 import com.kyawhut.atsycast.share.network.utils.NetworkResponse
 import com.kyawhut.atsycast.share.network.utils.execute
 import com.kyawhut.atsycast.share.utils.Crashlytics
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
-import java.util.*
+import kotlinx.coroutines.withContext
+import java.util.Locale
 import javax.inject.Inject
 
 /**
@@ -20,6 +21,7 @@ internal class SeriesRepositoryImpl @Inject constructor(
 ) : SeriesRepository {
 
     private var _tmpSeriesData = mutableListOf<VideoResponse>()
+    private var _newEpisodes = mutableListOf<VideoResponse>()
     private var isFirstTime: Boolean = false
 
     override suspend fun getSeries(
@@ -28,34 +30,51 @@ internal class SeriesRepositoryImpl @Inject constructor(
     ) {
         NetworkResponse.loading(callback)
         isFirstTime = key == "-" || _tmpSeriesData.isEmpty()
-        if (key == "-" || _tmpSeriesData.isEmpty()) {
+        if (isFirstTime) {
+            _newEpisodes.clear()
             _tmpSeriesData.clear()
-            val response = execute(crashlytics) { api.getAllSeries() }
+            val response = execute(crashlytics) {
+                api.getAllSeries()
+            }
             if (response.isSuccess) {
-                response.data?.map {
+                response.data?.series?.map {
                     it.apply {
                         isMovies = false
-                        videoTitle = AesEncryptDecrypt.getDecryptedString(videoTitle)
                     }
                 }?.let {
                     _tmpSeriesData.addAll(it)
                 }
+                response.data?.newepisodes?.map {
+                    it.apply {
+                        isMovies = false
+                    }
+                }?.let {
+                    _newEpisodes.addAll(it)
+                }
             } else if (response.isError) {
-                response.post(callback)
+                withContext(Dispatchers.Main) {
+                    callback(NetworkResponse(response.networkStatus, null, response.error))
+                }
                 return
             }
         }
 
-        _tmpSeriesData.filter {
+        when (key) {
+            "new-episode" -> _newEpisodes
+            else -> _tmpSeriesData
+        }.filter {
             when (key) {
-                "-" -> true
-                "korea", "english" -> key.contains(
+                "-", "new-episode" -> true
+                "ongoing" -> it.videoSeasonNumber == 99
+                "complete" -> it.videoSeasonNumber == 0
+                "new-season" -> it.videoSeasonNumber != 0 && it.videoSeasonNumber != 99 && !_newEpisodes.any { new -> new.videoId == it.videoId }
+                "korea", "english", "thai" -> key.contains(
                     (it.videoLanguage ?: "").toLowerCase(Locale.ENGLISH)
                 )
-                else -> (it.videoGenres ?: "").contains(key, ignoreCase = true) || key.contains(
-                    (it.videoGenres ?: ""),
-                    ignoreCase = true
-                )
+
+                else -> (it.videoGenres?.replace(" ", "")?.split(",") ?: listOf()).any { g ->
+                    key.contains(g.toLowerCase())
+                }
             }
         }.run {
             if (!isFirstTime) delay(3000)

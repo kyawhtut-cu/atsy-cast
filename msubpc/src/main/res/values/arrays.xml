@@ -73,4 +73,12 @@
         <item>@string/lbl_anime_series_key</item>
     </array>
 
+    <array name="array_adult_filter_title">
+        <item>@string/lbl_adult_title</item>
+    </array>
+
+    <array name="array_adult_filter_key">
+        <item>@string/lbl_adult_filter_key</item>
+    </array>
+
 </resources>

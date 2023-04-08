@@ -1,5 +1,7 @@
 package com.kyawhut.atsycast.msubpc.data.di
 
+import com.kyawhut.atsycast.msubpc.ui.adult.AdultRepository
+import com.kyawhut.atsycast.msubpc.ui.adult.AdultRepositoryImpl
 import com.kyawhut.atsycast.msubpc.ui.cache.CacheRepository
 import com.kyawhut.atsycast.msubpc.ui.cache.CacheRepositoryImpl
 import com.kyawhut.atsycast.msubpc.ui.detail.DetailRepository
@@ -66,4 +68,8 @@ internal object RepositoryModule {
     @Singleton
     fun provideFootballRepository(repository: FootballRepositoryImpl): FootballRepository =
         repository
+
+    @Provides
+    @Singleton
+    fun provideAdultRepository(repository: AdultRepositoryImpl): AdultRepository = repository
 }

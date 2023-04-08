@@ -28,7 +28,7 @@ data class VideoResponse(
         @SerializedName("video_poster")
         val videoPoster: String,
         @SerializedName("video_cover")
-        val videoCover: String,
+        val videoCover: String?,
         @SerializedName("video_view_count")
         val videoViewCount: String,
         @SerializedName("video_episode")

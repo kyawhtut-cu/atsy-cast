@@ -46,7 +46,7 @@ internal class DetailFragment : BaseDetailTvFragment<DetailViewModel>() {
 
         vm.videoData?.let {
             bindDetail(
-                it.videoCover,
+                it.videoCover ?: it.videoPoster,
                 it.videoTitle,
                 "",
                 "",
@@ -64,6 +64,7 @@ internal class DetailFragment : BaseDetailTvFragment<DetailViewModel>() {
             is NetworkStatus.LOADING -> {
                 toggleLoading(true)
             }
+
             is NetworkStatus.SUCCESS -> {
                 toggleLoading(false)
                 result.data?.let {
@@ -106,6 +107,7 @@ internal class DetailFragment : BaseDetailTvFragment<DetailViewModel>() {
                     )
                 }
             }
+
             is NetworkStatus.ERROR -> {
                 toggleLoading(false)
             }
@@ -155,10 +157,12 @@ internal class DetailFragment : BaseDetailTvFragment<DetailViewModel>() {
                             } ?: listOf())
                         )
                     }
+
                     2L -> {
                         vm.toggleWatchLater()
                         toggleWatchLater()
                     }
+
                     3L -> showFullScreenDescription()
                 }
             }
@@ -175,6 +179,7 @@ internal class DetailFragment : BaseDetailTvFragment<DetailViewModel>() {
                     Constants.EXTRA_CHANNEL_LOGO to vm.channelLogo,
                 )
             }
+
             is VideoEpisodeResponse -> {
                 startActivity<VideoSourceActivity>(
                     Constants.EXTRA_APP_NAME to vm.appName,

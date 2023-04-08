@@ -12,4 +12,6 @@ internal sealed class CardType : BaseCardType() {
     object EPISODE : CardType()
     object RECENTLY_WATCH : CardType()
     object FOOTBALL : CardType()
+
+    object ADULT : CardType()
 }

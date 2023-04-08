@@ -2,6 +2,7 @@ package com.kyawhut.atsycast.msubpc.ui.card
 
 import android.content.Context
 import com.google.gson.Gson
+import com.kyawhut.atsycast.msubpc.data.network.response.AdultResponse
 import com.kyawhut.atsycast.msubpc.data.network.response.EpisodeResponse
 import com.kyawhut.atsycast.msubpc.data.network.response.FootballResponse
 import com.kyawhut.atsycast.msubpc.data.network.response.VideoResponse
@@ -24,7 +25,8 @@ internal class CardPresenter(
             item is VideoResponse && !item.isMovies -> CardType.SERIES
             item is EpisodeResponse -> CardType.EPISODE
             item is RecentlyWatchEntity -> CardType.RECENTLY_WATCH
-            item is FootballResponse.Data -> CardType.FOOTBALL
+            item is FootballResponse -> CardType.FOOTBALL
+            item is AdultResponse -> CardType.ADULT
             else -> throw RuntimeException("Unknown item => ${Gson().toJson(item)}")
         }
     }
@@ -36,6 +38,7 @@ internal class CardPresenter(
             CardType.EPISODE -> EpisodeCardPresenter(context, poster)
             CardType.RECENTLY_WATCH -> RecentlyWatchCardPresenter(context)
             CardType.FOOTBALL -> FootballCardPresenter(context)
+            CardType.ADULT -> AdultCardPresenter(context)
         }
     }
 }

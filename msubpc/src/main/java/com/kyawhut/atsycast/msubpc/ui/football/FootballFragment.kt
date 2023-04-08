@@ -10,7 +10,6 @@ import com.kyawhut.atsycast.msubpc.data.network.response.FootballStreamResponse
 import com.kyawhut.atsycast.msubpc.data.network.response.VideoResponse
 import com.kyawhut.atsycast.msubpc.ui.card.CardPresenter
 import com.kyawhut.atsycast.msubpc.ui.source.VideoSourceActivity
-import com.kyawhut.atsycast.msubpc.utils.AesEncryptDecrypt
 import com.kyawhut.atsycast.msubpc.utils.Constants
 import com.kyawhut.atsycast.share.base.BaseGridSupportFragment
 import com.kyawhut.atsycast.share.model.VideoSourceModel
@@ -57,14 +56,15 @@ internal class FootballFragment : BaseGridSupportFragment<FootballViewModel>() {
         vm.getFootball(::onFootballResult)
     }
 
-    private fun onFootballResult(state: NetworkResponse<List<FootballResponse.Data>>) {
+    private fun onFootballResult(state: NetworkResponse<List<FootballResponse>>) {
         when {
             state.isLoading -> showLoading()
             state.isSuccess -> {
                 hideLoading()
-                rowsAdapter.setItems(state.data, FootballResponse.Data.diff)
+                rowsAdapter.setItems(state.data, FootballResponse.diff)
                 startEntranceTransition()
             }
+
             state.isError -> {
                 hideLoading()
                 showError(state.error!!, true)
@@ -72,7 +72,7 @@ internal class FootballFragment : BaseGridSupportFragment<FootballViewModel>() {
         }
     }
 
-    private fun onFootballStreamResult(state: NetworkResponse<FootballStreamResponse>) {
+    private fun onFootballStreamResult(state: NetworkResponse<List<FootballStreamResponse>>) {
         when (state.networkStatus) {
             is NetworkStatus.LOADING -> showLoading()
             is NetworkStatus.SUCCESS -> {
@@ -95,7 +95,7 @@ internal class FootballFragment : BaseGridSupportFragment<FootballViewModel>() {
                     ),
                     Constants.EXTRA_VIDEO_TITLE to (vm.football?.matchName ?: ""),
                     Constants.EXTRA_VIDEO_SOURCE to mutableListOf<VideoSourceModel>().apply {
-                        state.data?.let {
+                        /*state.data?.let {
                             if (it.streamFHD != null) {
                                 add(
                                     VideoSourceModel(
@@ -150,10 +150,10 @@ internal class FootballFragment : BaseGridSupportFragment<FootballViewModel>() {
                                     )
                                 )
                             }
-                        }
+                        }*/
                     },
                     Constants.EXTRA_RELATED_EPISODE to mutableListOf<EpisodeResponse>().apply {
-                        state.data?.let {
+                        /*state.data?.let {
                             if (it.streamFHD != null) {
                                 add(
                                     EpisodeResponse(
@@ -214,10 +214,11 @@ internal class FootballFragment : BaseGridSupportFragment<FootballViewModel>() {
                                     )
                                 )
                             }
-                        }
+                        }*/
                     }
                 )
             }
+
             is NetworkStatus.ERROR -> {
                 hideLoading()
                 showError(state.error!!, true)
@@ -226,7 +227,7 @@ internal class FootballFragment : BaseGridSupportFragment<FootballViewModel>() {
     }
 
     override fun onItemClicked(it: Any) {
-        if (it is FootballResponse.Data) {
+        if (it is FootballResponse) {
             vm.getFootballStream(it, ::onFootballStreamResult)
         }
     }

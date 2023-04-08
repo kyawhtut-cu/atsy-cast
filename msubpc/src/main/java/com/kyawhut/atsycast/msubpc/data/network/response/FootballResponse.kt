@@ -10,55 +10,45 @@ import com.google.gson.annotations.SerializedName
  */
 @Keep
 internal data class FootballResponse(
-    @SerializedName("football")
-    val football: List<Data>,
+    @SerializedName("id")
+    val id: Int,
+    @SerializedName("league")
+    val league: String,
+    @SerializedName("op")
+    val op: String,
+    @SerializedName("op2")
+    val op2: String,
+    @SerializedName("flag")
+    val flag: String,
+    @SerializedName("flag2")
+    val flag2: String,
+    @SerializedName("time")
+    val time: String,
+    @SerializedName("date")
+    val date: String,
 ) {
+    companion object {
+        val diff = object : DiffCallback<FootballResponse>() {
+            override fun areItemsTheSame(
+                oldItem: FootballResponse,
+                newItem: FootballResponse
+            ): Boolean {
+                return oldItem.id == newItem.id
+            }
 
-    @Keep
-    internal data class Data(
-        @SerializedName("id")
-        val id: Int,
-        @SerializedName("league")
-        val league: String,
-        @SerializedName("matchname")
-        val matchName: String,
-        @SerializedName("flag")
-        val flag: String,
-        @SerializedName("flag2")
-        val flag2: String,
-        @SerializedName("fhd")
-        val streamFHD: String?,
-        @SerializedName("fhd2")
-        val streamFHD2: String?,
-        @SerializedName("hd")
-        val streamHD: String?,
-        @SerializedName("hd2")
-        val streamHD2: String?,
-        @SerializedName("sd")
-        val streamSD: String?,
-        @SerializedName("sd2")
-        val streamSD2: String?,
-        @SerializedName("time")
-        val time: String,
-        @SerializedName("date")
-        val date: String,
-    ) {
-        companion object {
-            val diff = object : DiffCallback<Data>() {
-                override fun areItemsTheSame(
-                    oldItem: Data,
-                    newItem: Data
-                ): Boolean {
-                    return oldItem.id == newItem.id
-                }
-
-                override fun areContentsTheSame(
-                    oldItem: Data,
-                    newItem: Data
-                ): Boolean {
-                    return oldItem == newItem
-                }
+            override fun areContentsTheSame(
+                oldItem: FootballResponse,
+                newItem: FootballResponse
+            ): Boolean {
+                return oldItem == newItem
             }
         }
     }
+
+    val matchName: String
+        get() = "%s %s %s".format(
+            op,
+            "VS",
+            op2
+        )
 }

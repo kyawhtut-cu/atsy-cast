@@ -5,7 +5,11 @@ import android.os.Handler
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.leanback.app.RowsSupportFragment
-import androidx.leanback.widget.*
+import androidx.leanback.widget.ArrayObjectAdapter
+import androidx.leanback.widget.FocusHighlight
+import androidx.leanback.widget.HeaderItem
+import androidx.leanback.widget.ListRow
+import androidx.leanback.widget.ListRowPresenter
 import com.kyawhut.astycast.gsmovie.GSApplication.goToGSDetail
 import com.kyawhut.astycast.gsmovie.GSApplication.goToGSHome
 import com.kyawhut.astycast.gsmovie.GSApplication.goToGSPlayer
@@ -48,6 +52,11 @@ import timber.log.Timber
 @AndroidEntryPoint
 class HomeFeaturesFragment : RowsSupportFragment() {
 
+    companion object {
+        private const val WATCH_LATER_ID = 1001L
+        private const val RECENTLY_WATCHED_ID = 1002L
+    }
+
     private val vm: HomeViewModel by viewModels()
 
     private val rowsAdapter: ArrayObjectAdapter by lazy {
@@ -62,24 +71,30 @@ class HomeFeaturesFragment : RowsSupportFragment() {
         }
 
         setOnItemViewClickedListener { _, item, _, _ ->
-            if (item is HomeFeatureResponse.Data) {
-                when (item.featureKey) {
-                    -1 -> goToGSHome(item.featureAPIKey, item.featureCover, item.featureName)
-                    1 -> goToFree2Air(item.featureAPIKey, item.featureName, item.featureCover)
-                    2 -> goToMsubPC(item.featureName, item.featureCover, item.featureAPIKey)
-                    3 -> goToZCM(item.featureName, item.featureCover, item.featureAPIKey)
-                    4 -> goToMSYS(item.featureName, item.featureCover, item.featureAPIKey)
-                    6 -> goToETS2MM(item.featureName, item.featureCover, item.featureAPIKey)
-                    7 -> goToDoujin(item.featureName, item.featureCover, item.featureAPIKey)
-                    8 -> goToEPorner(item.featureName, item.featureCover)
-                    9 -> goTo2D(item.featureName)
-                    10 -> goToTiktok(item.featureAPIKey)
-                    11 -> goToGSMMHome(item.featureName, item.featureCover, item.featureAPIKey)
+            when (item) {
+                is HomeFeatureResponse.Data -> {
+                    when (item.featureKey) {
+                        -1 -> goToGSHome(item.featureAPIKey, item.featureName, item.featureCover)
+                        1 -> goToFree2Air(item.featureAPIKey, item.featureName, item.featureCover)
+                        2 -> goToMsubPC(item.featureName, item.featureCover, item.featureAPIKey)
+                        3 -> goToZCM(item.featureName, item.featureCover, item.featureAPIKey)
+                        4 -> goToMSYS(item.featureName, item.featureCover, item.featureAPIKey)
+                        6 -> goToETS2MM(item.featureName, item.featureCover, item.featureAPIKey)
+                        7 -> goToDoujin(item.featureName, item.featureCover, item.featureAPIKey)
+                        8 -> goToEPorner(item.featureName, item.featureCover)
+                        9 -> goTo2D(item.featureName)
+                        10 -> goToTiktok(item.featureAPIKey)
+                        11 -> goToGSMMHome(item.featureName, item.featureCover, item.featureAPIKey)
+                    }
                 }
-            } else if (item is WatchLaterEntity) {
-                vm.getFeatureDetail(item, ::onFeatureDetailState)
-            } else if (item is RecentlyWatchEntity) {
-                vm.getFeatureDetail(item, ::onFeatureDetailStateForPlay)
+
+                is WatchLaterEntity -> {
+                    vm.getFeatureDetail(item, ::onFeatureDetailState)
+                }
+
+                is RecentlyWatchEntity -> {
+                    vm.getFeatureDetail(item, ::onFeatureDetailStateForPlay)
+                }
             }
         }
     }
@@ -96,7 +111,7 @@ class HomeFeaturesFragment : RowsSupportFragment() {
             var foundIndex: Int = -1
             (0 until rowsAdapter.size()).forEach { index ->
                 with(rowsAdapter.get(index) as ListRow) {
-                    if (this.headerItem.id == 3L) {
+                    if (this.headerItem.id == WATCH_LATER_ID) {
                         foundIndex = index
                         return@forEach
                     }
@@ -104,12 +119,12 @@ class HomeFeaturesFragment : RowsSupportFragment() {
             }
             if (watchLater.isNotEmpty() && foundIndex == -1) rowsAdapter.add(
                 ListRow(
-                    HeaderItem(3L, "WatchLater"),
+                    HeaderItem(WATCH_LATER_ID, "WatchLater"),
                     ArrayObjectAdapter(CardPresenter(requireContext())).apply {
                         setItems(watchLater, WatchLaterEntity.diff)
                     }
                 )
-            ) else if (watchLater.isNotEmpty() && foundIndex != -1) {
+            ) else if (watchLater.isNotEmpty() && foundIndex > -1) {
                 with((rowsAdapter.get(foundIndex) as ListRow).adapter as ArrayObjectAdapter) {
                     this.clear()
                     this.addAll(this.size(), watchLater)
@@ -121,7 +136,7 @@ class HomeFeaturesFragment : RowsSupportFragment() {
             foundIndex = -1
             (0 until rowsAdapter.size()).forEach { index ->
                 with(rowsAdapter.get(index) as ListRow) {
-                    if (this.headerItem.id == 4L) {
+                    if (this.headerItem.id == RECENTLY_WATCHED_ID) {
                         foundIndex = index
                         return@forEach
                     }
@@ -130,12 +145,12 @@ class HomeFeaturesFragment : RowsSupportFragment() {
 
             if (recentlyWatch.isNotEmpty() && foundIndex == -1) rowsAdapter.add(
                 ListRow(
-                    HeaderItem(4L, "Recently Watch"),
+                    HeaderItem(RECENTLY_WATCHED_ID, "Recently Watch"),
                     ArrayObjectAdapter(CardPresenter(requireContext())).apply {
                         setItems(recentlyWatch, RecentlyWatchEntity.diff)
                     }
                 )
-            ) else if (recentlyWatch.isNotEmpty() && foundIndex != -1) {
+            ) else if (recentlyWatch.isNotEmpty() && foundIndex > -1) {
                 with((rowsAdapter.get(foundIndex) as ListRow).adapter as ArrayObjectAdapter) {
                     this.clear()
                     this.addAll(this.size(), recentlyWatch)
@@ -157,6 +172,7 @@ class HomeFeaturesFragment : RowsSupportFragment() {
             state.isLoading -> {
                 (requireActivity() as HomeActivity).toggleLoading(true)
             }
+
             state.isSuccess -> {
                 (requireActivity() as HomeActivity).toggleLoading(false)
                 vm.homeFeatureList = state.data ?: hashMapOf()
@@ -183,6 +199,7 @@ class HomeFeaturesFragment : RowsSupportFragment() {
                     verticalGridView.requestFocus()
                 }, 500)
             }
+
             state.isError -> {
                 (requireActivity() as HomeActivity).showError(
                     if (state.error?.message.isNullOrEmpty()) getString(
@@ -210,6 +227,7 @@ class HomeFeaturesFragment : RowsSupportFragment() {
                                 state.data?.first!!
                             )
                         }
+
                         is SourceType.ZCM -> {
                             goToZCMDetail(
                                 feature.featureName,
@@ -218,6 +236,7 @@ class HomeFeaturesFragment : RowsSupportFragment() {
                                 state.data?.first!!
                             )
                         }
+
                         is SourceType.MSYS -> {
                             goToMSYSDetail(
                                 feature.featureName,
@@ -226,6 +245,7 @@ class HomeFeaturesFragment : RowsSupportFragment() {
                                 state.data?.first!!
                             )
                         }
+
                         is SourceType.ET2SMM -> {
                             goToETS2MMDetail(
                                 feature.featureName,
@@ -234,6 +254,7 @@ class HomeFeaturesFragment : RowsSupportFragment() {
                                 state.data?.first!!
                             )
                         }
+
                         else -> {
                             when (source?.type ?: "") {
                                 ShareUtils.MYCINEMA -> goToGSDetail(
@@ -242,6 +263,7 @@ class HomeFeaturesFragment : RowsSupportFragment() {
                                     feature.featureAPIKey,
                                     state.data?.first!!
                                 )
+
                                 ShareUtils.VIU -> goToGSMMDetail(
                                     feature.featureName,
                                     feature.featureCover,
@@ -253,6 +275,7 @@ class HomeFeaturesFragment : RowsSupportFragment() {
                     }
                 }
             }
+
             state.isError -> {
                 (requireActivity() as HomeActivity).toggleLoading(false)
             }
@@ -275,6 +298,7 @@ class HomeFeaturesFragment : RowsSupportFragment() {
                                 state.data?.first!!
                             )
                         }
+
                         is SourceType.ZCM -> {
                             goToZCMPlayer(
                                 feature.featureName,
@@ -283,6 +307,7 @@ class HomeFeaturesFragment : RowsSupportFragment() {
                                 state.data?.first!!
                             )
                         }
+
                         is SourceType.MSYS -> {
                             goMSYSPlayer(
                                 feature.featureName,
@@ -291,6 +316,7 @@ class HomeFeaturesFragment : RowsSupportFragment() {
                                 state.data?.first!!
                             )
                         }
+
                         is SourceType.ET2SMM -> {
                             goToETS2MMPlayer(
                                 feature.featureName,
@@ -299,6 +325,7 @@ class HomeFeaturesFragment : RowsSupportFragment() {
                                 state.data?.first!!
                             )
                         }
+
                         else -> {
                             when (source?.type ?: "") {
                                 ShareUtils.MYCINEMA -> goToGSPlayer(
@@ -307,6 +334,7 @@ class HomeFeaturesFragment : RowsSupportFragment() {
                                     feature.featureAPIKey,
                                     state.data?.first!!
                                 )
+
                                 ShareUtils.VIU -> goToGSMMPlayer(
                                     feature.featureName,
                                     feature.featureCover,
@@ -318,6 +346,7 @@ class HomeFeaturesFragment : RowsSupportFragment() {
                     }
                 }
             }
+
             state.isError -> {
                 (requireActivity() as HomeActivity).toggleLoading(false)
             }

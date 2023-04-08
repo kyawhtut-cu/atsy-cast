@@ -25,10 +25,10 @@ internal class FootballViewModel @Inject constructor(
     val channelLogo: String by lazy {
         savedStateHandle.get(Constants.EXTRA_CHANNEL_LOGO) ?: ""
     }
-    var football: FootballResponse.Data? = null
+    var football: FootballResponse? = null
 
     fun getFootball(
-        callback: (NetworkResponse<List<FootballResponse.Data>>) -> Unit
+        callback: (NetworkResponse<List<FootballResponse>>) -> Unit
     ) {
         viewModelScope {
             repo.getFootball(callback)
@@ -36,8 +36,8 @@ internal class FootballViewModel @Inject constructor(
     }
 
     fun getFootballStream(
-        football: FootballResponse.Data? = this.football,
-        callback: (NetworkResponse<FootballStreamResponse>) -> Unit
+        football: FootballResponse? = this.football,
+        callback: (NetworkResponse<List<FootballStreamResponse>>) -> Unit
     ) {
         this.football = football
         if (football == null) return

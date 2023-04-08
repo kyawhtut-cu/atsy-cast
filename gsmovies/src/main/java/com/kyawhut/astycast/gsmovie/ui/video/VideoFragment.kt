@@ -58,6 +58,7 @@ internal class VideoFragment : BaseGridSupportFragment<VideoViewModel>() {
                 if (vm.isFirstPage) rowsAdapter.setItems(result.data, VideoResponse.Data.diff)
                 else rowsAdapter.addAll(rowsAdapter.size(), result.data)
             }
+
             is NetworkStatus.ERROR -> {
                 hideLoading()
                 showError(result.error, true)
@@ -78,7 +79,7 @@ internal class VideoFragment : BaseGridSupportFragment<VideoViewModel>() {
 
     override fun onItemFocus(it: Any) {
         if (it is VideoResponse.Data) {
-            changeBackground(it.videoCover)
+            changeBackground(it.videoCover ?: it.videoPoster)
         }
     }
 

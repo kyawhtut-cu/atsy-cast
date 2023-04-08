@@ -11,6 +11,7 @@ import androidx.leanback.widget.SectionRow
 import com.kyawhut.atsycast.msubpc.MsubPC.clearAPIKey
 import com.kyawhut.atsycast.msubpc.R
 import com.kyawhut.atsycast.msubpc.databinding.ActivityMsubHomeBinding
+import com.kyawhut.atsycast.msubpc.ui.adult.AdultFragment
 import com.kyawhut.atsycast.msubpc.ui.cache.CacheFragment
 import com.kyawhut.atsycast.msubpc.ui.football.FootballFragment
 import com.kyawhut.atsycast.msubpc.ui.movies.MoviesFragment
@@ -81,28 +82,50 @@ internal class HomeActivity : BaseTvActivity<ActivityMsubHomeBinding>() {
         override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
             super.onViewCreated(view, savedInstanceState)
 
+            var count = 0
             val moviesMenu = resources.getStringArray(
                 R.array.array_movies_filter_title
             ).mapIndexed { index, s ->
-                PageRow(HeaderItem(index.toLong(), s).apply {
+                PageRow(HeaderItem(count.toLong(), s).apply {
                     description = resources.getStringArray(
                         R.array.array_movies_filter_key
                     )[index]
-                })
+                }).also {
+                    count += 1
+                }
             }.filter {
                 !it.headerItem.name.isAdult || isAdultOpen
             }.toMutableList<Row>().apply {
                 add(0, SectionRow("$appName Movies"))
             }.toList()
 
+            val adult = if (requireContext().isAdultOpen) {
+                mutableListOf<Row>().apply {
+                    add(DividerRow())
+                    add(SectionRow("$appName Adult"))
+                    resources.getStringArray(
+                        R.array.array_adult_filter_title
+                    ).forEachIndexed { index, s ->
+                        add(PageRow(HeaderItem(count.toLong(), s).apply {
+                            description = resources.getStringArray(
+                                R.array.array_adult_filter_key
+                            )[index]
+                        }))
+                        count += 1
+                    }
+                }
+            } else listOf()
+
             val seriesMenu = resources.getStringArray(
                 R.array.array_series_filter_title
             ).mapIndexed { index, s ->
-                PageRow(HeaderItem(index.toLong(), s).apply {
+                PageRow(HeaderItem(count.toLong(), s).apply {
                     description = resources.getStringArray(
                         R.array.array_series_filter_key
                     )[index]
-                })
+                }).also {
+                    count += 1
+                }
             }.filter {
                 !it.headerItem.name.isAdult || isAdultOpen
             }.toMutableList<Row>().apply {
@@ -131,6 +154,10 @@ internal class HomeActivity : BaseTvActivity<ActivityMsubHomeBinding>() {
                 appName,
                 channelLogo,
             ) else if (header.description == getString(R.string.lbl_football_key)) FootballFragment.newInstance(
+                header.description.toString(),
+                appName,
+                channelLogo,
+            ) else if (header.description == getString(R.string.lbl_adult_filter_key)) AdultFragment.newInstance(
                 header.description.toString(),
                 appName,
                 channelLogo,

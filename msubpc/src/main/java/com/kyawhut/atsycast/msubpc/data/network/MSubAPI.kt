@@ -1,5 +1,6 @@
 package com.kyawhut.atsycast.msubpc.data.network
 
+import com.kyawhut.atsycast.msubpc.data.network.response.AdultResponse
 import com.kyawhut.atsycast.msubpc.data.network.response.EpisodeResponse
 import com.kyawhut.atsycast.msubpc.data.network.response.FootballResponse
 import com.kyawhut.atsycast.msubpc.data.network.response.FootballStreamResponse
@@ -51,11 +52,14 @@ internal interface MSubAPI {
     @GET("v2/fortv/all")
     suspend fun search(): SearchResponse
 
-    @GET("new/all")
-    suspend fun getFootball(): FootballResponse
+    @GET("v2/fortv/football")
+    suspend fun getFootball(): List<FootballResponse>
 
-    @GET("football/showlive/{FOOTBALL_ID}")
+    @GET("v2/fortv/flive/{FOOTBALL_ID}")
     suspend fun getFootballStream(
         @Path("FOOTBALL_ID") footballID: Int
-    ): FootballStreamResponse
+    ): List<FootballStreamResponse>
+
+    @GET("v2/get/adult")
+    suspend fun getAdultMovie(): List<AdultResponse>
 }

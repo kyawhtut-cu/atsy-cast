@@ -23,7 +23,7 @@ internal class FootballCardView(context: Context) : BaseCardView<CardMsubpcFootb
     }
 
     override fun bindUI(data: Any) {
-        if (data is FootballResponse.Data) {
+        if (data is FootballResponse) {
             vb.apply {
                 football = data
                 executePendingBindings()

@@ -18,12 +18,12 @@ internal class FootballRepositoryImpl @Inject constructor(
 ) : FootballRepository {
 
     override suspend fun getFootball(
-        callback: (NetworkResponse<List<FootballResponse.Data>>) -> Unit
+        callback: (NetworkResponse<List<FootballResponse>>) -> Unit
     ) {
         NetworkResponse.loading(callback)
         val response = execute(crashlytics) { api.getFootball() }
         if (response.isSuccess) {
-            NetworkResponse.success(response.data?.football ?: listOf(), callback)
+            NetworkResponse.success(response.data ?: listOf(), callback)
         } else {
             NetworkResponse.error(response.error, callback)
         }
@@ -31,7 +31,7 @@ internal class FootballRepositoryImpl @Inject constructor(
 
     override suspend fun getFootballStream(
         footballID: Int,
-        callback: (NetworkResponse<FootballStreamResponse>) -> Unit
+        callback: (NetworkResponse<List<FootballStreamResponse>>) -> Unit
     ) {
         NetworkResponse.loading(callback)
         val response = execute(crashlytics) { api.getFootballStream(footballID) }

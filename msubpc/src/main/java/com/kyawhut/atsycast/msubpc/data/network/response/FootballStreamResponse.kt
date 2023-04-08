@@ -9,16 +9,18 @@ import com.google.gson.annotations.SerializedName
  */
 @Keep
 internal data class FootballStreamResponse(
-    @SerializedName("fhd")
-    val streamFHD: String?,
-    @SerializedName("fhd2")
-    val streamFHD2: String?,
-    @SerializedName("hd")
-    val streamHD: String?,
-    @SerializedName("hd2")
-    val streamHD2: String?,
-    @SerializedName("sd")
-    val streamSD: String?,
-    @SerializedName("sd2")
-    val streamSD2: String?,
+    @SerializedName("id")
+    val id: String,
+    @SerializedName("football_id")
+    val footballID: String,
+    @SerializedName("quality")
+    val quality: String,
+    @SerializedName("link")
+    val link: String,
+    @SerializedName("referer")
+    val referer: String?,
+    @SerializedName("cusheader")
+    val cusheader: String?,
+    @SerializedName("cusheadervalue")
+    val cusheaderValue: String?,
 )

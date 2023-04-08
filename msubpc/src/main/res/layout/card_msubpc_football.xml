@@ -5,11 +5,11 @@
 
     <data>
 
-        <import type="com.kyawhut.atsycast.msubpc.data.network.response.FootballResponse.Data" />
+        <import type="com.kyawhut.atsycast.msubpc.data.network.response.FootballResponse" />
 
         <variable
             name="football"
-            type="Data" />
+            type="FootballResponse" />
 
     </data>
 

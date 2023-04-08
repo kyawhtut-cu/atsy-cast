@@ -71,6 +71,18 @@ public class AesEncryptDecrypt {
         }
     }
 
+    public static String getDecryptedStringForAnother(String password, String paramString) {
+        paramString = new String(Base64.decode(paramString.getBytes(), 0));
+        AesEncryptionData aesEncryptionData = (new Gson()).fromJson(paramString, AesEncryptionData.class);
+        try {
+            String str = decrypt(password.getBytes("UTF-8"), aesEncryptionData.iv, aesEncryptionData.value, aesEncryptionData.mac);
+            return str;
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return "";
+        }
+    }
+
     @Keep
     public static class AesEncryptionData {
         public String iv;

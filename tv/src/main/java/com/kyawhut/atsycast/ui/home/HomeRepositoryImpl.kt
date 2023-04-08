@@ -43,13 +43,19 @@ class HomeRepositoryImpl @Inject constructor(
     ) {
         NetworkResponse.loading(callback)
         val features = execute(crashlytics) {
+            val data = HashMap<String, List<HomeFeatureResponse.Data>>()
             sheetAPI.getHomeFeature(scriptRequest {
                 route = "homeFeatures"
                 payload = mutableMapOf(
                     "device_id" to context.deviceID,
                     "device_password" to context.devicePassword
                 )
-            }).data
+            }).data.forEach { (key, value) ->
+                data[key] = value.filter {
+                    it.featureStatus
+                }
+            }
+            data
         }
         features.post(callback)
     }

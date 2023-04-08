@@ -10,7 +10,13 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.leanback.app.BrowseSupportFragment
-import androidx.leanback.widget.*
+import androidx.leanback.widget.ArrayObjectAdapter
+import androidx.leanback.widget.DiffCallback
+import androidx.leanback.widget.HeaderItem
+import androidx.leanback.widget.ListRowPresenter
+import androidx.leanback.widget.PageRow
+import androidx.leanback.widget.Row
+import androidx.leanback.widget.TitleView
 import com.kyawhut.atsycast.share.R
 import com.kyawhut.atsycast.share.components.IOSLoading
 import com.kyawhut.atsycast.share.network.utils.NetworkError
@@ -118,7 +124,7 @@ abstract class BaseBrowseSupportFragment : BrowseSupportFragment() {
         progressBarManager.hide()
     }
 
-    fun showError(error: NetworkError?, isBackEnable: Boolean = false) {
+    fun showError(error: NetworkError?, isBackEnable: Boolean = true) {
         errorFragment.isBackEnabled = isBackEnable
         error.printStackTrace()
         hideLoading()

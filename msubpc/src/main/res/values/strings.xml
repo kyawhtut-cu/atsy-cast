@@ -33,6 +33,7 @@
     <string name="lbl_horror_thriller_series_title">Horror &amp; Thriller Series</string>
     <string name="lbl_scifi_fantasy_series_title">Sci-Fi &amp; Fantasy Series</string>
     <string name="lbl_anime_series_title">Anime &amp; Animation Series</string>
+    <string name="lbl_adult_title">Adult(18+)</string>
 
     <string name="lbl_latest_movie_key">-</string>
     <string name="lbl_2023_year_movies_key">2023</string>
@@ -64,4 +65,5 @@
     <string name="lbl_horror_thriller_series_key">horror,thriller</string>
     <string name="lbl_scifi_fantasy_series_key">sci-fi,fantasy</string>
     <string name="lbl_anime_series_key">anime,animation</string>
+    <string name="lbl_adult_filter_key">adult</string>
 </resources>

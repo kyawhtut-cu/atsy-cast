@@ -42,7 +42,7 @@ jobs:
         run: bash ./gradlew assembleprodRelease --stacktrace
 
       - name: Send Release APK to Tester
-        uses: wzieba/Firebase-Distribution-Github-Action@v1.3.2
+        uses: wzieba/Firebase-Distribution-Github-Action@v1
         with:
           appId: ${{ secrets.FIREBASE_RELEASE_APP_ID }}
           token: ${{ secrets.FIREBASE_TOKEN }}

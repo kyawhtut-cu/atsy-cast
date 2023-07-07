@@ -27,7 +27,7 @@ internal class AdultCardView(context: Context) : BaseCardView<CardMoviesBinding>
                 moviesPoster = data.adultImage
                 movieIMDB = ""
                 moviesResolution = ""
-                moviesYear = data.adultYear ?: ""
+                moviesYear = data.adultYear
                 moviesResolutionType = context.getDrawableValue(R.drawable.bg_resolution_default)
                 executePendingBindings()
             }

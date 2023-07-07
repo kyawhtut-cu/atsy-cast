@@ -17,24 +17,25 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
 public class AesEncryptDecrypt {
-    public static String decrypt(byte[] paramArrayOfbyte, String paramString1, String paramString2, String paramString3) throws Exception {
-        SecretKeySpec secretKeySpec2 = new SecretKeySpec(paramArrayOfbyte, "AES");
-        byte[] arrayOfByte2 = paramString1.getBytes("UTF-8");
-        byte b = 0;
-        arrayOfByte2 = Base64.decode(arrayOfByte2, 0);
-        byte[] arrayOfByte3 = Base64.decode(paramString2.getBytes("UTF-8"), 0);
-        SecretKeySpec secretKeySpec1 = new SecretKeySpec(paramArrayOfbyte, "HmacSHA256");
+    public static String decrypt(byte[] keyValue, String ivValue, String encryptedData, String macValue) throws Exception {
+        SecretKeySpec secretKeySpec = new SecretKeySpec(keyValue, "AES");
+        int i = 0;
+        byte[] decode = Base64.decode(ivValue.getBytes("UTF-8"), 0);
+        byte[] decode2 = Base64.decode(encryptedData.getBytes("UTF-8"), 0);
+        SecretKeySpec secretKeySpec2 = new SecretKeySpec(keyValue, "HmacSHA256");
         Mac mac = Mac.getInstance("HmacSHA256");
-        mac.init(secretKeySpec1);
-        mac.update(paramString1.getBytes("UTF-8"));
-        if (!Arrays.equals(mac.doFinal(paramString2.getBytes("UTF-8")), Hex.decodeHex(paramString3.toCharArray())))
+        mac.init(secretKeySpec2);
+        mac.update(ivValue.getBytes("UTF-8"));
+        if (!Arrays.equals(mac.doFinal(encryptedData.getBytes("UTF-8")), Hex.decodeHex(macValue.toCharArray()))) {
             return "MAC mismatch";
+        }
         Cipher cipher = Cipher.getInstance("AES/CBC/PKCS7Padding");
-        cipher.init(2, secretKeySpec2, new IvParameterSpec(arrayOfByte2));
-        byte[] arrayOfByte1 = cipher.doFinal(arrayOfByte3);
-        while (arrayOfByte1[b] != 34)
-            b++;
-        return new String(Arrays.copyOfRange(arrayOfByte1, b + 1, arrayOfByte1.length - 2));
+        cipher.init(2, secretKeySpec, new IvParameterSpec(decode));
+        byte[] doFinal = cipher.doFinal(decode2);
+        while (doFinal[i] != 34) {
+            i++;
+        }
+        return new String(Arrays.copyOfRange(doFinal, i + 1, doFinal.length - 2));
     }
 
     public static String encrypt(byte[] paramArrayOfbyte, String paramString) throws Exception {
@@ -59,24 +60,26 @@ public class AesEncryptDecrypt {
         return Base64.encodeToString((new Gson()).toJson(aesEncryptionData).getBytes("UTF-8"), 0);
     }
 
-    public static String getDecryptedString(String paramString) {
-        paramString = new String(Base64.decode(paramString.getBytes(), 0));
-        AesEncryptionData aesEncryptionData = (new Gson()).fromJson(paramString, AesEncryptionData.class);
+    public static String getDecryptedString(String encryptedString) {
+        AesEncryptionData aesEncryptionData = (AesEncryptionData) new Gson().fromJson(
+                new String(Base64.decode(encryptedString.getBytes(), 0)),
+                AesEncryptionData.class
+        );
         try {
-            String str = decrypt(BuildConfig.ENCRYPT_KEY.getBytes("UTF-8"), aesEncryptionData.iv, aesEncryptionData.value, aesEncryptionData.mac);
-            return str;
+            return decrypt(BuildConfig.ENCRYPT_KEY.getBytes("UTF-8"), aesEncryptionData.iv, aesEncryptionData.value, aesEncryptionData.mac);
         } catch (Exception exception) {
             exception.printStackTrace();
             return "";
         }
     }
 
-    public static String getDecryptedStringForAnother(String password, String paramString) {
-        paramString = new String(Base64.decode(paramString.getBytes(), 0));
-        AesEncryptionData aesEncryptionData = (new Gson()).fromJson(paramString, AesEncryptionData.class);
+    public static String getDecryptedStringForAnother(String password, String encryptedString) {
+        AesEncryptionData aesEncryptionData = (AesEncryptionData) new Gson().fromJson(
+                new String(Base64.decode(encryptedString.getBytes(), 0)),
+                AesEncryptionData.class
+        );
         try {
-            String str = decrypt(password.getBytes("UTF-8"), aesEncryptionData.iv, aesEncryptionData.value, aesEncryptionData.mac);
-            return str;
+            return decrypt(password.getBytes("UTF-8"), aesEncryptionData.iv, aesEncryptionData.value, aesEncryptionData.mac);
         } catch (Exception exception) {
             exception.printStackTrace();
             return "";

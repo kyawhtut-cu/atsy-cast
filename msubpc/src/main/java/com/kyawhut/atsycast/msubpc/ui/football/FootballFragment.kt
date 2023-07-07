@@ -4,12 +4,12 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.leanback.widget.ArrayObjectAdapter
-import com.kyawhut.atsycast.msubpc.data.network.response.EpisodeResponse
 import com.kyawhut.atsycast.msubpc.data.network.response.FootballResponse
 import com.kyawhut.atsycast.msubpc.data.network.response.FootballStreamResponse
 import com.kyawhut.atsycast.msubpc.data.network.response.VideoResponse
 import com.kyawhut.atsycast.msubpc.ui.card.CardPresenter
 import com.kyawhut.atsycast.msubpc.ui.source.VideoSourceActivity
+import com.kyawhut.atsycast.msubpc.utils.AesEncryptDecrypt
 import com.kyawhut.atsycast.msubpc.utils.Constants
 import com.kyawhut.atsycast.share.base.BaseGridSupportFragment
 import com.kyawhut.atsycast.share.model.VideoSourceModel
@@ -95,126 +95,28 @@ internal class FootballFragment : BaseGridSupportFragment<FootballViewModel>() {
                     ),
                     Constants.EXTRA_VIDEO_TITLE to (vm.football?.matchName ?: ""),
                     Constants.EXTRA_VIDEO_SOURCE to mutableListOf<VideoSourceModel>().apply {
-                        /*state.data?.let {
-                            if (it.streamFHD != null) {
-                                add(
-                                    VideoSourceModel(
-                                        (vm.football?.id ?: 0).toString(),
-                                        "Full HD - 1",
-                                        url = AesEncryptDecrypt.getDecryptedString(it.streamFHD),
-                                    )
+                        state.data?.forEach {
+                            add(
+                                VideoSourceModel(
+                                    it.footballID,
+                                    it.quality,
+                                    url = AesEncryptDecrypt.getDecryptedString(it.link),
+                                    customHeader = mutableListOf<Pair<String, String>>().apply {
+                                        if (it.referer != null) add(
+                                            "Referer" to AesEncryptDecrypt.getDecryptedString(
+                                                it.referer
+                                            )
+                                        ) else {
+                                            add("Referer" to "msub.fortv.channel 4.1")
+                                        }
+                                        if (it.cusheader != null && it.cusheaderValue != null) add(
+                                            AesEncryptDecrypt.getDecryptedString(it.cusheader) to
+                                                    AesEncryptDecrypt.getDecryptedString(it.cusheaderValue)
+                                        )
+                                    }
                                 )
-                            }
-                            if (it.streamFHD2 != null) {
-                                add(
-                                    VideoSourceModel(
-                                        (vm.football?.id ?: 0).toString(),
-                                        "Full HD - 2",
-                                        url = AesEncryptDecrypt.getDecryptedString(it.streamFHD2),
-                                    )
-                                )
-                            }
-                            if (it.streamHD != null) {
-                                add(
-                                    VideoSourceModel(
-                                        (vm.football?.id ?: 0).toString(),
-                                        "HD - 1",
-                                        url = AesEncryptDecrypt.getDecryptedString(it.streamHD),
-                                    )
-                                )
-                            }
-                            if (it.streamHD2 != null) {
-                                add(
-                                    VideoSourceModel(
-                                        (vm.football?.id ?: 0).toString(),
-                                        "HD - 2",
-                                        url = AesEncryptDecrypt.getDecryptedString(it.streamHD2),
-                                    )
-                                )
-                            }
-                            if (it.streamSD != null) {
-                                add(
-                                    VideoSourceModel(
-                                        (vm.football?.id ?: 0).toString(),
-                                        "SD - 1",
-                                        url = AesEncryptDecrypt.getDecryptedString(it.streamSD),
-                                    )
-                                )
-                            }
-                            if (it.streamSD2 != null) {
-                                add(
-                                    VideoSourceModel(
-                                        (vm.football?.id ?: 0).toString(),
-                                        "SD - 2",
-                                        url = AesEncryptDecrypt.getDecryptedString(it.streamSD2),
-                                    )
-                                )
-                            }
-                        }*/
-                    },
-                    Constants.EXTRA_RELATED_EPISODE to mutableListOf<EpisodeResponse>().apply {
-                        /*state.data?.let {
-                            if (it.streamFHD != null) {
-                                add(
-                                    EpisodeResponse(
-                                        "${vm.football?.id ?: 0}",
-                                        "${vm.football?.id ?: 0}",
-                                        "Full HD - 1",
-                                        vStream = AesEncryptDecrypt.getDecryptedString(it.streamFHD),
-                                    )
-                                )
-                            }
-                            if (it.streamFHD2 != null) {
-                                add(
-                                    EpisodeResponse(
-                                        "${vm.football?.id ?: 0}",
-                                        "${vm.football?.id ?: 0}",
-                                        "Full HD - 2",
-                                        vStream = AesEncryptDecrypt.getDecryptedString(it.streamFHD2),
-                                    )
-                                )
-                            }
-                            if (it.streamHD != null) {
-                                add(
-                                    EpisodeResponse(
-                                        "${vm.football?.id ?: 0}",
-                                        "${vm.football?.id ?: 0}",
-                                        "HD - 1",
-                                        vStream = AesEncryptDecrypt.getDecryptedString(it.streamHD),
-                                    )
-                                )
-                            }
-                            if (it.streamHD2 != null) {
-                                add(
-                                    EpisodeResponse(
-                                        "${vm.football?.id ?: 0}",
-                                        "${vm.football?.id ?: 0}",
-                                        "HD - 2",
-                                        vStream = AesEncryptDecrypt.getDecryptedString(it.streamHD2),
-                                    )
-                                )
-                            }
-                            if (it.streamSD != null) {
-                                add(
-                                    EpisodeResponse(
-                                        "${vm.football?.id ?: 0}",
-                                        "${vm.football?.id ?: 0}",
-                                        "SD - 1",
-                                        vStream = AesEncryptDecrypt.getDecryptedString(it.streamSD),
-                                    )
-                                )
-                            }
-                            if (it.streamSD2 != null) {
-                                add(
-                                    EpisodeResponse(
-                                        "${vm.football?.id ?: 0}",
-                                        "${vm.football?.id ?: 0}",
-                                        "SD - 2",
-                                        vStream = AesEncryptDecrypt.getDecryptedString(it.streamSD2),
-                                    )
-                                )
-                            }
-                        }*/
+                            )
+                        }
                     }
                 )
             }

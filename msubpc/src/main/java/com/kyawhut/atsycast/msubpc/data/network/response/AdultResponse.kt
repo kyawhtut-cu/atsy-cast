@@ -16,6 +16,7 @@ data class AdultResponse(
     @SerializedName("image") val adultImage: String,
     @SerializedName("movieyear") val adultYear: String,
     @SerializedName("stream") val adultStream: String?,
+    @SerializedName("download") val adultDownload: String?,
 ) {
 
     companion object {

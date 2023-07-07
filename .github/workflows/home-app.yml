@@ -15,7 +15,7 @@ jobs:
       APP_CONFIG_FILE_BASE64: ${{ secrets.APP_CONFIG_FILE }}
       RELEASE_KEYSTORE_BASE64: ${{ secrets.RELEASE_KEYSTORE }}
       HOME_PLAY_SERVICE_BASE64: ${{ secrets.HOME_PLAY_SERVICE }}
-      FILE_UPLOAD_URL: ${{ secrets.FILE_UPLOAD_URL }}
+      API_URL: ${{ secrets.API_URL }}
 
     steps:
 
@@ -53,7 +53,7 @@ jobs:
       - name: Upload Home APK to CDN
         uses: wei/curl@v1
         with:
-          args: --location --request POST ${{ env.FILE_UPLOAD_URL }} -F 'file=@tv/build/outputs/apk/release/${{ env.RELEASE_VERSION }}/atsy-cast-home.apk;type=application/vnd.android.package-archive' --form 'version=${{ env.RELEASE_VERSION }}' --form 'apk_name=ATSY Cast' --form 'file_name=atsy-cast' --form 'is_home_version=true' --form 'update_name=home'
+          args: --location --request POST ${{ env.API_URL }} -F 'file=@tv/build/outputs/apk/release/${{ env.RELEASE_VERSION }}/atsy-cast-home.apk;type=application/vnd.android.package-archive' --form 'version=${{ env.RELEASE_VERSION }}' --form 'apk_name=ATSY Cast' --form 'file_name=atsy-cast' --form 'is_home_version=true' --form 'update_name=home'
 
       - name: Notift Home status
         if: always()

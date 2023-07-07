@@ -10,7 +10,7 @@ plugins {
 }
 
 val releaseProperties = Properties()
-releaseProperties.load(file("${rootDir}/local.properties").inputStream())
+releaseProperties.load(file("${rootDir}/config.properties").inputStream())
 val BASE_URL: String = releaseProperties.getProperty("MSYS_BASE_URL", "")
 
 android {

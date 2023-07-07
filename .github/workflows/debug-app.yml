@@ -42,8 +42,8 @@ jobs:
       - name: Check Out Branch
         uses: actions/checkout@v2.3.4
 
-      - run: touch local.properties
-      - run: echo $APP_CONFIG_FILE_BASE64 | base64 --decode > local.properties
+      - run: touch config.properties
+      - run: echo $APP_CONFIG_FILE_BASE64 | base64 --decode > config.properties
       - run: touch debug-keystore.jks
       - run: echo $DEBUG_KEYSTORE_BASE64 | base64 --decode > debug-keystore.jks
       - run: touch tv/google-services.json

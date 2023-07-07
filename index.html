@@ -173,7 +173,7 @@
 						path = `/${path.join('/')}`;
 					}
 					$.ajax({
-						url: `https://cdn.kyawhtut.com/filePath.php?path=${path}`,
+						url: `https://cdn.kyawhtut.com/v1.php?route=filePath&path=${path}`,
 						method: 'get',
 						beforeSend: function() {
 							$('#fileList').empty();

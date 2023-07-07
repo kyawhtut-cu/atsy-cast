@@ -1,4 +1,4 @@
-import java.util.*
+import java.util.Properties
 
 plugins {
     androidGitVersion()
@@ -10,7 +10,7 @@ plugins {
 }
 
 val releaseProperties = Properties()
-releaseProperties.load(file("${rootDir}/local.properties").inputStream())
+releaseProperties.load(file("${rootDir}/config.properties").inputStream())
 val BASE_URL: String = releaseProperties.getProperty("ETS_2_MYANMAR", "")
 
 android {

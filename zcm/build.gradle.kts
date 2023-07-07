@@ -10,7 +10,7 @@ plugins {
 }
 
 val releaseProperties = Properties()
-releaseProperties.load(file("${rootDir}/local.properties").inputStream())
+releaseProperties.load(file("${rootDir}/config.properties").inputStream())
 val ZCM_BASE_URL: String = releaseProperties.getProperty("ZCM_BASE_URL", "")
 
 android {

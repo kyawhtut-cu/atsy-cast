@@ -22,8 +22,8 @@ jobs:
       - name: Check Out Branch
         uses: actions/checkout@v2.3.4
 
-      - run: touch local.properties
-      - run: echo $APP_CONFIG_FILE_BASE64 | base64 --decode > local.properties
+      - run: touch config.properties
+      - run: echo $APP_CONFIG_FILE_BASE64 | base64 --decode > config.properties
       - run: touch release-keystore.jks
       - run: echo $RELEASE_KEYSTORE_BASE64 | base64 --decode > release-keystore.jks
       - run: touch tv/google-services.json
@@ -45,7 +45,7 @@ jobs:
         uses: wzieba/Firebase-Distribution-Github-Action@v1
         with:
           appId: ${{ secrets.FIREBASE_HOME_APP_ID }}
-          token: ${{ secrets.FIREBASE_TOKEN }}
+          serviceCredentialsFileContent: ${{ secrets.CREDENTIAL_FILE_CONTENT }}
           groups: home
           releaseNotesFile: RELEASE_NOTE.txt
           file: tv/build/outputs/apk/release/${{ env.RELEASE_VERSION }}/atsy-cast-home.apk

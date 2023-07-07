@@ -18,3 +18,5 @@ git-push.gradle
 utils.txt
 debug-keystore.jks
 release-keystore.jks
+config.properties
+firebase-app-distribution.json

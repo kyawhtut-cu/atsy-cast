@@ -9,7 +9,7 @@ plugins {
 }
 
 val releaseProperties = Properties()
-releaseProperties.load(file("${rootDir}/local.properties").inputStream())
+releaseProperties.load(file("${rootDir}/config.properties").inputStream())
 val SHEET_BASE_URL: String = releaseProperties.getProperty("SHEET_BASE_URL", "")
 val RELEASE_SCRIPT_ID: String = releaseProperties.getProperty("RELEASE_SCRIPT_ID", "")
 val DEBUG_SCRIPT_ID: String = releaseProperties.getProperty("DEBUG_SCRIPT_ID", "")

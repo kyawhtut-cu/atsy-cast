@@ -21,7 +21,7 @@ val apkName = hashMapOf(
 )
 
 val releaseProperties = Properties()
-releaseProperties.load(file("${rootDir}/local.properties").inputStream())
+releaseProperties.load(file("${rootDir}/config.properties").inputStream())
 val DEBUG_ALIAS: String = releaseProperties.getProperty("DEBUG_ALIAS", "")
 val DEBUG_ALIAS_PASSWORD: String = releaseProperties.getProperty("DEBUG_ALIAS_PASSWORD", "")
 val DEBUG_KEYSTORE_PASSWORD: String = releaseProperties.getProperty("DEBUG_KEYSTORE_PASSWORD", "")

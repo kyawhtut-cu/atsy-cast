@@ -10,7 +10,7 @@ jobs:
   build_release:
 
     name: Build Release
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     env:
       APP_CONFIG_FILE_BASE64: ${{ secrets.APP_CONFIG_FILE }}
       RELEASE_KEYSTORE_BASE64: ${{ secrets.RELEASE_KEYSTORE }}

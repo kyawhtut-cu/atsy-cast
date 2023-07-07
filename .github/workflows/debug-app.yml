@@ -26,11 +26,11 @@ jobs:
         with:
           args: curl -G ${{ secrets.API_URL }} --data-urlencode 'route=notifyBot' --data-urlencode 'message=ATSY Cast Version - ${{ env.RELEASE_VERSION }} Build Start'
 
-  build_release:
+  build_debug:
 
     needs: build_start
     name: Build Release
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     env:
       APP_CONFIG_FILE_BASE64: ${{ secrets.APP_CONFIG_FILE }}
       DEBUG_KEYSTORE_BASE64: ${{ secrets.DEBUG_KEYSTORE }}

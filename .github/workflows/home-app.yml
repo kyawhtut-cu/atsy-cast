@@ -7,10 +7,10 @@ on:
 
 jobs:
 
-  build_release:
+  build_home:
 
-    name: Build Debug
-    runs-on: ubuntu-18.04
+    name: Build Home
+    runs-on: ubuntu-latest
     env:
       APP_CONFIG_FILE_BASE64: ${{ secrets.APP_CONFIG_FILE }}
       RELEASE_KEYSTORE_BASE64: ${{ secrets.RELEASE_KEYSTORE }}
